@@ -4,23 +4,33 @@ module.exports = {
   context: path.resolve(__dirname),
   entry: './src/index.js',
   output: {
-    path: 'app',
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'app'),
+    filename: 'bundle.js'
+  },
+  watch: true,
+  devServer: {
+    contentBase: path.join(__dirname, 'app')
   },
   module: {
-    use: [
+    loaders: [
       {
-        test: [/\.jsx?$/, /\.js?$/],
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        include: [
+          path.resolve('.')
+        ],
         query: {
-          presets: ['react', 'es2015'],
-        },
-      },
-    ],
+          presets: [['react'], ['es2015']]
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   },
   stats: {
-    colors: true,
+    colors: true
   },
-  devtool: 'source-map',
+  devtool: 'source-map'
 };
