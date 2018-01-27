@@ -1,13 +1,12 @@
 /* global document */
 
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import React from 'react';
 
-// should not need the extension. Why webpack not resolve?
-import App from './App.jsx';
+import App from './components/App.jsx';
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
+  render(
     <App />,
     document.getElementById('root')
   );

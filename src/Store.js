@@ -1,16 +1,25 @@
+import { combineReducers, createStore } from 'redux';
+
+import { default as friends } from './reducers/friends.js';
+import { default as movies } from './reducers/movies.js';
+import { default as parties } from './reducers/parties.js';
+import { default as user } from './reducers/user.js';
+
 const initialState = {
-  user: {
-    username: '',
-    id: ''
-  },
-  movies: [],
-  friends: [],
-  parties: [],
-  currentlyViewing: {
-    movie: null,
-    friend: null,
-    party: null
-  }
+  user: {},
+  movies: {},
+  friends: {},
+  parties: {}
 };
 
-export default initialState;
+const store = createStore(
+  combineReducers({
+    friends,
+    movies,
+    parties,
+    user
+  }),
+  initialState
+);
+
+export default store;
