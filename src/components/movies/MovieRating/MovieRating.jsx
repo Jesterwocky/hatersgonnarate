@@ -5,34 +5,27 @@ import styled from 'styled-components';
 
 import { updateMovieRating } from '../../../actions/movies.js';
 
-import { movieRatingsOutOf } from '../../../util/constants.js';
+import { movieRatingsOutOf, defaultStarsWidth } from '../../../util/constants.js';
 
 import MovieRatingStar from './MovieRatingStar.jsx';
 
 const Rating = styled.div`
   display: flex;
-  width: ${props => `${props.width}px` || '100px'};
-  justify-content: space-between;
+  flex-shrink: 0;
   flex-wrap: no-wrap;
+  width: ${props => `${props.width}px` || `${defaultStarsWidth}px`};
+  justify-content: space-between;
 `;
-
-const defaultRatingWidth = 100;
-const spacingReductionFactor = 75/100;
 
 function createUpdateRating(update, id) {
   return rating => update(id, rating);
-}
-
-function getStarSize(ratingWidth) {
-  return (ratingWidth / movieRatingsOutOf) *
-  spacingReductionFactor;
 }
 
 const MovieRating = ({
   movieId,
   canEdit = false,
   rating,
-  ratingWidth = defaultRatingWidth,
+  ratingWidth = defaultStarsWidth,
   updateRating
 }) => {
   return (
@@ -42,7 +35,7 @@ const MovieRating = ({
           <MovieRatingStar
             starNumber={starNumber}
             rating={rating}
-            starSize={`${getStarSize(ratingWidth)}px`}
+            starSize={ratingWidth / movieRatingsOutOf}
             canEdit={canEdit}
             updateRating={createUpdateRating(updateRating, movieId)}
             key={`star-${starNumber}`}

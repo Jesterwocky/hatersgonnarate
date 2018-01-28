@@ -56,17 +56,17 @@ export const movies = {
         friendDetails: [
           {
             ...friends[0],
-            rating: '5',
+            rating: '1',
             thoughts: 'Omg overrated'
           },
           {
             ...friends[1],
-            rating: '10',
+            rating: '5',
             thoughts: 'movie was fantastic!'
           },
           {
             ...friends[2],
-            rating: '8',
+            rating: '4.5',
             thoughts: 'I have soo much to say about this movie'
           }
         ],
@@ -79,7 +79,103 @@ export const movies = {
         }
       }
     }
+  },
+  '00002': {
+    name: 'Call Me By Your Name',
+    id: '00002',
+    ratings: {
+      user: '5',
+      friends: '3.5',
+      sitewide: '4.5'
+    },
+    tagline: 'The older guy is not 35.',
+    blurb: 'That guy looks 35!',
+    friends: {
+      saw: {
+        total: '10',
+        friendDetails: [
+          {
+            ...friends[0],
+            rating: '5',
+            thoughts: 'SO GOOD!!'
+          },
+          {
+            ...friends[1],
+            rating: '2',
+            thoughts: 'Meeehhhhh'
+          },
+          {
+            ...friends[2],
+            rating: '3',
+            thoughts: 'I fell asleep.'
+          }
+        ],
+        wantToSee: {
+          total: '1',
+          friendDetails: [
+            friends[4]
+          ]
+        }
+      }
+    }
+  },
+  '00003': {
+    name: 'Whiplash',
+    id: '00003',
+    ratings: {
+      user: '5',
+      friends: '3.5',
+      sitewide: '4.5'
+    },
+    tagline: 'It is not about Indiana Jones',
+    blurb: 'NOT MY TEMPO',
+    friends: {
+      saw: {
+        total: '10',
+        friendDetails: [
+          {
+            ...friends[0],
+            rating: '5',
+            thoughts: 'SO GOOD!!'
+          },
+          {
+            ...friends[1],
+            rating: '2',
+            thoughts: 'Meeehhhhh'
+          },
+          {
+            ...friends[2],
+            rating: '3',
+            thoughts: 'I fell asleep.'
+          }
+        ],
+        wantToSee: {
+          total: '1',
+          friendDetails: [
+            friends[4]
+          ]
+        }
+      }
+    }
   }
+};
+
+export const reRateMovieData = {
+  movieId: '0001',
+  movieName: 'Scott Pilgrim vs The World',
+  currentRating: '5',
+  previousRatings: [
+    {
+      dateTime: 'yesterday',
+      explanation: 'I mixed this up with another movie',
+      context: '2 months after first rating'
+    },
+    {
+      dateTime: 'Jan 1, 2017',
+      explanation: 'I mixed this up with another movie',
+      context: '2 months after first rating'
+    }
+  ]
 };
 
 export const parties = {

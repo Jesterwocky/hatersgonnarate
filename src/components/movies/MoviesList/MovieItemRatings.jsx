@@ -2,19 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import MovieRating from '../MovieRating/MovieRating.jsx';
+import { defaultStarsWidth } from '../../../util/constants.js';
 
-const ratingWidth = 100;
+import MovieRating from '../MovieRating/MovieRating.jsx';
 
 const Ratings = styled.div`
   font-size: 12px;
-  width: ${ratingWidth}px;
 `;
 
 const Rating = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
 `;
 
-const RatingsHeading = styled.h3`
+const RatingsHeading = styled.span`
+  margin: 0 7px 0 0;
+  width: 40%;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: right;
 `;
 
 const ratingLabels = {
@@ -40,6 +47,7 @@ const MovieItemRatings = ({ ratings = {}, movieId, updateRating }) => (
           className="movie-ratings-rating-starscontainer"
           movieId={movieId}
           rating={parseFloat(ratings[ratingType])}
+          ratingWidth={defaultStarsWidth}
           canEdit={ratingType === 'user'}
           updateRating={updateRating}
         />

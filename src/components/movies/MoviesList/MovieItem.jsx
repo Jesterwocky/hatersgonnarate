@@ -14,10 +14,11 @@ const Movie = ListItem.extend`
   border-bottom: 1px solid orange;
 `;
 
-const MovieTitle = styled.span`
+const MovieTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
   color: orange;
+  margin: 0 0 10px 0;
 `;
 
 const Description = styled.p`

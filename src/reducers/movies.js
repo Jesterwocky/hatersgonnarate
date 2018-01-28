@@ -1,12 +1,15 @@
 import {
   GET_MOVIES,
   GET_MOVIE,
-  UPDATE_MOVIE_RATING
+  UPDATE_MOVIE_RATING,
+  START_RERATE,
+  UPDATE_RERATE
 } from '../actions/movies.js';
 
 const initialState = {
   movies: {},
-  currentMovie: {}
+  currentMovie: {},
+  reRate: {}
 };
 
 function getMovieWithUpdatedRating(movies, movieId, rating) {
@@ -50,6 +53,22 @@ function reducer(state = initialState, action) {
             action.payload.movieId,
             action.payload.rating
           )
+        }
+      };
+    case START_RERATE:
+      return {
+        ...state,
+        reRate: {
+          movieId: action.payload.movieId,
+          ...action.payload.data
+        }
+      }
+    case UPDATE_RERATE:
+      return {
+        ...state,
+        reRate: {
+          ...state.reRate,
+          ...action.payload.data
         }
       };
     default:

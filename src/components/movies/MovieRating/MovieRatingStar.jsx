@@ -2,19 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const defaultStarSize = '10px';
+import { starColor } from '../../../util/constants.js';
+
+const defaultStarSize = 10;
 
 const Star = styled.div`
-  width: ${props => props.starSize || defaultStarSize};
-  height: ${props => props.starSize || defaultStarSize};
+  width: ${props => props.starSize || defaultStarSize}px;
+  height: ${props => ((props.starSize || defaultStarSize) * (9 / 10))}px; // squatter stars
   display: flex;
-  border: 1px solid orange;
+  border: 1px solid #ecd6ab;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 `;
 
 const StarHalf = styled.div`
   width: 50%;
   background-color: ${props => (
-    props.filled ? 'yellow' : 'transparent'
+    props.filled ? starColor : 'transparent'
   )};
 `;
 
@@ -55,7 +58,7 @@ MovieRatingStar.propTypes = {
   starNumber: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   canEdit: PropTypes.bool,
-  starSize: PropTypes.string,
+  starSize: PropTypes.number,
   updateRating: PropTypes.func.isRequired
 };
 
