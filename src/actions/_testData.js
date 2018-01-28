@@ -50,22 +50,57 @@ export const movies = {
     },
     tagline: 'It is a movie',
     blurb: 'A guy fights some guys... and one girl!',
+    activity: {
+      callouts: [
+        {
+          id: '0001',
+          fromFriend: { id: '1234567891', username: friends[1234567891].username },
+          toFriend: { id: '1234567890', username: friends['1234567890'].username },
+          type: 'shame',
+          starter: 'This was a MASTERPIECE!'
+        },
+      ],
+      friendComments: [
+        {
+          id: '1234567890',
+          username: friends['1234567890'].username,
+          snippet: 'Omg overrated'
+        },
+        {
+          id: '1234567891',
+          username: friends[1234567891].username,
+          snippet: 'movie was fantastic!'
+        },
+        {
+          id: '1234567892',
+          username: friends['1234567892'].username,
+          snippet: 'I have soo much to say'
+        }
+      ],
+      strangerComments: [
+        {
+          id: '9999999999',
+          username: 'youDunnoMe',
+          snippet: 'La la la la'
+        }
+      ]
+    },
     friends: {
       saw: {
         total: '10',
         friendDetails: [
           {
-            ...friends[0],
+            ...friends['1234567890'],
             rating: '1',
             thoughts: 'Omg overrated'
           },
           {
-            ...friends[1],
+            ...friends['1234567891'],
             rating: '5',
             thoughts: 'movie was fantastic!'
           },
           {
-            ...friends[2],
+            ...friends['1234567892'],
             rating: '4.5',
             thoughts: 'I have soo much to say about this movie'
           }
@@ -73,8 +108,8 @@ export const movies = {
         wantToSee: {
           total: '2',
           friendDetails: [
-            friends[3],
-            friends[4]
+            friends['1234567893'],
+            friends['1234567894']
           ]
         }
       }
@@ -90,22 +125,64 @@ export const movies = {
     },
     tagline: 'The older guy is not 35.',
     blurb: 'That guy looks 35!',
+    activity: {
+      callouts: [
+        {
+          id: '0002',
+          fromFriend: { id: '1234567890', username: friends['1234567890'].username },
+          toFriend: { id: '1234567891', username: friends[1234567891].username },
+          type: 'shame',
+          starter: 'You gotta be kidding me, dude!'
+        },
+        {
+          id: '0003',
+          fromFriend: { id: '1234567891', username: friends[1234567891].username },
+          toFriend: { id: '1234567892', username: friends['1234567892'].username },
+          type: 'applaud',
+          starter: 'I almost fell asleep, too'
+        }
+      ],
+      friendComments: [
+        {
+          id: '1234567890',
+          username: friends['1234567890'].username,
+          snippet: 'SO GOOD!!'
+        },
+        {
+          id: '1234567891',
+          username: friends[1234567891].username,
+          snippet: 'Meeehhhhh'
+        },
+        {
+          id: '1234567892',
+          username: friends['1234567892'].username,
+          snippet: 'I fell asleep.'
+        }
+      ],
+      strangerComments: [
+        {
+          id: '9999999999',
+          username: 'youDunnoMe',
+          snippet: 'La la la la'
+        }
+      ]
+    },
     friends: {
       saw: {
         total: '10',
         friendDetails: [
           {
-            ...friends[0],
+            ...friends['1234567890'],
             rating: '5',
             thoughts: 'SO GOOD!!'
           },
           {
-            ...friends[1],
+            ...friends['1234567891'],
             rating: '2',
             thoughts: 'Meeehhhhh'
           },
           {
-            ...friends[2],
+            ...friends['1234567892'],
             rating: '3',
             thoughts: 'I fell asleep.'
           }
@@ -113,7 +190,7 @@ export const movies = {
         wantToSee: {
           total: '1',
           friendDetails: [
-            friends[4]
+            friends['1234567894']
           ]
         }
       }
@@ -129,30 +206,41 @@ export const movies = {
     },
     tagline: 'It is not about Indiana Jones',
     blurb: 'NOT MY TEMPO',
+    activity: {
+      callouts: [],
+      friendComments: [],
+      strangerComments: [
+        {
+          id: '9999999999',
+          username: 'youDunnoMe',
+          snippet: 'La la la la'
+        }
+      ]
+    },
     friends: {
       saw: {
         total: '10',
         friendDetails: [
           {
-            ...friends[0],
-            rating: '5',
-            thoughts: 'SO GOOD!!'
-          },
-          {
-            ...friends[1],
-            rating: '2',
-            thoughts: 'Meeehhhhh'
-          },
-          {
-            ...friends[2],
+            ...friends['1234567890'],
             rating: '3',
-            thoughts: 'I fell asleep.'
+            thoughts: 'I dont like music'
+          },
+          {
+            ...friends['1234567891'],
+            rating: '5',
+            thoughts: 'LOVE so much'
+          },
+          {
+            ...friends['1234567892'],
+            rating: '5',
+            thoughts: 'This movie is king'
           }
         ],
         wantToSee: {
           total: '1',
           friendDetails: [
-            friends[4]
+            friends['1234567894']
           ]
         }
       }
@@ -185,8 +273,8 @@ export const parties = {
   newParty: {
     movie: movies[0],
     friends: [
-      friends[0],
-      friends[1]
+      friends['1234567890'],
+      friends['1234567891']
     ],
     secret: true,
     when: {

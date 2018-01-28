@@ -29,11 +29,14 @@ export const SubHeading = styled.h2`
 `;
 
 // Columns
+const defaultSectionPadding = 20;
+
 const getColumnMinWidth = props => (props.sidebar ? '200px' : 'initial');
 const getColumnWidth = props => (props.sidebar ? '30%' : '100%');
 const getColumnMaxWidth = props => (props.sidebar ? '400px' : 'initial');
 const getColumnSidePadding = (props) => {
-  const sidePadding = props.sidePadding ? `${props.sidePadding}px` : '10px';
+  const sidePadding = props.sidePadding ?
+    `${props.sidePadding}px` : `${defaultSectionPadding}px`;
 
   if (props.sidebar) return `0 ${sidePadding} 0 0`;
 

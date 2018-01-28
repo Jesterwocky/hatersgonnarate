@@ -6,14 +6,13 @@ import { defaultStarsWidth } from '../../../util/constants.js';
 
 import MovieRating from '../MovieRating/MovieRating.jsx';
 
-const Ratings = styled.div`
+const RatingsList = styled.div`
   font-size: 12px;
 `;
 
 const Rating = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
 `;
 
 const RatingsHeading = styled.span`
@@ -30,21 +29,21 @@ const ratingLabels = {
   sitewide: 'Everybody'
 };
 
-const MovieItemRatings = ({ ratings = {}, movieId, updateRating }) => (
-  <Ratings className="movie-ratings">
+const MovieRatings = ({ ratings = {}, movieId, updateRating }) => (
+  <RatingsList className="movie-item-ratings">
 
     {Object.keys(ratings).map(ratingType => (
       <Rating
         key={`rating-${ratingType}-movie${movieId}`}
-        className="movie-ratings-rating"
+        className="movie-item-ratings-rating"
       >
 
-        <RatingsHeading className="movie-ratings-rating-heading">
+        <RatingsHeading className="movie-item-ratings-rating-heading">
           {ratingLabels[ratingType]}
         </RatingsHeading>
 
         <MovieRating
-          className="movie-ratings-rating-starscontainer"
+          className="movie-item-ratings-rating-starscontainer"
           movieId={movieId}
           rating={parseFloat(ratings[ratingType])}
           ratingWidth={defaultStarsWidth}
@@ -55,10 +54,10 @@ const MovieItemRatings = ({ ratings = {}, movieId, updateRating }) => (
       </Rating>
     ))}
 
-  </Ratings>
+  </RatingsList>
 );
 
-MovieItemRatings.propTypes = {
+MovieRatings.propTypes = {
   movieId: PropTypes.string.isRequired,
   ratings: PropTypes.shape({
     user: PropTypes.string,
@@ -68,9 +67,9 @@ MovieItemRatings.propTypes = {
   updateRating: PropTypes.func
 };
 
-MovieItemRatings.defaultProps = {
+MovieRatings.defaultProps = {
   ratings: {},
   updateRating: null
 };
 
-export default MovieItemRatings;
+export default MovieRatings;

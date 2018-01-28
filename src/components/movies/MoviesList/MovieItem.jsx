@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import MovieItemRatings from './MovieItemRatings.jsx';
+import MovieRatings from './MovieRatings.jsx';
+import MovieCallout from './MovieCallout.jsx';
+import MovieComment from './MovieComment.jsx';
 
 import {
   ListItem,
@@ -11,18 +13,22 @@ import {
 const Movie = ListItem.extend`
   padding: 10px 0;
   border-top: 1px solid orange;
-  border-bottom: 1px solid orange;
+
+  &:last-child {
+    border-bottom: 1px solid orange;
+  }
 `;
 
 const MovieTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
   color: orange;
-  margin: 0 0 10px 0;
+  margin: 0 0 5px 0;
 `;
 
-const Description = styled.p`
+const Blurb = styled.p`
   font-size: 11px;
+  margin: 10px 0 0;
 `;
 
 const MovieItem = ({
@@ -30,24 +36,68 @@ const MovieItem = ({
   name,
   ratings,
   blurb,
+  activity,
+
   getMovie,
   updateMovieRating
-}) => (
-  <Movie
-    key={`movie-${id}`}
-    onClick={getMovie}
-  >
-    <MovieTitle>{name}</MovieTitle>
+}) => {
+  const hasCallouts =
+    activity &&
+    activity.callouts
+    && activity.callouts.length > 0;
 
-    <MovieItemRatings
-      movieId={id}
-      ratings={ratings}
-      updateRating={updateMovieRating}
-    />
+  const hasFriendComments =
+    !hasCallouts &&
+    activity &&
+    activity.friendComments.length > 0;
 
-    <Description>{blurb}</Description>
-  </Movie>
-);
+  const hasStrangerComments =
+    !hasCallouts &&
+    !hasFriendComments &&
+    activity &&
+    activity.strangerComments &&
+    activity.strangerComments.length > 0;
+
+  return (
+    <Movie
+      key={`movie-${id}`}
+      onClick={getMovie}
+    >
+      <MovieTitle>{name}</MovieTitle>
+
+      <MovieRatings
+        movieId={id}
+        ratings={ratings}
+        updateRating={updateMovieRating}
+      />
+
+      <Blurb>{blurb}</Blurb>
+
+      {hasCallouts && activity.callouts.map(callout => (
+        <MovieCallout
+          key={`callout-${callout.id}`}
+          {...callout}
+        />
+      ))}
+
+      {hasFriendComments && activity.friendComments.map(friendComment => (
+        <MovieComment
+          key={`comment-${id}-${friendComment.username}`}
+          type="friend"
+          {...friendComment}
+        />
+      ))}
+
+      {hasStrangerComments && activity.strangerComments.map(strangerComment => (
+        <MovieComment
+          key={`comment-${id}-${strangerComment.username}`}
+          type="friend"
+          {...strangerComment}
+        />
+      ))}
+    </Movie>
+  );
+};
 
 MovieItem.propTypes = {
   id: PropTypes.string.isRequired,
