@@ -275,7 +275,7 @@ export const movies = {
 export const matchingMoviesList = [
   {
     id: '00002',
-    name: 'Call Me By Your Name'
+    title: 'Call Me By Your Name'
   },
   {
     id: '00001',
@@ -283,7 +283,7 @@ export const matchingMoviesList = [
   },
   {
     id: '00003',
-    name: 'Whiplash'
+    title: 'Whiplash'
   }
 ];
 

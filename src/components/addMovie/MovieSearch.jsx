@@ -8,17 +8,29 @@ import { findMatchingMovies } from '../../actions/movies.js';
 import TextBox from '../TextBox.jsx';
 import { buttonMinHeight } from '../../util/constants.js';
 
-const Search = styled.div`
+const Search = styled.div.attrs({
+  className: 'movie-search'
+})`
   width: 100%;
   position: relative;
 `;
 
-const Options = styled.div`
+const Options = styled.div.attrs({
+  className: 'movie-search-options'
+})`
   position: absolute;
   top: ${buttonMinHeight};
+  background-color: yellow;
 `;
 
-const Option = styled.div``;
+const Option = styled.div.attrs({
+  className: 'movie-search-options-option'
+})``;
+
+const SearchText = styled(TextBox).attrs({
+  className: 'movie-search-searchtext',
+  height: buttonMinHeight
+})``;
 
 class MovieSearch extends Component {
   state = {
@@ -29,36 +41,47 @@ class MovieSearch extends Component {
   onUpdateText = (text) => {
     // select movie if movie title in suggestions exactly matches text
     this.props.findMatchingMovies(text);
+
+    const shouldShowSuggestions = !(text === '');
+
+    if (shouldShowSuggestions !== this.state.showSuggestions) {
+      this.setState({
+        showSuggestions: shouldShowSuggestions
+      });
+    }
   }
 
-  onSelectMatch = (selectedMovie) => {
+  getOnSelectMatch = selectedMovie => () => {
+    if (typeof this.props.onFindMovie === 'function') {
+      this.props.onFindMovie(selectedMovie);
+    }
+
     this.setState({
       selectedMovie,
       showSuggestions: false
-    }, () => {
-      if (typeof this.props.onFindMovie === 'function') {
-        this.props.onFindMovie(selectedMovie);
-      }
     });
   }
 
   render() {
     const { showSuggestions } = this.state;
+
     return (
-      <Search className="movie-search">
+      <Search>
+
         <Options>
           {showSuggestions && this.props.matches.map(movie => (
+
             <Option
               key={`search-result-${movie.id}`}
-              onClick={this.onSelectMatch(movie)}
+              onClick={this.getOnSelectMatch(movie)}
             >
               {movie.title}
             </Option>
+
           ))}
         </Options>
 
-        <TextBox
-          height={buttonMinHeight}
+        <SearchText
           onUpdateText={this.onUpdateText}
         />
       </Search>
