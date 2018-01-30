@@ -20,12 +20,20 @@ const Options = styled.div.attrs({
 })`
   position: absolute;
   top: ${buttonMinHeight};
-  background-color: yellow;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #e4f1fb;
+  font-size: 12px;
+  padding: 5px;
 `;
 
 const Option = styled.div.attrs({
   className: 'movie-search-options-option'
-})``;
+})`
+  white-space: nowrap;
+  padding: 3px 0;
+  overflow: hidden;
+`;
 
 const SearchText = styled(TextBox).attrs({
   className: 'movie-search-searchtext',
@@ -35,7 +43,7 @@ const SearchText = styled(TextBox).attrs({
 class MovieSearch extends Component {
   state = {
     selectedMovie: {},
-    showSuggestions: true
+    showSuggestions: false
   }
 
   onUpdateText = (text) => {
@@ -68,18 +76,20 @@ class MovieSearch extends Component {
     return (
       <Search>
 
-        <Options>
-          {showSuggestions && this.props.matches.map(movie => (
+        {showSuggestions && this.props.matches.length > 0 &&
+          <Options>
+            {this.props.matches.map(movie => (
 
-            <Option
-              key={`search-result-${movie.id}`}
-              onClick={this.getOnSelectMatch(movie)}
-            >
-              {movie.title}
-            </Option>
+              <Option
+                key={`search-result-${movie.id}`}
+                onClick={this.getOnSelectMatch(movie)}
+              >
+                {movie.title}
+              </Option>
 
-          ))}
-        </Options>
+            ))}
+          </Options>
+        }
 
         <SearchText
           onUpdateText={this.onUpdateText}

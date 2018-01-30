@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { buttonMinHeight } from '../util/constants.js';
@@ -16,7 +17,9 @@ const Field = styled.input.attrs({
 
 const TextBox = ({ placeholder, onUpdateText }) => {
   function onChange(e) {
-    onUpdateText(e.currentTarget.value);
+    if (typeof onUpdateText === 'function') {
+      onUpdateText(e.currentTarget.value);
+    }
   }
 
   return (
@@ -25,6 +28,16 @@ const TextBox = ({ placeholder, onUpdateText }) => {
       placeholder={placeholder}
     />
   );
+};
+
+TextBox.propTypes = {
+  placeholder: PropTypes.string,
+  onUpdateText: PropTypes.func
+};
+
+TextBox.defaultProps = {
+  placeholder: '',
+  onUpdateText: null
 };
 
 export default TextBox;
