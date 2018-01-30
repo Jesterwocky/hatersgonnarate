@@ -4,22 +4,16 @@ import { default as friends } from './reducers/friends.js';
 import { default as movies } from './reducers/movies.js';
 import { default as parties } from './reducers/parties.js';
 import { default as user } from './reducers/user.js';
+import { default as newRating } from './reducers/newRating.js';
+import { default as modals } from './reducers/modals.js';
 
-const initialState = {
-  user: {},
-  movies: {},
-  friends: {},
-  parties: {}
-};
-
-const store = createStore(
-  combineReducers({
-    friends,
-    movies,
-    parties,
-    user
-  }),
-  initialState
-);
+const store = createStore(combineReducers({
+  user,
+  movies,
+  friends,
+  parties,
+  newRating,
+  modals
+}));
 
 export default store;

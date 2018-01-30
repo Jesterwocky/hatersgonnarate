@@ -24,7 +24,7 @@ function createUpdateRating(update, id) {
 const MovieRating = ({
   movieId,
   canEdit = false,
-  rating,
+  rating = 0.5,
   ratingWidth = defaultStarsWidth,
   updateRating
 }) => {

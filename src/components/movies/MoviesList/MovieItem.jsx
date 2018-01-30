@@ -28,7 +28,7 @@ const MovieTitle = styled.h3`
 
 const Blurb = styled.p`
   font-size: 11px;
-  margin: 10px 0 0;
+  margin: 5p 0;
 `;
 
 const MovieItem = ({
@@ -58,20 +58,23 @@ const MovieItem = ({
     activity.strangerComments &&
     activity.strangerComments.length > 0;
 
+  const haveNotSeenIt = false;
+
   return (
     <Movie
       key={`movie-${id}`}
       onClick={getMovie}
     >
       <MovieTitle>{name}</MovieTitle>
+      {haveNotSeenIt &&
+        <Blurb>{blurb}</Blurb>
+      }
 
       <MovieRatings
         movieId={id}
         ratings={ratings}
         updateRating={updateMovieRating}
       />
-
-      <Blurb>{blurb}</Blurb>
 
       {hasCallouts && activity.callouts.map(callout => (
         <MovieCallout

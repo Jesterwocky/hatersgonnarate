@@ -1,14 +1,15 @@
-import { movies as testMovies, reRateMovieData } from './_testData.js';
+import {
+  movies as testMovies,
+  matchingMoviesList
+} from './_testData.js';
 
 // action types
 export const GET_MOVIES = 'GET_MOVIES';
 export const GET_MOVIE = 'GET_MOVIE';
-export const UPDATE_MOVIE_RATING = 'UPDATE_MOVIE_RATING';
-export const START_RERATE = 'START_RERATE';
-export const UPDATE_RERATE = 'UPDATE_RERATE';
+export const GET_MOVIES_MATCHING_SEARCH = 'GET_MOVIES_MATCHING_SEARCH';
 
 // action creators
-function createGetMoviesAction(movies) {
+function getMoviesAction(movies) {
   return {
     type: GET_MOVIES,
     payload: {
@@ -17,7 +18,7 @@ function createGetMoviesAction(movies) {
   };
 }
 
-function createGetMovieAction(movie) {
+function getMovieAction(movie) {
   return {
     type: GET_MOVIE,
     payload: {
@@ -26,51 +27,24 @@ function createGetMovieAction(movie) {
   };
 }
 
-function createUpdateMovieRatingAction(movieId, rating) {
+function getMatchingMovies(searchMatches) {
   return {
-    type: UPDATE_MOVIE_RATING,
+    type: GET_MOVIES_MATCHING_SEARCH,
     payload: {
-      movieId,
-      rating
-    }
-  };
-}
-
-function createStartReRateAction(data) {
-  return {
-    type: START_RERATE,
-    payload: {
-      data
-    }
-  };
-}
-
-function createUpdateReRateAction(data) {
-  return {
-    type: UPDATE_RERATE,
-    payload: {
-      data
+      searchMatches
     }
   };
 }
 
 // action dispatchers
 export function getMovies(dispatch) {
-  dispatch(createGetMoviesAction(testMovies));
+  dispatch(getMoviesAction(testMovies));
 }
 
 export function getMovie(dispatch, id) {
-  dispatch(createGetMovieAction(testMovies[id]));
+  dispatch(getMovieAction(testMovies[id]));
 }
 
-export function updateMovieRating(dispatch, id, rating) {
-  dispatch(createUpdateMovieRatingAction(id, rating));
-}
-
-export function startReRate(dispatch, data) {
-  dispatch(createStartReRateAction(reRateMovieData));
-}
-
-export function updateReRate(dispatch, data) {
-  dispatch(createUpdateReRateAction(data));
+export function findMatchingMovies(dispatch, movieString) {
+  dispatch(getMatchingMovies(matchingMoviesList));
 }

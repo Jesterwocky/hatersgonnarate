@@ -54,8 +54,16 @@ export const movies = {
       callouts: [
         {
           id: '0001',
-          fromFriend: { id: '1234567891', username: friends[1234567891].username },
-          toFriend: { id: '1234567890', username: friends['1234567890'].username },
+          fromFriend: {
+            id: '1234567891',
+            username: friends[1234567891].username,
+            profilePicUrl: userData.profilePicUrl
+          },
+          toFriend: {
+            id: '1234567890',
+            username: friends['1234567890'].username,
+            profilePicUrl: userData.profilePicUrl
+          },
           type: 'shame',
           starter: 'This was a MASTERPIECE!'
         },
@@ -129,15 +137,31 @@ export const movies = {
       callouts: [
         {
           id: '0002',
-          fromFriend: { id: '1234567890', username: friends['1234567890'].username },
-          toFriend: { id: '1234567891', username: friends[1234567891].username },
+          fromFriend: {
+            id: '1234567890',
+            username: friends['1234567890'].username,
+            profilePicUrl: userData.profilePicUrl
+          },
+          toFriend: {
+            id: '1234567891',
+            username: friends[1234567891].username,
+            profilePicUrl: userData.profilePicUrl
+          },
           type: 'shame',
           starter: 'You gotta be kidding me, dude!'
         },
         {
           id: '0003',
-          fromFriend: { id: '1234567891', username: friends[1234567891].username },
-          toFriend: { id: '1234567892', username: friends['1234567892'].username },
+          fromFriend: {
+            id: '1234567891',
+            username: friends[1234567891].username,
+            profilePicUrl: userData.profilePicUrl
+          },
+          toFriend: {
+            id: '1234567892',
+            username: friends['1234567892'].username,
+            profilePicUrl: userData.profilePicUrl
+          },
           type: 'applaud',
           starter: 'I almost fell asleep, too'
         }
@@ -248,6 +272,21 @@ export const movies = {
   }
 };
 
+export const matchingMoviesList = [
+  {
+    id: '00002',
+    name: 'Call Me By Your Name'
+  },
+  {
+    id: '00001',
+    title: 'Scott Pilgrim vs The World'
+  },
+  {
+    id: '00003',
+    name: 'Whiplash'
+  }
+];
+
 export const reRateMovieData = {
   movieId: '0001',
   movieName: 'Scott Pilgrim vs The World',
@@ -255,12 +294,12 @@ export const reRateMovieData = {
   previousRatings: [
     {
       dateTime: 'yesterday',
-      explanation: 'I mixed this up with another movie',
+      remarks: 'I mixed this up with another movie',
       context: '2 months after first rating'
     },
     {
       dateTime: 'Jan 1, 2017',
-      explanation: 'I mixed this up with another movie',
+      remarks: 'I mixed this up with another movie',
       context: '2 months after first rating'
     }
   ]

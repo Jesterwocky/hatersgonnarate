@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { getMovies, getMovie, updateMovieRating } from '../../actions/movies.js';
-
 import MoviesList from '../movies/MoviesList/MoviesList.jsx';
+import AddMovieWithSearch from '../addMovie/AddMovieWithSearch.jsx';
 
 import {
   Page,
@@ -14,14 +15,33 @@ import {
   Column
 } from './_StyledComponents.jsx';
 
-const Movies = Page.extend`
-`;
+const Home = Page.extend.attrs({
+  className: 'page-home'
+})``;
 
-const MoviesSubHeading = SubHeading.extend`
+const HomeContent = Content.extend.attrs({
+  className: 'page-home-content'
+})``;
+
+const MainContent = Column.extend.attrs({
+  className: 'page-home-main'
+})``;
+
+const MoviesSidebar = Column.extend.attrs({
+  sidebar: 'true',
+  className: 'page-home-sidebar'
+})``;
+
+const HomeSubHeading = SubHeading.extend.attrs({
+  className: 'page-home-subheading'
+})`
   font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-class MoviesPage extends Component {
+class HomePage extends Component {
   componentWillMount() {
     this.props.getMovies();
   }
@@ -30,7 +50,7 @@ class MoviesPage extends Component {
     () => this.props.getMovie(id)
   );
 
-  // TODO: sort movies here
+  // TODO: sort movies here?
   orderMovies = () => {
     const { movies } = this.props.movies;
 
@@ -45,40 +65,44 @@ class MoviesPage extends Component {
     const movieList = this.orderMovies();
 
     return (
-      <Movies className="page-movies">
-        <Heading className="page-movies-heading">
-          Movies
-        </Heading>
+      <Home>
+        <HomeContent>
+          <MoviesSidebar>
 
-        <Content className="page-movies-content">
-          <Column sidebar className="page-movies-sidebar">
-            <MoviesSubHeading className="page-movies-sidebar-subheading">
-              Latest Movies
-            </MoviesSubHeading>
+            <HomeSubHeading>
+              Seen it
+            </HomeSubHeading>
+
             <MoviesList
               movies={movieList}
               getMovies={this.props.getMovies}
               getMovie={this.createOnClickMovie}
             />
-          </Column>
 
-          <Column className="page-movies-main">
-            Latest Movie Junk
-          </Column>
-        </Content>
-      </Movies>
+          </MoviesSidebar>
+
+          <MainContent>
+
+            <AddMovieWithSearch>
+              Add Movie
+            </AddMovieWithSearch>
+          </MainContent>
+
+        </HomeContent>
+
+      </Home>
     );
   }
 }
 
-MoviesPage.propTypes = {
+HomePage.propTypes = {
   movies: PropTypes.object,
   getMovies: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,
   updateMovieRating: PropTypes.func.isRequired
 };
 
-MoviesPage.defaultProps = {
+HomePage.defaultProps = {
   movies: []
 };
 
@@ -90,11 +114,11 @@ function mapDispatchToProps(dispatch) {
   return {
     getMovies: () => getMovies(dispatch),
     getMovie: id => getMovie(dispatch, id),
-    updateMovieRating: (id, rating) => updateMovieRating(dispatch, id, rating)
+    updateMovieRating: (id, rating) => updateMovieRating(dispatch, id, rating),
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MoviesPage);
+)(HomePage);

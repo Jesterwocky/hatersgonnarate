@@ -32,7 +32,7 @@ const RerateTime = styled.span`
 
 const RerateContext = styled.p``;
 
-const Explanation = styled.div``;
+const Remarks = styled.div``;
 
 const reasonPlaceholderText = `Saw it again sober...
 Realized I just like watching Chris Hemsworth...
@@ -41,13 +41,13 @@ Left the cult that told me to like this movie...
 Gotta speak my truth...`;
 
 class MovieReRating extends Component {
-  updateExplanation = (event) => {
-    const explanation = event.currentTarget.value;
+  updateRemarks = (event) => {
+    const remarks = event.currentTarget.value;
     const { updateReRate, movieId } = this.props;
 
     updateReRate({
       movieId,
-      explanation
+      remarks
     });
   }
 
@@ -75,12 +75,12 @@ class MovieReRating extends Component {
             <HistoryItem key={`pastRating-${movieId}`}>
               <RerateTime>pastRating.dateTime</RerateTime>
 
-              {pastRating.explanation &&
+              {pastRating.remarks &&
                 <RerateContext>
-                  &quot;{pastRating.explanation}&quot;
+                  &quot;{pastRating.remarks}&quot;
                 </RerateContext>
               }
-              {!pastRating.explanation && pastRating.context &&
+              {!pastRating.remarks && pastRating.context &&
                 <RerateContext>
                   {pastRating.context}
                 </RerateContext>
@@ -89,16 +89,16 @@ class MovieReRating extends Component {
             </HistoryItem>
           ))}
         </History>
-        <Explanation>
+        <Remarks>
           <ReRateSubHeading>Sooo... What's changed?</ReRateSubHeading>
           <input
             type="text"
             name="why-text"
             value={reasonPlaceholderText}
-            onChange={updateExplanation}
+            onChange={updateRemarks}
           />
 
-        </Explanation>
+        </Remarks>
       </ReRating>
     );
   }
@@ -125,12 +125,12 @@ const MovieReRating = ({
         <HistoryItem key={`pastRating-${movieId}`}>
           <RerateTime>pastRating.dateTime</RerateTime>
 
-          {pastRating.explanation &&
+          {pastRating.remarks &&
             <RerateContext>
-              &quot;{pastRating.explanation}&quot;
+              &quot;{pastRating.remarks}&quot;
             </RerateContext>
           }
-          {!pastRating.explanation && pastRating.context &&
+          {!pastRating.remarks && pastRating.context &&
             <RerateContext>
               {pastRating.context}
             </RerateContext>
@@ -139,16 +139,16 @@ const MovieReRating = ({
         </HistoryItem>
       ))}
     </History>
-    <Explanation>
+    <Remarks>
       <ReRateSubHeading>Sooo... What's changed?</ReRateSubHeading>
       <input
         type="text"
         name="why-text"
         value={reasonPlaceholderText}
-        onChange={updateExplanation}
+        onChange={updateRemarks}
       />
 
-    </Explanation>
+    </Remarks>
   </ReRating>
 );
 

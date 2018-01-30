@@ -1,16 +1,11 @@
 import { friends, friendsFull } from './_testData.js';
 
-const initialState = {
-  friends: {},
-  currentFriend: {}
-};
-
 // action types
 export const GET_FRIENDS = 'GET_FRIENDS';
 export const GET_FRIEND = 'GET_FRIEND';
 
 // action creators
-function createGetFriendsAction(friends) {
+function getFriendsAction(friends) {
   return {
     type: GET_FRIENDS,
     payload: {
@@ -19,7 +14,7 @@ function createGetFriendsAction(friends) {
   }
 }
 
-function createGetFriendAction(friend) {
+function getFriendAction(friend) {
   return {
     type: GET_FRIEND,
     payload: {
@@ -29,9 +24,9 @@ function createGetFriendAction(friend) {
 }
 
 export function getFriends(dispatch) {
-  dispatch(createGetFriendsAction(friends));
+  dispatch(getFriendsAction(friends));
 }
 
 export function getFriend(dispatch, userid) {
-  dispatch(createGetFriendAction(friendsFull[userid]));
+  dispatch(getFriendAction(friendsFull[userid]));
 }

@@ -2,17 +2,29 @@ import {
   GET_MOVIES,
   GET_MOVIE,
   UPDATE_MOVIE_RATING,
-  START_RERATE,
-  UPDATE_RERATE
+  GET_MOVIES_MATCHING_SEARCH
 } from '../actions/movies.js';
 
 const initialState = {
   movies: {},
-  currentMovie: {},
-  reRate: {}
+  searchMatches: [],
+  newRating: {
+    movie: {
+      id: '',
+      name: '',
+      friends: {
+        sawIt: [],
+        interested: []
+      }
+    },
+    rating: '',
+    remarks: '',
+    taggedFriends: []
+  },
+  currentMovie: {}
 };
 
-function getMovieWithUpdatedRating(movies, movieId, rating) {
+function getMovieWithUpdatedRating(movies, movieId, { rating, remarks, taggedFriends }) {
   const movie = (movies || {})[movieId] || {};
   const ratingAsString = rating.toString();
 
@@ -21,7 +33,9 @@ function getMovieWithUpdatedRating(movies, movieId, rating) {
       ...movie,
       ratings: {
         ...movie.ratings,
-        user: ratingAsString
+        user: ratingAsString,
+        userRemarks: remarks,
+        taggedFriends
       }
     }
   };
@@ -51,25 +65,18 @@ function reducer(state = initialState, action) {
           ...getMovieWithUpdatedRating(
             state.movies,
             action.payload.movieId,
-            action.payload.rating
+            {
+              rating: action.payload.rating,
+              remarks: action.payload.remarks,
+              taggedFriends: action.payload.taggedFriends
+            }
           )
         }
       };
-    case START_RERATE:
+    case GET_MOVIES_MATCHING_SEARCH:
       return {
         ...state,
-        reRate: {
-          movieId: action.payload.movieId,
-          ...action.payload.data
-        }
-      }
-    case UPDATE_RERATE:
-      return {
-        ...state,
-        reRate: {
-          ...state.reRate,
-          ...action.payload.data
-        }
+        searchMatches: action.payload.searchMatches
       };
     default:
       return state;

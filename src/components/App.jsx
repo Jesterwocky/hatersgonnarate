@@ -1,12 +1,13 @@
-import React from 'react';
-import { Provider } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import store from '../store.js';
+import { ADD_MOVIE_MODAL } from '../util/constants.js';
 
-import Footer from '../components/Footer.jsx';
-import NavBar from '../components/NavBar.jsx';
-import Movies from '../components/pages/Movies.jsx';
+import Footer from './Footer.jsx';
+import NavBar from './NavBar.jsx';
+import HomePage from './pages/HomePage.jsx';
+import AddMovieModal from './modals/AddMovieModal.jsx';
 
 export const PageBase = styled.div`
   font-family: sans-serif;
@@ -16,14 +17,22 @@ export const PageBase = styled.div`
   flex-direction: column;
 `;
 
-const App = () => (
-  <Provider store={store}>
-    <PageBase>
-      <NavBar />
-      <Movies />
-      <Footer />
-    </PageBase>
-  </Provider>
+const App = ({ openModal }) => (
+  <PageBase>
+    <NavBar />
+    <HomePage />
+    <Footer />
+    {openModal === ADD_MOVIE_MODAL &&
+      <AddMovieModal />
+    }
+  </PageBase>
 );
 
-export default App;
+
+function mapStateToProps(state) {
+  return {
+    openModal: state.modals.modalName
+  };
+}
+
+export default connect(mapStateToProps)(App);
