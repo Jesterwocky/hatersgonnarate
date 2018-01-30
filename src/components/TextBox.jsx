@@ -15,7 +15,7 @@ const Field = styled.input.attrs({
   width: 100%;
 `;
 
-const TextBox = ({ placeholder, onUpdateText }) => {
+const TextBox = ({ text, placeholder, onUpdateText }) => {
   function onChange(e) {
     if (typeof onUpdateText === 'function') {
       onUpdateText(e.currentTarget.value);
@@ -24,6 +24,7 @@ const TextBox = ({ placeholder, onUpdateText }) => {
 
   return (
     <Field
+      value={text}
       onChange={onChange}
       placeholder={placeholder}
     />
@@ -31,11 +32,13 @@ const TextBox = ({ placeholder, onUpdateText }) => {
 };
 
 TextBox.propTypes = {
+  text: PropTypes.string,
   placeholder: PropTypes.string,
   onUpdateText: PropTypes.func
 };
 
 TextBox.defaultProps = {
+  text: '',
   placeholder: '',
   onUpdateText: null
 };

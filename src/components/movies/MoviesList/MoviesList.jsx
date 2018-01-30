@@ -19,7 +19,7 @@ const MoviesList = ({ movies = [], getMovie }) => {
       {hasMovies &&
         movies.map(movie => (
           <MovieItem
-            key={movie.id}
+            key={`movie-${movie.id}`}
             getMovie={getMovie(movie.id)}
             {...movie}
           />
@@ -40,6 +40,7 @@ const MoviesList = ({ movies = [], getMovie }) => {
 
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     blurb: PropTypes.string,
     ratings: PropTypes.shape({

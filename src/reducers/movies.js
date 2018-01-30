@@ -24,24 +24,23 @@ const initialState = {
   currentMovie: {}
 };
 
-function getMovieWithUpdatedRating(movies, movieId, { rating, remarks, taggedFriends }) {
-  const movie = (movies || {})[movieId] || {};
-  const ratingAsString = rating.toString();
-
-  return {
-    [movieId]: {
-      ...movie,
-      ratings: {
-        ...movie.ratings,
-        user: ratingAsString,
-        userRemarks: remarks,
-        taggedFriends
-      }
-    }
-  };
-}
-
 function reducer(state = initialState, action) {
+  function getMovieWithUpdatedRating(movieId, rating, remarks) {
+    const movie = (state.movies || {})[movieId] || {};
+    const ratingAsString = rating.toString();
+
+    return {
+      [movieId]: {
+        ...movie,
+        ratings: {
+          ...movie.ratings,
+          user: ratingAsString,
+          userRemarks: remarks
+        }
+      }
+    };
+  }
+
   switch (action.type) {
     case GET_MOVIES:
       // for now, just concat movies
@@ -63,13 +62,9 @@ function reducer(state = initialState, action) {
         movies: {
           ...state.movies,
           ...getMovieWithUpdatedRating(
-            state.movies,
             action.payload.movieId,
-            {
-              rating: action.payload.rating,
-              remarks: action.payload.remarks,
-              taggedFriends: action.payload.taggedFriends
-            }
+            action.payload.rating,
+            action.payload.remarks,
           )
         }
       };

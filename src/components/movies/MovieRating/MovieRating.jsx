@@ -17,10 +17,6 @@ const Rating = styled.div`
   justify-content: space-between;
 `;
 
-function createUpdateRating(update, id) {
-  return rating => update(id, rating);
-}
-
 const MovieRating = ({
   movieId,
   canEdit = false,
@@ -28,6 +24,10 @@ const MovieRating = ({
   ratingWidth = defaultStarsWidth,
   updateRating
 }) => {
+  function createUpdateRating(id) {
+    return newRating => updateRating(id, newRating);
+  }
+
   return (
     <Rating width={ratingWidth}>
       {Array.from({ length: movieRatingsOutOf }, (x, index) => index + 1)
@@ -37,7 +37,7 @@ const MovieRating = ({
             rating={rating}
             starSize={ratingWidth / movieRatingsOutOf}
             canEdit={canEdit}
-            updateRating={createUpdateRating(updateRating, movieId)}
+            updateRating={createUpdateRating(movieId)}
             key={`star-${starNumber}`}
           />
         ))

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { defaultStarsWidth } from '../../../util/constants.js';
+import { hasKey } from '../../../util/helpers';
 
 import MovieRating from '../MovieRating/MovieRating.jsx';
 
@@ -32,28 +33,29 @@ const ratingLabels = {
 const MovieRatings = ({ ratings = {}, movieId, updateRating }) => (
   <RatingsList className="movie-item-ratings">
 
-    {Object.keys(ratings).map(ratingType => (
-      <Rating
-        key={`rating-${ratingType}-movie${movieId}`}
-        className="movie-item-ratings-rating"
-      >
+    {Object.keys(ratings)
+      .filter(ratingType => hasKey(ratingLabels, ratingType))
+      .map(ratingType => (
+        <Rating
+          key={`rating-${ratingType}-movie${movieId}`}
+          className="movie-item-ratings-rating"
+        >
 
-        <RatingsHeading className="movie-item-ratings-rating-heading">
-          {ratingLabels[ratingType]}
-        </RatingsHeading>
+          <RatingsHeading className="movie-item-ratings-rating-heading">
+            {ratingLabels[ratingType]}
+          </RatingsHeading>
 
-        <MovieRating
-          className="movie-item-ratings-rating-starscontainer"
-          movieId={movieId}
-          rating={parseFloat(ratings[ratingType])}
-          ratingWidth={defaultStarsWidth}
-          canEdit={ratingType === 'user'}
-          updateRating={updateRating}
-        />
+          <MovieRating
+            className="movie-item-ratings-rating-starscontainer"
+            movieId={movieId}
+            rating={parseFloat(ratings[ratingType])}
+            ratingWidth={defaultStarsWidth}
+            canEdit={ratingType === 'user'}
+            updateRating={updateRating}
+          />
 
-      </Rating>
+        </Rating>
     ))}
-
   </RatingsList>
 );
 

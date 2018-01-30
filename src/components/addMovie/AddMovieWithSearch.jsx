@@ -61,7 +61,7 @@ class AddMovieWithSearch extends Component {
         onMouseLeave={this.closeSearch}
       >
         <AddMovieButton
-          movie={this.props.movieToAdd}
+          movieToAdd={this.props.movieToAdd}
         >
           {this.props.children}
         </AddMovieButton>

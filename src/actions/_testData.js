@@ -30,7 +30,6 @@ export const friends = {
   }
 };
 
-
 export const friendsFull = {
   1234567894: {
     id: '1234567894',
@@ -274,16 +273,16 @@ export const movies = {
 
 export const matchingMoviesList = [
   {
-    id: '00002',
-    title: 'Call Me By Your Name'
+    id: '00004',
+    title: 'A Futile and Stupid Gesture'
   },
   {
-    id: '00001',
-    title: 'Scott Pilgrim vs The World'
+    id: '00005',
+    title: 'StarWars: The Last Jedi'
   },
   {
-    id: '00003',
-    title: 'Whiplash'
+    id: '00006',
+    title: 'StarWars: Rogue One'
   }
 ];
 

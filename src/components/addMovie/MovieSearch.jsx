@@ -40,23 +40,23 @@ const SearchText = styled(TextBox).attrs({
   height: buttonMinHeight
 })``;
 
+// TODO: listen for enter and interpret as Search click when component's focused
 class MovieSearch extends Component {
   state = {
+    searchString: '',
     selectedMovie: {},
     showSuggestions: false
   }
 
   onUpdateText = (text) => {
-    // select movie if movie title in suggestions exactly matches text
+    // TODO: select movie if movie title in suggestions exactly matches text
     this.props.findMatchingMovies(text);
 
-    const shouldShowSuggestions = !(text === '');
-
-    if (shouldShowSuggestions !== this.state.showSuggestions) {
-      this.setState({
-        showSuggestions: shouldShowSuggestions
-      });
-    }
+    this.setState({
+      selectedMovie: {},
+      searchString: text,
+      showSuggestions: !(text === '')
+    });
   }
 
   getOnSelectMatch = selectedMovie => () => {
@@ -66,13 +66,13 @@ class MovieSearch extends Component {
 
     this.setState({
       selectedMovie,
+      searchString: selectedMovie.title,
       showSuggestions: false
     });
   }
 
   render() {
-    const { showSuggestions } = this.state;
-
+    const { searchString, showSuggestions } = this.state;
     return (
       <Search>
 
@@ -92,6 +92,7 @@ class MovieSearch extends Component {
         }
 
         <SearchText
+          text={searchString}
           onUpdateText={this.onUpdateText}
         />
       </Search>

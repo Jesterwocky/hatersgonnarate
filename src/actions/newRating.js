@@ -14,20 +14,6 @@ function updateNewRatingAction(rating) {
   };
 }
 
-function updateMovieRatingAction(movieId, { rating, remarks, taggedFriends }) {
-  return {
-    type: UPDATE_NEW_RATING,
-    payload: {
-      data: {
-        movieId,
-        rating,
-        remarks,
-        taggedFriends
-      }
-    }
-  };
-}
-
 const clearNewRatingAction = {
   type: CLEAR_NEW_RATING
 };
