@@ -5,11 +5,11 @@ import styled from 'styled-components';
 
 import { getMovies, getMovie, updateMovieRating } from '../../actions/movies.js';
 import MoviesList from '../movies/MoviesList/MoviesList.jsx';
-import AddMovieWithSearch from '../addMovie/AddMovieWithSearch.jsx';
+import AddMovieWithSearch from '../movies/addMovie/AddMovieWithSearch.jsx';
 
 import {
   Page,
-  Heading,
+  // Heading,
   SubHeading,
   Content,
   Column

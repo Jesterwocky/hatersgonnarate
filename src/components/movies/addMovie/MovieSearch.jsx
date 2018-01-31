@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { findMatchingMovies } from '../../actions/movies.js';
+import { findMatchingMovies } from '../../../actions/movies.js';
 
-import TextBox from '../TextBox.jsx';
-import { buttonMinHeight } from '../../util/constants.js';
+import TextBox from '../../TextBox.jsx';
+import { buttonMinHeight } from '../../../util/constants.js';
 
 const Search = styled.div.attrs({
   className: 'movie-search'

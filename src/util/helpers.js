@@ -1,3 +1,7 @@
+export function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 export function hasKey(obj, key) {
   return Object.keys(obj).indexOf(key) !== -1;
 }

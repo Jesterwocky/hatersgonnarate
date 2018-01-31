@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 const shameColor = '#ffadbd';
 const shameBG = '#c12e41';
 
-const accordColor = '#14d652';
-const accordBG = '#238427';
+const agreeColor = '#14d652';
+const agreeBG = '#238427';
 
 function getContainerColor({ type }) {
-  return type === 'shame' ? shameBG : accordBG;
+  return type === 'shame' ? shameBG : agreeBG;
 }
 
 function getTextColor({ type }) {
-  return type === 'shame' ? shameColor : accordColor;
+  return type === 'shame' ? shameColor : agreeColor;
 }
 
 const CalloutContainer = styled.div`
@@ -56,7 +56,7 @@ const FightingWords = styled.div`
 
 const typeLabels = {
   shame: 'Shame',
-  applaud: 'Accord'
+  applaud: 'Agree'
 };
 
 const MovieCallout = ({

@@ -34,7 +34,7 @@ const MovieRating = ({
         .map(starNumber => (
           <MovieRatingStar
             starNumber={starNumber}
-            rating={rating}
+            rating={parseFloat(rating)}
             starSize={ratingWidth / movieRatingsOutOf}
             canEdit={canEdit}
             updateRating={createUpdateRating(movieId)}
@@ -49,7 +49,10 @@ const MovieRating = ({
 MovieRating.propTypes = {
   movieId: PropTypes.string.isRequired,
   canEdit: PropTypes.bool,
-  rating: PropTypes.number,
+  rating: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   ratingWidth: PropTypes.number,
   updateRating: PropTypes.func
 };

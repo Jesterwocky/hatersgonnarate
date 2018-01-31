@@ -7,6 +7,10 @@ import {
 export const GET_MOVIES = 'GET_MOVIES';
 export const GET_MOVIE = 'GET_MOVIE';
 export const GET_MOVIES_MATCHING_SEARCH = 'GET_MOVIES_MATCHING_SEARCH';
+
+// TODO: better naming to differentiate putting new rating info in createStore
+// vs saving new rating (which UPDATE_MOVIE_RATING does). Or put all the
+// newRating stuff in component state. Probably makes more sense
 export const UPDATE_MOVIE_RATING = 'UPDATE_MOVIE_RATING';
 
 // action creators

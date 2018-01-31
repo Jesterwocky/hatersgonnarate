@@ -9,6 +9,7 @@ export const Page = styled.div`
   flex-direction: column;
   flex: 1;
   padding: ${pagePadding};
+  position: relative; // so modals can be positioned on top
 `;
 
 export const Content = styled.div`

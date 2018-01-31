@@ -64,7 +64,7 @@ function reducer(state = initialState, action) {
           ...getMovieWithUpdatedRating(
             action.payload.movieId,
             action.payload.rating,
-            action.payload.remarks,
+            action.payload.remarks
           )
         }
       };

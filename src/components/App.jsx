@@ -17,16 +17,18 @@ export const PageBase = styled.div`
   flex-direction: column;
 `;
 
-const App = ({ openModal }) => (
-  <PageBase>
-    <NavBar />
-    <HomePage />
-    <Footer />
-    {openModal === ADD_MOVIE_MODAL &&
-      <AddMovieModal />
-    }
-  </PageBase>
-);
+const App = ({ openModal }) => {
+  return (
+    <PageBase>
+      <NavBar />
+      <HomePage />
+      <Footer />
+      {openModal === ADD_MOVIE_MODAL &&
+        <AddMovieModal />
+      }
+    </PageBase>
+  );
+}
 
 
 function mapStateToProps(state) {
