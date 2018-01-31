@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { modalZIndex, modalContentZIndex } from '../../util/constants.js';
+import { modalPadding, modalZIndex, modalContentZIndex } from '../../util/constants.js';
 
 import { closeModal } from '../../actions/modals/modals.js';
 
@@ -37,7 +37,8 @@ const ModalContent = styled.div.attrs({
   min-width: 700px;
   max-width: 915px;
   background-color: white;
-  padding: 45px;
+  padding: ${modalPadding};
+  border-radius: 15px;
   z-index: ${modalContentZIndex};
 `;
 

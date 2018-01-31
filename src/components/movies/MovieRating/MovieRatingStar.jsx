@@ -67,10 +67,6 @@ const StarHalf = styled.div`
   )};
 `;
 
-function getUpdateRating(update, rating) {
-  return () => update(rating);
-}
-
 const MovieRatingStar = ({
   starNumber,
   rating,
@@ -83,6 +79,12 @@ const MovieRatingStar = ({
 
   const innerStarWidth = outerStarWidth * (9 / 10);
   const innerStarHeight = outerStarHeight * (9 / 10);
+
+  // TODO: better way to prevent click on a friend's rating or
+  // sitewide rating from updating your rating (vs relying on 'edit' prop)
+  function getUpdateRating(newRating) {
+    return () => updateRating(newRating);
+  }
 
   return (
     <StarContainer className="star" width={starSize} height={starSize}>
@@ -101,7 +103,7 @@ const MovieRatingStar = ({
           filled={rating >= starNumber - 0.5}
           onClick={
             canEdit ?
-            getUpdateRating(updateRating, starNumber - 0.5) :
+            getUpdateRating(starNumber - 0.5) :
             null
           }
         />
@@ -110,7 +112,7 @@ const MovieRatingStar = ({
           filled={rating >= starNumber}
           onClick={
             canEdit ?
-            getUpdateRating(updateRating, starNumber) :
+            getUpdateRating(starNumber) :
             null
           }
         />

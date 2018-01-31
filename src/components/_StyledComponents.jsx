@@ -16,7 +16,10 @@ export const Button = styled.button`
   color: white;
   margin: 5px;
   min-height: ${buttonMinHeight};
-  box-shadow: ${buttonBoxShadow};
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const List = styled.div`
@@ -29,4 +32,12 @@ export const ListItem = styled.div`
 
 export const BlankListItem = styled.div`
 
+`;
+
+export const Friend = styled.span.attrs({
+  className: 'modal-addmovie-friendname'
+})`
+  background-color: white;
+  padding: 5px 7px;
+  margin: 0 5px;
 `;

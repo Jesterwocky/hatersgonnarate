@@ -65,6 +65,8 @@ export function findMatchingMovies(dispatch, movieString) {
   dispatch(getMatchingMovies(matchingMoviesList));
 }
 
+// TODO: save updated movie rating and ALSO get recently rated movies
+// and return them
 export function updateMovieRating(dispatch, id, rating, remarks) {
   dispatch(updateMovieRatingAction(id, rating, remarks));
 }

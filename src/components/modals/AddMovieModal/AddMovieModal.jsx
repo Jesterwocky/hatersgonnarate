@@ -3,56 +3,57 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { isEmpty } from '../../util/helpers.js';
-import { closeModal } from '../../actions/modals/modals.js';
+// import actions
+import { closeModal } from '../../../actions/modals/modals.js';
 import {
   updateNewMovieRating,
   updateNewMovieRemarks,
   addNewMovie,
   clearNewRating
-} from '../../actions/modals/newRating.js';
-import { updateMovieRating } from '../../actions/movies.js';
+} from '../../../actions/modals/newRating.js';
+import { updateMovieRating } from '../../../actions/movies.js';
 
-import Modal from './Modal.jsx';
-import { ModalTitle } from './_StyledComponents.jsx';
-import { Button } from '../_StyledComponents.jsx';
-import TextBox from '../TextBox.jsx';
-import MovieRating from '../movies/MovieRating/MovieRating.jsx';
-import AddMovieWithSearch from '../movies/addMovie/AddMovieWithSearch.jsx';
+// import styled components
+import Modal from '../Modal.jsx';
+import {
+  ModalTitle,
+  ModalHeading2,
+  ModalHeading3,
+  ModalText,
+  ModalButton
+} from '../_StyledComponents.jsx';
+import TextBox from '../../TextBox.jsx';
 
-// search
-// rate
-// explain
+// import components
+import MovieRating from '../../movies/MovieRating/MovieRating.jsx';
+import AddMovieWithSearch from '../../movies/addMovie/AddMovieWithSearch.jsx';
+import NotSeenItOptions from './NotSeenItOptions.jsx';
+import SelectFriends from '../../SelectFriends.jsx';
 
-// once saved...
-// see what friends have said
-// and call them out if you want
-
+// styled components
 const AddMovie = styled(Modal).attrs({
   className: 'modal-add-movie'
 })``;
+
 const ForSelectedMovie = styled.div.attrs({
   className: 'modal-addmovie-forselectedmovie'
 })``;
-const MovieTitle = styled.h2.attrs({
+
+const MovieTitle = ModalHeading2.extend.attrs({
   className: 'modal-addmovie-title'
-})``;
+})`
+  font-size: 25px;
+`;
+
 const Remarks = styled.div.attrs({
   className: 'modal-addmovie-remarks'
 })``;
-const NotSeenIt = styled.div.attrs({
-  className: 'modal-addmovie-notseenit'
-})``;
-const SawIt = styled.div.attrs({
-  className: 'modal-addmovie-friendssawit'
-})``;
-const Interested = styled.div.attrs({
-  className: 'modal-addmovie-friendsInterested'
-})``;
+
 const ModalControls = styled.div.attrs({
   className: 'modal-addmovie-controls'
 })``;
 
+// component
 class AddMovieModal extends Component {
   onCancel = () => {
     this.props.clearRating();
@@ -66,46 +67,32 @@ class AddMovieModal extends Component {
       close,
       rating,
       remarks,
-      taggedFriends,
+      taggedFriends
     } = this.props;
 
-    save(
-      movie.id,
-      {
-        rating,
-        remarks,
-        taggedFriends
-      }
-    );
-
+    save(movie.id, { rating, remarks, taggedFriends });
     close();
   }
-
-  // addTaggedFriend(friend) {
-  //   // TODO: check if friend is already in list n stuff
-  //   this.props.updateNewRating({
-  //     taggedFriends: this.props.taggedFriends.concat(friend)
-  //   });
-  // }
-  //
-  // removeTaggedFriend = (friend) => {
-  //   console.log('Will remove friend');
-  // }
 
   render() {
     const {
       movie,
       rating,
       remarks,
-      friends,
-      taggedFriends
+      taggedFriends,
+      updateRating,
+      updateRemarks,
+      changeMovie,
+      tagFriend,
+      untagFriend
     } = this.props;
-    const friendsThatSaw = ((movie.friends || {}).sawIt) || [];
     const friendsInterested = ((movie.friends || {}).interested) || {};
     const savable = !!movie.id && !!rating;
 
     // TODO: if select movie they already saw, indicate re-rating
     // and show different options (like no "not seen it")
+    // TODO: allow friend search, and show friend suggestions in addition
+    // to people who are interested in seeing the movie
     return (
       <AddMovie>
         <ModalTitle>
@@ -113,70 +100,69 @@ class AddMovieModal extends Component {
         </ModalTitle>
 
         <AddMovieWithSearch
-          onConfirmSelection={this.props.changeMovie}
+          onConfirmSelection={changeMovie}
         />
 
         <MovieTitle>{movie.title}</MovieTitle>
-        <SawIt>
-          {friendsThatSaw.map(friend => <div>{friend.username}</div>)}
-        </SawIt>
 
         {movie.id &&
           <ForSelectedMovie>
-            <NotSeenIt>
-              Havent seen it?
-              {friendsInterested && friendsInterested.length > 0 &&
-                <Interested>
-                  These friends want to watch it:
-                  {friendsInterested.map(friend => (
-                    friend.username
-                  ))}
-                </Interested>
-              }
-
-              <Button>Gauge interest</Button>
-              <Button>Schedule a viewing</Button>
-              <Button>See it online</Button>
-
-            </NotSeenIt>
 
             <MovieRating
               movieId={movie.id}
               rating={rating}
+              updateRating={updateRating}
               canEdit
             />
 
             <Remarks>
-              What did you think?
+              <ModalText>
+                What did you think?
+              </ModalText>
               <TextBox
-                onUpdateText={this.props.updateRemarks}
-                text={this.props.remarks}
+                onUpdateText={updateRemarks}
+                text={remarks}
               />
             </Remarks>
+
+            <SelectFriends
+              friends={
+                Object.keys(movie.friends.interested)
+                .map(key => movie.friends.interested[key])
+              }
+              taggedFriends={taggedFriends}
+              onSelectFriend={tagFriend}
+              onUnselectFriend={untagFriend}
+            />
 
           </ForSelectedMovie>
         }
 
         <ModalControls>
-          <Button
+          <ModalButton
             onClick={this.onSave}
             disabled={savable}
           >
-            Save
-          </Button>
-          <Button onClick={this.onCancel}>
-            Cancel
-          </Button>
+            Done
+          </ModalButton>
         </ModalControls>
+
+        {movie.id &&
+          <NotSeenItOptions friendsInterested={friendsInterested} />
+        }
 
       </AddMovie>
     );
   }
 }
 
+// props
 AddMovieModal.propTypes = {
   movie: PropTypes.object,
-  rating: PropTypes.string,
+  rating: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   remarks: PropTypes.string,
   friends: PropTypes.object,
   taggedFriends: PropTypes.array,
@@ -184,6 +170,8 @@ AddMovieModal.propTypes = {
   updateRemarks: PropTypes.func.isRequired,
   clearRating: PropTypes.func.isRequired,
   changeMovie: PropTypes.func.isRequired,
+  tagFriend: PropTypes.func.isRequired,
+  untagFriend: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   save: PropTypes.func.isRequired
 };
@@ -196,6 +184,7 @@ AddMovieModal.defaultProps = {
   taggedFriends: []
 };
 
+// connect and export
 function mapStateToProps(state) {
   return {
     movie: state.newRating.movie,
@@ -211,6 +200,8 @@ function mapDispatchToProps(dispatch) {
   return {
     updateRating: rating => updateNewMovieRating(dispatch, rating),
     updateRemarks: remarks => updateNewMovieRemarks(dispatch, remarks),
+    tagFriend: remarks => addFriendToTag(dispatch, friend),
+    untagFriend: remarks => removeFriendToTag(dispatch, friend),
     changeMovie: movie => addNewMovie(dispatch, movie),
     clearRating: () => clearNewRating(dispatch),
     close: () => closeModal(dispatch),

@@ -286,6 +286,54 @@ export const matchingMoviesList = [
   }
 ];
 
+export const modalMovieData = {
+  '00004': {
+    id: '00004',
+    title: 'A Futile and Stupid Gesture',
+    friends: {
+      sawIt: [
+        friends['1234567890'],
+        friends['1234567891']
+      ],
+      interested: [
+        friends['1234567892'],
+        friends['1234567893'],
+        friends['1234567894']
+      ]
+    }
+  },
+  '00005': {
+    id: '00005',
+    title: 'StarWars: The Last Jedi',
+    friends: {
+      sawIt: [
+        friends['1234567890'],
+        friends['1234567891']
+      ],
+      interested: [
+        friends['1234567892'],
+        friends['1234567893'],
+        friends['1234567894']
+      ]
+    }
+  },
+  '00006': {
+    id: '00006',
+    title: 'StarWars: Rogue One',
+    friends: {
+      sawIt: [
+        friends['1234567890'],
+        friends['1234567891']
+      ],
+      interested: [
+        friends['1234567892'],
+        friends['1234567893'],
+        friends['1234567894']
+      ]
+    }
+  },
+};
+
 export const reRateMovieData = {
   movieId: '0001',
   movieName: 'Scott Pilgrim vs The World',

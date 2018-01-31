@@ -2,7 +2,9 @@ import {
   CLEAR_NEW_MOVIE,
   CHANGE_NEW_MOVIE,
   UPDATE_NEW_MOVIE_RATING,
-  UPDATE_NEW_MOVIE_REMARKS
+  UPDATE_NEW_MOVIE_REMARKS,
+  ADD_FRIEND_TO_TAG,
+  REMOVE_FRIEND_TO_TAG
 } from '../../actions/modals/newRating.js';
 
 const initialState = {
@@ -31,6 +33,19 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         remarks: action.payload.remarks
+      };
+
+    case ADD_FRIEND_TO_TAG:
+      return {
+        ...state,
+        taggedFriends: state.taggedFriends.concat(action.payload.friend)
+      };
+
+    case REMOVE_FRIEND_TO_TAG:
+      return {
+        ...state,
+        taggedFriends: state.taggedFriends
+          .filter(friend => friend.id !== action.payload.friend.id)
       };
 
     case CHANGE_NEW_MOVIE:

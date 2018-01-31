@@ -7,7 +7,7 @@ import { ADD_MOVIE_MODAL } from '../util/constants.js';
 import Footer from './Footer.jsx';
 import NavBar from './NavBar.jsx';
 import HomePage from './pages/HomePage.jsx';
-import AddMovieModal from './modals/AddMovieModal.jsx';
+import AddMovieModal from './modals/AddMovieModal/AddMovieModal.jsx';
 
 export const PageBase = styled.div`
   font-family: sans-serif;

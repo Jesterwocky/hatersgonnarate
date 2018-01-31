@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
-
-import { updateMovieRating } from '../../../actions/movies.js';
 
 import { movieRatingsOutOf, defaultStarsWidth } from '../../../util/constants.js';
 
@@ -24,10 +21,6 @@ const MovieRating = ({
   ratingWidth = defaultStarsWidth,
   updateRating
 }) => {
-  function createUpdateRating(id) {
-    return newRating => updateRating(id, newRating);
-  }
-
   return (
     <Rating width={ratingWidth}>
       {Array.from({ length: movieRatingsOutOf }, (x, index) => index + 1)
@@ -37,7 +30,7 @@ const MovieRating = ({
             rating={parseFloat(rating)}
             starSize={ratingWidth / movieRatingsOutOf}
             canEdit={canEdit}
-            updateRating={createUpdateRating(movieId)}
+            updateRating={updateRating}
             key={`star-${starNumber}`}
           />
         ))
@@ -54,23 +47,13 @@ MovieRating.propTypes = {
     PropTypes.string
   ]),
   ratingWidth: PropTypes.number,
-  updateRating: PropTypes.func
+  updateRating: PropTypes.func.isRequired
 };
 
 MovieRating.defaultProps = {
   canEdit: false,
-  rating: 1,
+  rating: 0.5,
   ratingWidth: 100,
-  updateRating: null
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    updateRating: (id, rating) => updateMovieRating(dispatch, id, rating)
-  };
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(MovieRating);
+export default MovieRating;

@@ -7,7 +7,7 @@ import MovieCallout from './MovieCallout.jsx';
 import MovieComment from './MovieComment.jsx';
 
 import {
-  ListItem,
+  ListItem
 } from '../../_StyledComponents.jsx';
 
 const Movie = ListItem.extend`
@@ -39,7 +39,7 @@ const MovieItem = ({
   activity,
 
   getMovie,
-  updateMovieRating
+  updateRating
 }) => {
   const hasCallouts =
     activity &&
@@ -73,7 +73,7 @@ const MovieItem = ({
       <MovieRatings
         movieId={id}
         ratings={ratings}
-        updateRating={updateMovieRating}
+        updateRating={updateRating}
       />
 
       {hasCallouts && activity.callouts.map(callout => (
@@ -106,15 +106,14 @@ MovieItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   getMovie: PropTypes.func.isRequired,
+  updateRating: PropTypes.func.isRequired,
   blurb: PropTypes.string,
-  updateMovieRating: PropTypes.func,
   ratings: PropTypes.object
 };
 
 MovieItem.defaultProps = {
   ratings: {},
   blurb: '',
-  updateMovieRating: null
 };
 
 export default MovieItem;

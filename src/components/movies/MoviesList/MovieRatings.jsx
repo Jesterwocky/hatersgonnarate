@@ -66,12 +66,11 @@ MovieRatings.propTypes = {
     friends: PropTypes.string,
     sitewide: PropTypes.string
   }),
-  updateRating: PropTypes.func
+  updateRating: PropTypes.func.isRequired
 };
 
 MovieRatings.defaultProps = {
-  ratings: {},
-  updateRating: null
+  ratings: {}
 };
 
 export default MovieRatings;

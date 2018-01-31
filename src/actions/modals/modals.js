@@ -1,5 +1,6 @@
 import { ADD_MOVIE_MODAL } from '../../util/constants.js';
 import { addNewMovieAction } from './newRating.js';
+import { modalMovieData } from '../_testData.js';
 
 // action types
 export const OPEN_MODAL = 'OPEN_MODAL';
@@ -22,7 +23,8 @@ const closeModalAction = { type: CLOSE_MODAL };
 export function openModal(dispatch, modalName, data) {
   // TODO: better way to do this?
   if (modalName === ADD_MOVIE_MODAL) {
-    dispatch(addNewMovieAction(data.movie));
+    // TODO: get full movie data
+    dispatch(addNewMovieAction(modalMovieData[data.movie.id]));
   }
 
   dispatch(openModalAction(modalName, data));

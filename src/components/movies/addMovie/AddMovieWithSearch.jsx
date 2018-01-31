@@ -44,7 +44,6 @@ class AddMovieWithSearch extends Component {
     if (typeof onConfirmSelection === 'function') {
       onConfirmSelection(this.state.movieToAdd);
     } else {
-      console.log(`movie to add: ${this.state.movieToAdd.title}`);
       openAddMovieModal(this.state.movieToAdd);
     }
   }
