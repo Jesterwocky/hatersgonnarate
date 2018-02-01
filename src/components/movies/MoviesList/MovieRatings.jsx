@@ -51,7 +51,7 @@ const MovieRatings = ({ ratings = {}, movieId, updateRating }) => (
             width={100}
             rating={parseFloat(ratings[ratingType])}
             canEdit={ratingType === 'user'}
-            updateRating={updateRating}
+            onUpdateRating={updateRating}
           />
 
         </Rating>

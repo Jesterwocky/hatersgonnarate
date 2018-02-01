@@ -134,7 +134,7 @@ class AddMovieModal extends Component {
               <MovieModalRating
                 movieId={movie.id}
                 rating={rating}
-                updateRating={updateRating}
+                onUpdateRating={updateRating}
                 canEdit
               />
             </RateIt>

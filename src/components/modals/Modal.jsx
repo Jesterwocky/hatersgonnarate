@@ -14,6 +14,8 @@ const Container = styled.div.attrs({
   display: flex;
   width: 100vw;
   height: 100vh;
+  padding: 30px;
+  box-sizing: border-box;
 `;
 
 const Overlay = styled.div.attrs({

@@ -69,14 +69,14 @@ const MovieRatingStar = ({
   starNumber,
   rating,
   canEdit,
-  updateRating
+  onUpdateRating
 }) => {
   const reductionPercent = 10;
 
   // TODO: better way to prevent click on a friend's rating or
   // sitewide rating from updating your rating (vs relying on 'edit' prop)
-  function getUpdateRating(newRating) {
-    return () => updateRating(newRating);
+  function getOnUpdateRating(newRating) {
+    return () => onUpdateRating(newRating);
   }
 
   return (
@@ -96,7 +96,7 @@ const MovieRatingStar = ({
           filled={rating >= starNumber - 0.5}
           onClick={
             canEdit ?
-            getUpdateRating(starNumber - 0.5) :
+            getOnUpdateRating(starNumber - 0.5) :
             null
           }
         />
@@ -105,7 +105,7 @@ const MovieRatingStar = ({
           filled={rating >= starNumber}
           onClick={
             canEdit ?
-            getUpdateRating(starNumber) :
+            getOnUpdateRating(starNumber) :
             null
           }
         />
@@ -118,7 +118,7 @@ MovieRatingStar.propTypes = {
   starNumber: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   canEdit: PropTypes.bool,
-  updateRating: PropTypes.func.isRequired
+  onUpdateRating: PropTypes.func.isRequired
 };
 
 MovieRatingStar.defaultProps = {

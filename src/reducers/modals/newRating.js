@@ -16,7 +16,7 @@ const initialState = {
       interested: []
     }
   },
-  rating: '',
+  rating: null,
   remarks: '',
   taggedFriends: []
 };

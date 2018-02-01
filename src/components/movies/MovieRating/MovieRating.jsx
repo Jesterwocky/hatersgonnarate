@@ -20,7 +20,7 @@ const MovieRating = ({
   width,
   canEdit = false,
   rating = 0.5,
-  updateRating
+  onUpdateRating
 }) => {
   return (
     <Rating width={width}>
@@ -30,7 +30,7 @@ const MovieRating = ({
             starNumber={starNumber}
             rating={parseFloat(rating)}
             canEdit={canEdit}
-            updateRating={updateRating}
+            onUpdateRating={onUpdateRating}
             key={`star-${starNumber}`}
           />
         ))
@@ -47,7 +47,7 @@ MovieRating.propTypes = {
     PropTypes.string
   ]),
   ratingWidth: PropTypes.number,
-  updateRating: PropTypes.func.isRequired,
+  onUpdateRating: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired
 };
 
