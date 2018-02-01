@@ -6,29 +6,29 @@ import { movieRatingsOutOf, defaultStarsWidth } from '../../../util/constants.js
 
 import MovieRatingStar from './MovieRatingStar.jsx';
 
-const Rating = styled.div`
-  display: flex;
-  flex-shrink: 0;
-  flex-wrap: no-wrap;
-  width: ${props => `${props.width}px` || `${defaultStarsWidth}px`};
-  justify-content: space-between;
+const Rating = styled.div.attrs({
+  className: 'movie-rating-stars'
+})`
+  width: ${props => props.width}px;
+  height: ${props => props.width / movieRatingsOutOf}px;
+  display: grid;
+  grid-template-columns: repeat(${movieRatingsOutOf}, 1fr);
 `;
 
 const MovieRating = ({
   movieId,
+  width,
   canEdit = false,
   rating = 0.5,
-  ratingWidth = defaultStarsWidth,
   updateRating
 }) => {
   return (
-    <Rating width={ratingWidth}>
+    <Rating width={width}>
       {Array.from({ length: movieRatingsOutOf }, (x, index) => index + 1)
         .map(starNumber => (
           <MovieRatingStar
             starNumber={starNumber}
             rating={parseFloat(rating)}
-            starSize={ratingWidth / movieRatingsOutOf}
             canEdit={canEdit}
             updateRating={updateRating}
             key={`star-${starNumber}`}
@@ -47,7 +47,8 @@ MovieRating.propTypes = {
     PropTypes.string
   ]),
   ratingWidth: PropTypes.number,
-  updateRating: PropTypes.func.isRequired
+  updateRating: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired
 };
 
 MovieRating.defaultProps = {

@@ -35,7 +35,6 @@ const SeeItButton = ModalButton.extend`
   padding: 0;
   margin-left: 0;
   margin-right: 20px;
-  box-shadow: none;
 `;
 const InterestedFriends = styled.div.attrs({
   className: 'modal-addmovie-friendsInterested'

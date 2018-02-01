@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import { themes } from '../../../util/constants.js';
+
 // import actions
 import { closeModal } from '../../../actions/modals/modals.js';
 import {
@@ -20,9 +22,9 @@ import {
   ModalHeading2,
   ModalHeading3,
   ModalText,
-  ModalButton
+  ModalButton,
+  ModalTextBox
 } from '../_StyledComponents.jsx';
-import TextBox from '../../TextBox.jsx';
 
 // import components
 import MovieRating from '../../movies/MovieRating/MovieRating.jsx';
@@ -45,8 +47,25 @@ const MovieTitle = ModalHeading2.extend.attrs({
   font-size: 25px;
 `;
 
+const ModalMovieSearch = styled(AddMovieWithSearch).attrs({
+  className: 'modal-addmovie-search',
+  theme: themes.LIGHT
+})``;
+
 const Remarks = styled.div.attrs({
   className: 'modal-addmovie-remarks'
+})``;
+
+const RateIt = styled.div.attrs({
+  className: 'modal-addmovie-rateit'
+})``;
+
+const RateItLabel = ModalHeading3.extend.attrs({
+  className: 'modal-addmovie-rateit-label'
+})``;
+
+const MovieModalRating = styled(MovieRating).attrs({
+  width: 300 // needed by MovieRating to calc star width
 })``;
 
 const ModalControls = styled.div.attrs({
@@ -99,7 +118,7 @@ class AddMovieModal extends Component {
           Rate Movie
         </ModalTitle>
 
-        <AddMovieWithSearch
+        <ModalMovieSearch
           onConfirmSelection={changeMovie}
         />
 
@@ -108,18 +127,23 @@ class AddMovieModal extends Component {
         {movie.id &&
           <ForSelectedMovie>
 
-            <MovieRating
-              movieId={movie.id}
-              rating={rating}
-              updateRating={updateRating}
-              canEdit
-            />
+            <RateIt>
+              <RateItLabel>
+                Rate
+              </RateItLabel>
+              <MovieModalRating
+                movieId={movie.id}
+                rating={rating}
+                updateRating={updateRating}
+                canEdit
+              />
+            </RateIt>
 
             <Remarks>
               <ModalText>
                 What did you think?
               </ModalText>
-              <TextBox
+              <ModalTextBox
                 onUpdateText={updateRemarks}
                 text={remarks}
               />

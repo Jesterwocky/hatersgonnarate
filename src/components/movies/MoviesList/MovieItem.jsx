@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { movieTitleColor, headerColor } from '../../../util/constants.js';
+
 import MovieRatings from './MovieRatings.jsx';
 import MovieCallout from './MovieCallout.jsx';
 import MovieComment from './MovieComment.jsx';
@@ -11,24 +13,26 @@ import {
 } from '../../_StyledComponents.jsx';
 
 const Movie = ListItem.extend`
-  padding: 10px 0;
-  border-top: 1px solid orange;
-
-  &:last-child {
-    border-bottom: 1px solid orange;
-  }
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: ${headerColor};
 `;
 
 const MovieTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
-  color: orange;
+  color: ${movieTitleColor};
   margin: 0 0 5px 0;
 `;
 
 const Blurb = styled.p`
   font-size: 11px;
   margin: 5p 0;
+`;
+
+const Callouts = styled.div`
+  margin-top: 14px;
 `;
 
 const MovieItem = ({
@@ -66,6 +70,7 @@ const MovieItem = ({
       onClick={getMovie}
     >
       <MovieTitle>{name}</MovieTitle>
+
       {haveNotSeenIt &&
         <Blurb>{blurb}</Blurb>
       }
@@ -76,12 +81,16 @@ const MovieItem = ({
         updateRating={updateRating}
       />
 
-      {hasCallouts && activity.callouts.map(callout => (
-        <MovieCallout
-          key={`callout-${callout.id}`}
-          {...callout}
-        />
-      ))}
+      {hasCallouts &&
+        <Callouts>
+          {activity.callouts.map(callout => (
+            <MovieCallout
+              key={`callout-${callout.id}`}
+              {...callout}
+            />
+          ))}
+        </Callouts>
+      }
 
       {hasFriendComments && activity.friendComments.map(friendComment => (
         <MovieComment

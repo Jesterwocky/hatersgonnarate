@@ -2,18 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const shameColor = '#ffadbd';
-const shameBG = '#c12e41';
-
-const agreeColor = '#14d652';
-const agreeBG = '#238427';
+const shameBG = '#b72538';
+const agreeBG = '#398e3d';
 
 function getContainerColor({ type }) {
   return type === 'shame' ? shameBG : agreeBG;
-}
-
-function getTextColor({ type }) {
-  return type === 'shame' ? shameColor : agreeColor;
 }
 
 const CalloutContainer = styled.div`
@@ -22,9 +15,8 @@ const CalloutContainer = styled.div`
   font-size: 11px;
   text-align: center;
   padding: 7px 7px 9px;
-  margin-top: 5px;
+  margin-top: 10px;
   border-radius: 2px;
-  box-shadow: 1px 1px 4px #ababab;
 `;
 
 const Versus = styled.div`
@@ -43,15 +35,9 @@ const ConnectorText = styled.span`
   padding: 0 3px;
 `;
 
-const ShameOrApplaud = styled.div`
-  color: ${getTextColor};
-  font-weight: 600;
-  font-size: 18px;
-  padding: 3px 0;
-`;
-
 const FightingWords = styled.div`
   font-style: italic;
+  margin-top: 5px;
 `;
 
 const typeLabels = {
@@ -70,16 +56,11 @@ const MovieCallout = ({
       <Name>
         {fromFriend.username}
       </Name>
-      <ConnectorText>@</ConnectorText>
+      <ConnectorText>{'>'}</ConnectorText>
       <Name>
         {toFriend.username}
       </Name>
     </Versus>
-
-    <ShameOrApplaud type={type}>
-      {typeLabels[type]}!
-    </ShameOrApplaud>
-
     <FightingWords>
       “{starter}”
     </FightingWords>

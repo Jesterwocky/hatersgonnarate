@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { findMatchingMovies } from '../../../actions/movies.js';
 
 import TextBox from '../../TextBox.jsx';
-import { buttonMinHeight } from '../../../util/constants.js';
+import { buttonMinHeight, buttonColor, themes } from '../../../util/constants.js';
 
 const Search = styled.div.attrs({
   className: 'movie-search'
@@ -22,22 +22,26 @@ const Options = styled.div.attrs({
   top: ${buttonMinHeight};
   width: 100%;
   box-sizing: border-box;
-  background-color: #e4f1fb;
-  font-size: 12px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
   padding: 5px;
+
+  background-color: ${buttonColor};
+  color: white;
+  font-size: 14px;
 `;
 
 const Option = styled.div.attrs({
   className: 'movie-search-options-option'
 })`
   white-space: nowrap;
-  padding: 3px 0;
+  padding: 7px 0;
   overflow: hidden;
 `;
 
 const SearchText = styled(TextBox).attrs({
   className: 'movie-search-searchtext',
-  height: buttonMinHeight
+  height: buttonMinHeight,
 })``;
 
 // TODO: listen for enter and interpret as Search click when component's focused
@@ -94,6 +98,7 @@ class MovieSearch extends Component {
         <SearchText
           text={searchString}
           onUpdateText={this.onUpdateText}
+          theme={this.props.theme}
         />
       </Search>
     );
@@ -103,13 +108,15 @@ class MovieSearch extends Component {
 MovieSearch.propTypes = {
   matches: PropTypes.array,
   onFindMovie: PropTypes.func,
-  findMatchingMovies: PropTypes.func
+  findMatchingMovies: PropTypes.func,
+  theme: PropTypes.string
 };
 
 MovieSearch.defaultProps = {
   matches: [],
   onFindMovie: null,
-  findMatchingMovies: null
+  findMatchingMovies: null,
+  theme: ''
 };
 
 function mapStateToProps(state) {

@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { Button } from '../_StyledComponents.jsx';
+import TextBox from '../TextBox.jsx';
+
+import { themes } from '../../util/constants.js';
 
 export const ModalTitle = styled.h1`
   margin-top: 0;
@@ -17,7 +20,6 @@ export const ModalHeading3 = styled.h3.attrs({
 `;
 
 export const ModalText = styled.p`
-
 `;
 
 export const ModalButton = Button.extend`
@@ -31,3 +33,8 @@ export const Friend = styled.span.attrs({
   padding: 5px 7px;
   margin: 0 5px;
 `;
+
+export const ModalTextBox = styled(TextBox).attrs({
+  className: 'modal-textbox',
+  theme: themes.LIGHT
+})``;

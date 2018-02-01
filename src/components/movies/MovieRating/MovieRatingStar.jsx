@@ -4,30 +4,22 @@ import styled from 'styled-components';
 
 import { starColor } from '../../../util/constants.js';
 
-const defaultStarSize = 10;
-
-// border: 1px solid #ecd6ab;
-
-function getStarWidth(props) {
-  return props.starSize || defaultStarSize;
-}
-
-function getStarHeight(props) {
-  return (props.starSize || defaultStarSize) * (9 / 10);
-}
-
-const StarContainer = styled.div`
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
+const StarContainer = styled.div.attrs({
+  className: 'star'
+})`
+  width: 100%;
+  height: 100%;
   position: relative;
 `;
 
-const ClippedStar = styled.div`
+const ClippedStar = styled.div.attrs({
+  className: 'star-clip'
+})`
   position: absolute;
   top: 0;
   left: 0;
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
+  width: ${props => props.width || 100}%;
+  height: ${props => props.height || 100}%;
   display: flex;
   clip-path: polygon(
     50% 0%,
@@ -39,12 +31,18 @@ const ClippedStar = styled.div`
     21% 91%,
     32% 57%,
     2% 35%,
-    39% 35%);
+    39% 35%
+  );
 `;
 
 const OuterClippedStar = ClippedStar.extend`
-  top: -1px;
-  left: -1px;
+  top: -5%;
+  left: -5%;
+`;
+
+const InnerClippedStar = ClippedStar.extend`
+  width: 90%;
+  height: 90%;
 `;
 
 const StarCore = styled.div`
@@ -70,15 +68,10 @@ const StarHalf = styled.div`
 const MovieRatingStar = ({
   starNumber,
   rating,
-  starSize = defaultStarSize,
   canEdit,
   updateRating
 }) => {
-  const outerStarWidth = starSize;
-  const outerStarHeight = starSize * (9 / 10); // squatter star
-
-  const innerStarWidth = outerStarWidth * (9 / 10);
-  const innerStarHeight = outerStarHeight * (9 / 10);
+  const reductionPercent = 10;
 
   // TODO: better way to prevent click on a friend's rating or
   // sitewide rating from updating your rating (vs relying on 'edit' prop)
@@ -87,17 +80,17 @@ const MovieRatingStar = ({
   }
 
   return (
-    <StarContainer className="star" width={starSize} height={starSize}>
+    <StarContainer>
 
-      <OuterClippedStar className="star-clip" width={outerStarWidth} height={outerStarHeight}>
+      <OuterClippedStar>
         <StarBackgroundToMakeBorder className="star-border" />
       </OuterClippedStar>
 
-      <ClippedStar className="star-clip" width={innerStarWidth} height={innerStarHeight}>
+      <InnerClippedStar>
         <EmptyStarCore className="star-empty" />
-      </ClippedStar>
+      </InnerClippedStar>
 
-      <ClippedStar className="star-clip" width={innerStarWidth} height={innerStarHeight}>
+      <InnerClippedStar>
         <StarHalf
           className="star-left"
           filled={rating >= starNumber - 0.5}
@@ -116,7 +109,7 @@ const MovieRatingStar = ({
             null
           }
         />
-      </ClippedStar>
+    </InnerClippedStar>
     </StarContainer>
   );
 };
@@ -125,12 +118,10 @@ MovieRatingStar.propTypes = {
   starNumber: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   canEdit: PropTypes.bool,
-  starSize: PropTypes.number,
   updateRating: PropTypes.func.isRequired
 };
 
 MovieRatingStar.defaultProps = {
-  starSize: '10px',
   canEdit: false
 };
 

@@ -88,11 +88,12 @@ class AddMovieWithSearch extends Component {
     return (
       <AddMovie>
         <AddButton onClick={this.onGo}>
-          Add Movie
+          + Movie
         </AddButton>
         {this.props.allowSearch && this.state.searchOpen &&
           <SearchContainer>
             <MovieSearch
+              theme={this.props.theme}
               onFindMovie={this.getMovieToAdd}
             />
           </SearchContainer>
@@ -106,13 +107,15 @@ AddMovieWithSearch.propTypes = {
   openAddMovieModal: PropTypes.func.isRequired,
   onConfirmSelection: PropTypes.func,
   allowSearch: PropTypes.bool,
-  searchOpenByDefault: PropTypes.bool
+  searchOpenByDefault: PropTypes.bool,
+  theme: PropTypes.string
 };
 
 AddMovieWithSearch.defaultProps = {
   onConfirmSelection: null,
   allowSearch: true,
-  searchOpenByDefault: true
+  searchOpenByDefault: true,
+  theme: ''
 };
 
 function mapDispatchToProps(dispatch) {

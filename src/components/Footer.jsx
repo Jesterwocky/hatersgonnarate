@@ -13,7 +13,7 @@ const StyledFooter = styled.div`
   align-items: center;
   align-self: flex-end;
   color: white;
-  background-color: #033152;
+  background-color: ${footerColor};
   padding: 0 ${pagePadding};
   box-sizing: border-box; // don't count padding in width
 `;

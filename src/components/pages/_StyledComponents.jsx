@@ -25,8 +25,9 @@ export const Heading = styled.h1`
 `;
 
 export const SubHeading = styled.h2`
-  font-weight: 600;
+  font-weight: 400;
   margin: 0 0 10px 0;
+  color: white;
 `;
 
 // Columns

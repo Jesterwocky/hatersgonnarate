@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { ADD_MOVIE_MODAL } from '../util/constants.js';
+import { ADD_MOVIE_MODAL, pageBackgroundColor, textColor } from '../util/constants.js';
 
 import Footer from './Footer.jsx';
 import NavBar from './NavBar.jsx';
@@ -15,6 +15,8 @@ export const PageBase = styled.div`
   box-sizing: border-box; // ignore page padding in vh calc
   display: flex;
   flex-direction: column;
+  background-color: ${pageBackgroundColor};
+  color: ${textColor};
 `;
 
 const App = ({ openModal }) => {

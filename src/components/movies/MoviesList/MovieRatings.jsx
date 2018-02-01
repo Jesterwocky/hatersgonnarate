@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { defaultStarsWidth } from '../../../util/constants.js';
+import { defaultStarsWidth, textColor } from '../../../util/constants.js';
 import { hasKey } from '../../../util/helpers';
 
 import MovieRating from '../MovieRating/MovieRating.jsx';
@@ -48,8 +48,8 @@ const MovieRatings = ({ ratings = {}, movieId, updateRating }) => (
           <MovieRating
             className="movie-item-ratings-rating-starscontainer"
             movieId={movieId}
+            width={100}
             rating={parseFloat(ratings[ratingType])}
-            ratingWidth={defaultStarsWidth}
             canEdit={ratingType === 'user'}
             updateRating={updateRating}
           />

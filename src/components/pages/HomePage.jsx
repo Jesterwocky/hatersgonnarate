@@ -68,11 +68,6 @@ class HomePage extends Component {
       <Home>
         <HomeContent>
           <MoviesSidebar>
-
-            <HomeSubHeading>
-              Seen it
-            </HomeSubHeading>
-
             <MoviesList
               movies={movieList}
               getMovies={this.props.getMovies}
@@ -84,7 +79,7 @@ class HomePage extends Component {
           <MainContent>
 
             <AddMovieWithSearch>
-              Add Movie
+              + Movie
             </AddMovieWithSearch>
           </MainContent>
 

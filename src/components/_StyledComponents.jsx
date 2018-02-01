@@ -8,13 +8,14 @@ export const Link = styled.a`
 `;
 
 export const Button = styled.button`
+  font-size: 14px;
+  font-weight: 400;
   min-width: 65px;
   border: none;
   border-radius: 2px;
-  padding: 10px 7px;
+  padding: 9px 7px;
   background-color: ${buttonColor};
   color: white;
-  margin: 5px;
   min-height: ${buttonMinHeight};
 
   &:hover {
