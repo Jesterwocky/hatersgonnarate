@@ -14,7 +14,7 @@ const Container = styled.div.attrs({
   display: flex;
   width: 100vw;
   height: 100vh;
-  padding: 30px;
+  padding: ${modalPadding};
   box-sizing: border-box;
 `;
 

@@ -23,7 +23,8 @@ import {
   ModalHeading3,
   ModalText,
   ModalButton,
-  ModalTextBox
+  ModalTextBox,
+  ModalTextArea
 } from '../_StyledComponents.jsx';
 
 // import components
@@ -44,9 +45,11 @@ const ForSelectedMovie = styled.div.attrs({
 const MovieTitle = ModalHeading2.extend.attrs({
   className: 'modal-addmovie-title'
 })`
-  font-size: 25px;
+  font-size: 30px;
+  color: black;
 `;
 
+// TODO: only show add button if user opens model without searching
 const ModalMovieSearch = styled(AddMovieWithSearch).attrs({
   className: 'modal-addmovie-search',
   theme: themes.LIGHT
@@ -56,16 +59,17 @@ const Remarks = styled.div.attrs({
   className: 'modal-addmovie-remarks'
 })``;
 
-const RateIt = styled.div.attrs({
-  className: 'modal-addmovie-rateit'
-})``;
+const ModalMovieRatingContainer = styled.div.attrs({
+  className: 'modal-addmovie-rating-container'
+})`
+  display: flex;
+  justify-content: center;
+`;
 
-const RateItLabel = ModalHeading3.extend.attrs({
-  className: 'modal-addmovie-rateit-label'
-})``;
-
-const MovieModalRating = styled(MovieRating).attrs({
-  width: 300 // needed by MovieRating to calc star width
+const ModalMovieRating = styled(MovieRating).attrs({
+  className: 'modal-addmovie-rating-stars',
+  width: 300, // needed by MovieRating to calc star width
+  theme: themes.LIGHT
 })``;
 
 const ModalControls = styled.div.attrs({
@@ -74,11 +78,6 @@ const ModalControls = styled.div.attrs({
 
 // component
 class AddMovieModal extends Component {
-  onCancel = () => {
-    this.props.clearRating();
-    this.props.close();
-  }
-
   onSave = () => {
     const {
       movie,
@@ -125,25 +124,27 @@ class AddMovieModal extends Component {
         <MovieTitle>{movie.title}</MovieTitle>
 
         {movie.id &&
+          <NotSeenItOptions friendsInterested={friendsInterested} />
+        }
+
+        {movie.id &&
           <ForSelectedMovie>
 
-            <RateIt>
-              <RateItLabel>
-                Rate
-              </RateItLabel>
-              <MovieModalRating
+            <ModalMovieRatingContainer>
+              <ModalMovieRating
                 movieId={movie.id}
                 rating={rating}
                 onUpdateRating={updateRating}
                 canEdit
               />
-            </RateIt>
+            </ModalMovieRatingContainer>
 
             <Remarks>
               <ModalText>
                 What did you think?
               </ModalText>
-              <ModalTextBox
+              <ModalTextArea
+                height={75}
                 onUpdateText={updateRemarks}
                 text={remarks}
               />
@@ -170,10 +171,6 @@ class AddMovieModal extends Component {
             Done
           </ModalButton>
         </ModalControls>
-
-        {movie.id &&
-          <NotSeenItOptions friendsInterested={friendsInterested} />
-        }
 
       </AddMovie>
     );

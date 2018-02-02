@@ -5,7 +5,7 @@ export const ADD_MOVIE_MODAL = 'ADD_MOVIE_MODAL';
 export const footerHeight = '75px';
 export const pagePadding = '30px';
 export const buttonMinHeight = '37px';
-export const modalPadding = '45px';
+export const modalPadding = '30px';
 export const modalContentZIndex = 10;
 export const modalZIndex = 9;
 
@@ -15,8 +15,15 @@ export const buttonColor = '#504dad';
 export const headerColor = '#1d1b67';
 export const footerColor = headerColor;
 export const starColor = '#fdc726';
+export const starBackground = '#af8918';
 export const movieTitleColor = '#ffcc3c';
 export const textColor = '#bcbbff';
+
+export const greenBanner = {
+  'background-color': '#6ff9c7',
+  color: '#00ab6d'
+};
+
 export const themes = {
   LIGHT: 'LIGHT'
 };

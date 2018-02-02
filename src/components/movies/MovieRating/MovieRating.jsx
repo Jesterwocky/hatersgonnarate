@@ -13,6 +13,7 @@ const Rating = styled.div.attrs({
   height: ${props => props.width / movieRatingsOutOf}px;
   display: grid;
   grid-template-columns: repeat(${movieRatingsOutOf}, 1fr);
+  cursor: ${props => (props.canEdit ? 'pointer' : 'default')};
 `;
 
 const MovieRating = ({
@@ -20,10 +21,15 @@ const MovieRating = ({
   width,
   canEdit = false,
   rating = 0.5,
-  onUpdateRating
+  onUpdateRating,
+  theme
 }) => {
   return (
-    <Rating width={width}>
+    <Rating
+      width={width}
+      canEdit={canEdit}
+      theme={theme}
+    >
       {Array.from({ length: movieRatingsOutOf }, (x, index) => index + 1)
         .map(starNumber => (
           <MovieRatingStar
@@ -31,6 +37,7 @@ const MovieRating = ({
             rating={parseFloat(rating)}
             canEdit={canEdit}
             onUpdateRating={onUpdateRating}
+            theme={theme}
             key={`star-${starNumber}`}
           />
         ))
@@ -48,13 +55,15 @@ MovieRating.propTypes = {
   ]),
   ratingWidth: PropTypes.number,
   onUpdateRating: PropTypes.func.isRequired,
-  width: PropTypes.number.isRequired
+  width: PropTypes.number.isRequired,
+  theme: PropTypes.string
 };
 
 MovieRating.defaultProps = {
   canEdit: false,
   rating: 0.5,
   ratingWidth: 100,
+  theme: ''
 };
 
 export default MovieRating;

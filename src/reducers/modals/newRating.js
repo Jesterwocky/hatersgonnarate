@@ -11,6 +11,7 @@ const initialState = {
   movie: {
     id: '',
     title: '',
+    blurb: '',
     friends: {
       sawIt: [],
       interested: []

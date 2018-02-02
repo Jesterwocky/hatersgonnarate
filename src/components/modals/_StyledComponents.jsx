@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Button } from '../_StyledComponents.jsx';
 import TextBox from '../TextBox.jsx';
+import TextArea from '../TextArea.jsx';
 
 import { themes } from '../../util/constants.js';
 
@@ -20,6 +21,7 @@ export const ModalHeading3 = styled.h3.attrs({
 `;
 
 export const ModalText = styled.p`
+  margin: 5px;
 `;
 
 export const ModalButton = Button.extend`
@@ -36,5 +38,10 @@ export const Friend = styled.span.attrs({
 
 export const ModalTextBox = styled(TextBox).attrs({
   className: 'modal-textbox',
+  theme: themes.LIGHT
+})``;
+
+export const ModalTextArea = styled(TextArea).attrs({
+  className: 'modal-textarea',
   theme: themes.LIGHT
 })``;

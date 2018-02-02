@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack",
-    "start:dev": "webpack-dev-server"
+    "start": "webpack-dev-server --hot --inline"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "eslint-webpack": "^3.12.2",
+    "react-hot-loader": "^3.1.3",
+    "style-loader": "^0.20.1",
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {

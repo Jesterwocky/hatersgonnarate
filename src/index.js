@@ -5,13 +5,17 @@ import { render } from 'react-dom';
 import store from './store.js';
 import { Provider } from 'react-redux';
 
-import App from './components/App.jsx';
+import AppConnected from './AppConnected.jsx';
 
 document.addEventListener('DOMContentLoaded', () => {
   render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
+    <AppConnected />,
     document.getElementById('root')
   );
+
+  if (module.hot) {
+    module.hot.accept('./AppConnected.jsx', () => {
+      render(require('./AppConnected.jsx').default);
+    });
+  }
 });

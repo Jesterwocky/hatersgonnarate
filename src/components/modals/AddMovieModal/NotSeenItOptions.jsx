@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { modalPadding } from '../../../util/constants.js';
+import {
+  modalPadding,
+  buttonColor,
+  greenBanner
+} from '../../../util/constants.js';
 import {
   ModalHeading3,
   ModalButton,
@@ -12,14 +16,15 @@ import {
 const NotSeenIt = styled.div.attrs({
   className: 'modal-addmovie-notseenit'
 })`
-  background-color: #cfe022;
-  padding: 15px ${modalPadding};
+  background-color: ${greenBanner['background-color']};
+  color: ${greenBanner.color};
+  padding: 15px 50px;
   margin: 15px -${modalPadding};
+  position: relative; // to position close icon
 `;
 const NotSeenItHeading = ModalHeading3.extend.attrs({
   className: 'modal-addmovie-notseenit-heading'
 })`
-  color: #748000;
   font-style: italic;
   margin: 0 0 15px;
 `;
@@ -51,31 +56,45 @@ const InterestedFriend = Friend.extend.attrs({
   margin: 0 5px;
 `;
 
+const CloseButton = styled.button`
+  border: none;
+  color: ${greenBanner.color};
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: 600;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+`;
+
 const NotSeenItOptions = ({ friendsInterested }) => (
   <NotSeenIt>
+    <CloseButton onClick={() => console.log("clooooose")}>
+      x
+    </CloseButton>
     <NotSeenItHeading>
       Havent seen it?
+      {' '}
+      {friendsInterested && friendsInterested.length > 0 &&
+        'These friends wanna watch it:'
+      }
     </NotSeenItHeading>
 
-    <NotSeenItContent>
+    {friendsInterested && friendsInterested.length > 0 &&
+      <InterestedFriends>
+        {friendsInterested.map(friend => (
+          <InterestedFriend key={`friend-${friend.id}`}>
+            {friend.username}
+          </InterestedFriend>
+        ))}
+      </InterestedFriends>
+    }
 
-      {friendsInterested && friendsInterested.length > 0 &&
-        <InterestedFriends>
-          These friends wanna watch it:
-          {friendsInterested.map(friend => (
-            <InterestedFriend key={`friend-${friend.id}`}>
-              {friend.username}
-            </InterestedFriend>
-          ))}
-        </InterestedFriends>
-      }
-
-      <SeeItButtons>
-        <SeeItButton>Ask who’s interested</SeeItButton>
-        <SeeItButton>Schedule movie night</SeeItButton>
-        <SeeItButton>Watch online</SeeItButton>
-      </SeeItButtons>
-    </NotSeenItContent>
+    <SeeItButtons>
+      <SeeItButton>Ask who’s interested</SeeItButton>
+      <SeeItButton>Schedule movie night</SeeItButton>
+      <SeeItButton>Watch online</SeeItButton>
+    </SeeItButtons>
   </NotSeenIt>
 );
 

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { starColor } from '../../../util/constants.js';
+import { starColor, starBackground, themes } from '../../../util/constants.js';
+
+const innerStarPercentReduction = 20;
 
 const StarContainer = styled.div.attrs({
   className: 'star'
@@ -12,9 +14,7 @@ const StarContainer = styled.div.attrs({
   position: relative;
 `;
 
-const ClippedStar = styled.div.attrs({
-  className: 'star-clip'
-})`
+const ClippedStar = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -35,14 +35,31 @@ const ClippedStar = styled.div.attrs({
   );
 `;
 
-const OuterClippedStar = ClippedStar.extend`
-  top: -5%;
-  left: -5%;
+const OuterClippedStar = ClippedStar.extend.attrs({
+  className: 'star-outer-clip'
+})`
+  display: ${props => (props.theme === themes.LIGHT ? 'initial' : 'none')};
 `;
 
-const InnerClippedStar = ClippedStar.extend`
-  width: 90%;
-  height: 90%;
+function getInnerStarSize(props) {
+  return props.theme === themes.LIGHT ?
+    100 - innerStarPercentReduction : 100;
+}
+
+const InnerClippedStar = ClippedStar.extend.attrs({
+  className: 'star-inner-clip'
+})`
+  width: ${getInnerStarSize}%;
+  height: ${getInnerStarSize}%;
+
+  // for every 10 percentage points the inner star size is reduced
+  // to produce a border, offset 5% to keep inner star centered
+  ${props => (props.theme === themes.LIGHT ?
+    `
+      top: ${5 * (innerStarPercentReduction / 10)}%;
+      left: ${5 * (innerStarPercentReduction / 10)}%;
+    `
+    : '')}
 `;
 
 const StarCore = styled.div`
@@ -50,11 +67,15 @@ const StarCore = styled.div`
   height: 100%;
 `;
 
-const StarBackgroundToMakeBorder = StarCore.extend`
+const StarBackgroundToMakeBorder = StarCore.extend.attrs({
+  className: 'star-border'
+})`
   background-color: #af8918;
 `;
 
-const EmptyStarCore = StarCore.extend`
+const EmptyStar = StarCore.extend.attrs({
+  className: 'star-empty'
+})`
   background-color: white;
 `;
 
@@ -66,13 +87,12 @@ const StarHalf = styled.div`
 `;
 
 const MovieRatingStar = ({
+  theme,
   starNumber,
   rating,
   canEdit,
   onUpdateRating
 }) => {
-  const reductionPercent = 10;
-
   // TODO: better way to prevent click on a friend's rating or
   // sitewide rating from updating your rating (vs relying on 'edit' prop)
   function getOnUpdateRating(newRating) {
@@ -82,15 +102,15 @@ const MovieRatingStar = ({
   return (
     <StarContainer>
 
-      <OuterClippedStar>
-        <StarBackgroundToMakeBorder className="star-border" />
+      <OuterClippedStar theme={theme}>
+        <StarBackgroundToMakeBorder />
       </OuterClippedStar>
 
-      <InnerClippedStar>
-        <EmptyStarCore className="star-empty" />
+      <InnerClippedStar theme={theme}>
+        <EmptyStar />
       </InnerClippedStar>
 
-      <InnerClippedStar>
+      <InnerClippedStar theme={theme}>
         <StarHalf
           className="star-left"
           filled={rating >= starNumber - 0.5}
@@ -118,11 +138,13 @@ MovieRatingStar.propTypes = {
   starNumber: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   canEdit: PropTypes.bool,
-  onUpdateRating: PropTypes.func.isRequired
+  onUpdateRating: PropTypes.func.isRequired,
+  theme: PropTypes.string
 };
 
 MovieRatingStar.defaultProps = {
-  canEdit: false
+  canEdit: false,
+  theme: ''
 };
 
 export default MovieRatingStar;
