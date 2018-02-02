@@ -67,7 +67,6 @@ class HomePage extends Component {
     return (
       <Home>
         <HomeContent>
-          FARTS
           <MoviesSidebar>
             <MoviesList
               movies={movieList}

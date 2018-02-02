@@ -21,7 +21,7 @@ export const ModalHeading3 = styled.h3.attrs({
 `;
 
 export const ModalText = styled.p`
-  margin: 5px;
+  margin: 0 5px;
 `;
 
 export const ModalButton = Button.extend`

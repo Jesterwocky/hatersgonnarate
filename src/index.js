@@ -1,4 +1,5 @@
 /* global document */
+/* global require */
 
 import React from 'react';
 import { render } from 'react-dom';
@@ -15,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (module.hot) {
     module.hot.accept('./AppConnected.jsx', () => {
-      render(require('./AppConnected.jsx').default);
+      render(
+        require('./AppConnected.jsx').default,
+        document.getElementById('root')
+      );
     });
   }
 });

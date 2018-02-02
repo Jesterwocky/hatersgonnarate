@@ -20,8 +20,8 @@ export const movieTitleColor = '#ffcc3c';
 export const textColor = '#bcbbff';
 
 export const greenBanner = {
-  'background-color': '#6ff9c7',
-  color: '#00ab6d'
+  'background-color': '#24e29d',
+  color: '#0d9866'
 };
 
 export const themes = {

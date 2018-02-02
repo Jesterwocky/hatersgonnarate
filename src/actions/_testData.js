@@ -290,6 +290,7 @@ export const modalMovieData = {
   '00004': {
     id: '00004',
     title: 'A Futile and Stupid Gesture',
+    blurb: 'A movie about good times, bad times, and that one time at band camp.',
     friends: {
       sawIt: [
         friends['1234567890'],
@@ -305,6 +306,7 @@ export const modalMovieData = {
   '00005': {
     id: '00005',
     title: 'StarWars: The Last Jedi',
+    blurb: 'A movie about good times, bad times, and that one time at band camp.',
     friends: {
       sawIt: [
         friends['1234567890'],
@@ -320,6 +322,7 @@ export const modalMovieData = {
   '00006': {
     id: '00006',
     title: 'StarWars: Rogue One',
+    blurb: 'A movie about good times, bad times, and that one time at band camp.',
     friends: {
       sawIt: [
         friends['1234567890'],

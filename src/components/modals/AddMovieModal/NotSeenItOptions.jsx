@@ -40,6 +40,7 @@ const SeeItButton = ModalButton.extend`
   padding: 0;
   margin-left: 0;
   margin-right: 20px;
+  height: 30px;
 `;
 const InterestedFriends = styled.div.attrs({
   className: 'modal-addmovie-friendsInterested'
@@ -67,16 +68,16 @@ const CloseButton = styled.button`
   left: 7px;
 `;
 
-const NotSeenItOptions = ({ friendsInterested }) => (
+const NotSeenItOptions = ({ friendsInterested, onClose }) => (
   <NotSeenIt>
-    <CloseButton onClick={() => console.log("clooooose")}>
+    <CloseButton onClick={onClose}>
       x
     </CloseButton>
     <NotSeenItHeading>
       Havent seen it?
       {' '}
       {friendsInterested && friendsInterested.length > 0 &&
-        'These friends wanna watch it:'
+        'These friends wanna watch it, too:'
       }
     </NotSeenItHeading>
 
@@ -99,7 +100,8 @@ const NotSeenItOptions = ({ friendsInterested }) => (
 );
 
 NotSeenItOptions.propTypes = {
-  friendsInterested: PropTypes.array
+  friendsInterested: PropTypes.array,
+  onClose: PropTypes.func.isRequired
 };
 
 NotSeenItOptions.defaultProps = {

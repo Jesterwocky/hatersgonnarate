@@ -55,21 +55,26 @@ const ModalMovieSearch = styled(AddMovieWithSearch).attrs({
   theme: themes.LIGHT
 })``;
 
-const Remarks = styled.div.attrs({
-  className: 'modal-addmovie-remarks'
-})``;
-
-const ModalMovieRatingContainer = styled.div.attrs({
+const RatingContainer = styled.div.attrs({
   className: 'modal-addmovie-rating-container'
 })`
   display: flex;
   justify-content: center;
 `;
 
-const ModalMovieRating = styled(MovieRating).attrs({
+const Rating = styled(MovieRating).attrs({
   className: 'modal-addmovie-rating-stars',
   width: 300, // needed by MovieRating to calc star width
   theme: themes.LIGHT
+})``;
+
+const RemarksContainer = styled.div.attrs({
+  className: 'modal-addmovie-remarks'
+})``;
+
+const Remarks = ModalTextArea.extend.attrs({
+  className: 'modal-addmovie-rating-stars',
+  height: 75
 })``;
 
 const ModalControls = styled.div.attrs({
@@ -78,6 +83,18 @@ const ModalControls = styled.div.attrs({
 
 // component
 class AddMovieModal extends Component {
+  state = {
+    showNotSeenItOptions: false
+  }
+
+  componentDidMount() {
+    this.bannerTimer = setTimeout(() => {
+      this.setState({
+        showNotSeenItOptions: true
+      });
+    }, 3000);
+  }
+
   onSave = () => {
     const {
       movie,
@@ -92,13 +109,31 @@ class AddMovieModal extends Component {
     close();
   }
 
+  updateRatingAndStopBanner = (rating) => {
+    if (this.bannerTimer) {
+      clearTimeout(this.bannerTimer);
+    }
+    this.props.updateRating(rating);
+  }
+
+  closeNotSeenIt = () => {
+    this.setState({
+      showNotSeenItOptions: false
+    });
+  }
+
+  openNotSeenIt = () => {
+    this.setState({
+      showNotSeenItOptions: true
+    });
+  }
+
   render() {
     const {
       movie,
       rating,
       remarks,
       taggedFriends,
-      updateRating,
       updateRemarks,
       changeMovie,
       tagFriend,
@@ -123,32 +158,38 @@ class AddMovieModal extends Component {
 
         <MovieTitle>{movie.title}</MovieTitle>
 
-        {movie.id &&
-          <NotSeenItOptions friendsInterested={friendsInterested} />
+        <ModalText>
+          {movie.blurb}
+        </ModalText>
+
+        {movie.id && this.state.showNotSeenItOptions &&
+          <NotSeenItOptions
+            friendsInterested={friendsInterested}
+            onClose={this.closeNotSeenIt}
+          />
         }
 
         {movie.id &&
           <ForSelectedMovie>
 
-            <ModalMovieRatingContainer>
-              <ModalMovieRating
+            <RatingContainer>
+              <Rating
                 movieId={movie.id}
                 rating={rating}
-                onUpdateRating={updateRating}
+                onUpdateRating={this.updateRatingAndStopBanner}
                 canEdit
               />
-            </ModalMovieRatingContainer>
+            </RatingContainer>
 
-            <Remarks>
+            <RemarksContainer>
               <ModalText>
                 What did you think?
               </ModalText>
-              <ModalTextArea
-                height={75}
+              <Remarks
                 onUpdateText={updateRemarks}
                 text={remarks}
               />
-            </Remarks>
+            </RemarksContainer>
 
             <SelectFriends
               friends={
