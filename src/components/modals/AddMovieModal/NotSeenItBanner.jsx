@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import {
-  modalPadding,
-  buttonColor,
+  modalBannerZIndex,
   greenBanner
 } from '../../../util/constants.js';
 import {
@@ -13,40 +12,24 @@ import {
   Friend
 } from '../_StyledComponents.jsx';
 
-const NotSeenIt = styled.div.attrs({
-  className: 'modal-addmovie-notseenit'
-})`
-  background-color: ${greenBanner['background-color']};
-  color: ${greenBanner.color};
-  padding: 15px 50px;
-  margin: 15px -${modalPadding};
-  position: relative; // to position close icon
-`;
-const NotSeenItHeading = ModalHeading3.extend.attrs({
+import ModalBanner from '../ModalBanner.jsx';
+
+const BannerHeading = ModalHeading3.extend.attrs({
   className: 'modal-addmovie-notseenit-heading'
 })`
   font-style: italic;
-  margin: 0 0 15px;
+  margin: 0 0 5px;
+  display: inline;
 `;
-const NotSeenItContent = styled.div`
-  margin-left: 30px;
-`;
-const SeeItButtons = styled.div`
-  color: white;
-`;
-const SeeItButton = ModalButton.extend`
-  background-color: transparent;
-  color: white;
-  padding: 0;
-  margin-left: 0;
-  margin-right: 20px;
-  height: 30px;
-`;
+
 const InterestedFriends = styled.div.attrs({
   className: 'modal-addmovie-friendsInterested'
 })`
   font-size: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  display: inline;
+  position: relative;
+  top: -3px;
 `;
 
 const InterestedFriend = Friend.extend.attrs({
@@ -55,6 +38,21 @@ const InterestedFriend = Friend.extend.attrs({
   background-color: white;
   padding: 5px 7px;
   margin: 0 5px;
+  display: inline-block;
+`;
+
+const SeeItButtons = styled.div`
+  color: white;
+  text-align: center;
+`;
+const SeeItButton = ModalButton.extend`
+  background-color: transparent;
+  color: white;
+  padding: 0;
+  margin-left: 0;
+  margin-right: 20px;
+  height: 30px;
+  min-height: unset;
 `;
 
 const CloseButton = styled.button`
@@ -68,20 +66,13 @@ const CloseButton = styled.button`
   left: 7px;
 `;
 
-const NotSeenItOptions = ({ friendsInterested, onClose }) => (
-  <NotSeenIt>
-    <CloseButton onClick={onClose}>
-      x
-    </CloseButton>
-    <NotSeenItHeading>
-      Havent seen it?
+const NotSeenItBanner = ({ friendsInterested, onClose }) => (
+  <ModalBanner onClose={onClose}>
+    <BannerHeading>
+      Not seen it? {friendsInterested.length > 0 && 'These friends wanna watch it:'}
       {' '}
-      {friendsInterested && friendsInterested.length > 0 &&
-        'These friends wanna watch it, too:'
-      }
-    </NotSeenItHeading>
-
-    {friendsInterested && friendsInterested.length > 0 &&
+    </BannerHeading>
+    {friendsInterested.length > 0 &&
       <InterestedFriends>
         {friendsInterested.map(friend => (
           <InterestedFriend key={`friend-${friend.id}`}>
@@ -96,16 +87,16 @@ const NotSeenItOptions = ({ friendsInterested, onClose }) => (
       <SeeItButton>Schedule movie night</SeeItButton>
       <SeeItButton>Watch online</SeeItButton>
     </SeeItButtons>
-  </NotSeenIt>
+  </ModalBanner>
 );
 
-NotSeenItOptions.propTypes = {
+NotSeenItBanner.propTypes = {
   friendsInterested: PropTypes.array,
   onClose: PropTypes.func.isRequired
 };
 
-NotSeenItOptions.defaultProps = {
+NotSeenItBanner.defaultProps = {
   friendsInterested: []
 };
 
-export default NotSeenItOptions;
+export default NotSeenItBanner;

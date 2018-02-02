@@ -6,6 +6,9 @@ export const footerHeight = '75px';
 export const pagePadding = '30px';
 export const buttonMinHeight = '37px';
 export const modalPadding = '30px';
+
+// z-indexes
+export const modalBannerZIndex = 11;
 export const modalContentZIndex = 10;
 export const modalZIndex = 9;
 

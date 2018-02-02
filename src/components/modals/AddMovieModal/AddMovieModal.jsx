@@ -30,7 +30,7 @@ import {
 // import components
 import MovieRating from '../../movies/MovieRating/MovieRating.jsx';
 import AddMovieWithSearch from '../../movies/addMovie/AddMovieWithSearch.jsx';
-import NotSeenItOptions from './NotSeenItOptions.jsx';
+import NotSeenItBanner from './NotSeenItBanner.jsx';
 import SelectFriends from '../../SelectFriends.jsx';
 
 // styled components
@@ -47,6 +47,13 @@ const MovieTitle = ModalHeading2.extend.attrs({
 })`
   font-size: 30px;
   color: black;
+  margin-bottom: 5px;
+`;
+
+const MovieBlurb = ModalText.extend.attrs({
+  className: 'modal-addmovie-blurb'
+})`
+  margin-bottom: 15px;
 `;
 
 // TODO: only show add button if user opens model without searching
@@ -84,13 +91,13 @@ const ModalControls = styled.div.attrs({
 // component
 class AddMovieModal extends Component {
   state = {
-    showNotSeenItOptions: false
+    showNotSeenItBanner: false
   }
 
   componentDidMount() {
     this.bannerTimer = setTimeout(() => {
       this.setState({
-        showNotSeenItOptions: true
+        showNotSeenItBanner: true
       });
     }, 3000);
   }
@@ -113,18 +120,25 @@ class AddMovieModal extends Component {
     if (this.bannerTimer) {
       clearTimeout(this.bannerTimer);
     }
+
     this.props.updateRating(rating);
+
+    if (this.state.showNotSeenItBanner) {
+      this.setState({
+        showNotSeenItBanner: false
+      });
+    }
   }
 
   closeNotSeenIt = () => {
     this.setState({
-      showNotSeenItOptions: false
+      showNotSeenItBanner: false
     });
   }
 
   openNotSeenIt = () => {
     this.setState({
-      showNotSeenItOptions: true
+      showNotSeenItBanner: true
     });
   }
 
@@ -148,6 +162,13 @@ class AddMovieModal extends Component {
     // to people who are interested in seeing the movie
     return (
       <AddMovie>
+        {movie.id && this.state.showNotSeenItBanner &&
+          <NotSeenItBanner
+            friendsInterested={friendsInterested}
+            onClose={this.closeNotSeenIt}
+          />
+        }
+
         <ModalTitle>
           Rate Movie
         </ModalTitle>
@@ -158,16 +179,9 @@ class AddMovieModal extends Component {
 
         <MovieTitle>{movie.title}</MovieTitle>
 
-        <ModalText>
+        <MovieBlurb>
           {movie.blurb}
-        </ModalText>
-
-        {movie.id && this.state.showNotSeenItOptions &&
-          <NotSeenItOptions
-            friendsInterested={friendsInterested}
-            onClose={this.closeNotSeenIt}
-          />
-        }
+        </MovieBlurb>
 
         {movie.id &&
           <ForSelectedMovie>

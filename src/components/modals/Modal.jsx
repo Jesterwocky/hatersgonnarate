@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { modalPadding, modalZIndex, modalContentZIndex } from '../../util/constants.js';
+import {
+  modalPadding,
+  modalZIndex,
+  modalContentZIndex,
+} from '../../util/constants.js';
 
 import { closeModal } from '../../actions/modals/modals.js';
 
@@ -42,6 +46,7 @@ const ModalContent = styled.div.attrs({
   padding: ${modalPadding};
   border-radius: 15px;
   z-index: ${modalContentZIndex};
+  position: relative; // to position banner
 `;
 
 const Modal = ({ children, close }) => (
