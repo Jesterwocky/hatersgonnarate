@@ -40,6 +40,10 @@ const CloseButton = styled.button.attrs({
 
   font-size: 18px;
   font-weight: 600;
+
+  &:hover: {
+    cursor: pointer;
+  }
 `;
 
 const Content = styled.div.attrs({

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {
   buttonMinHeight,
   headerColor,
-  fieldOnWhiteColor,
   textColor,
   themes,
   lightTheme
@@ -36,7 +35,12 @@ const Field = styled.input.attrs({
   )};
 `;
 
-const TextBox = ({ text, placeholder, onUpdateText, theme }) => {
+const TextBox = ({
+  text,
+  placeholder,
+  onUpdateText,
+  theme
+}) => {
   function onChange(e) {
     if (typeof onUpdateText === 'function') {
       onUpdateText(e.currentTarget.value);

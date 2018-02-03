@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { buttonMinHeight, buttonColor, themes } from '../util/constants.js';
+import { buttonMinHeight, buttonColor, themes } from '../../util/constants.js';
 
 const Suggestions = styled.div.attrs({
   className: 'search-suggestions'
@@ -43,7 +43,7 @@ const SearchSuggestions = ({ suggestions, onSelectSuggestion }) => {
           key={`suggestion-${suggestion.id}`}
           onClick={onSelect(suggestion)}
         >
-          {suggestion.text}
+          {suggestion.title || suggestion.username}
         </Suggestion>
       ))}
     </Suggestions>

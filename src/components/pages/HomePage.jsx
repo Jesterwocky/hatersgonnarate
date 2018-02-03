@@ -77,9 +77,8 @@ class HomePage extends Component {
           </MoviesSidebar>
 
           <MainContent>
-
             <MovieSearch>
-              + Movie
+              + movie
             </MovieSearch>
           </MainContent>
 

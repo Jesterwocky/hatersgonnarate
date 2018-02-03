@@ -21,6 +21,7 @@ const Area = styled.textarea.attrs({
   border-radius: 2px;
   box-sizing: border-box;
   width: 100%;
+  min-width: 100%; // prevent weird resizing (e.g., in chrome)
   min-height: 70px;
   height: ${props => (props.height ? `${props.height}px` : 'auto')};
   background-color: ${props => (

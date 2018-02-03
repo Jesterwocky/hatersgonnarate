@@ -210,7 +210,10 @@ class AddMovieModal extends Component {
 
         <ModalMovieSearch
           onConfirmSelection={changeMovie}
-        />
+          showButton={!movie.id}
+        >
+          change movie
+        </ModalMovieSearch>
 
         <MovieTitle>{movie.title}</MovieTitle>
 
