@@ -1,6 +1,7 @@
 import {
   GET_MOVIES,
   GET_MOVIE,
+  ADD_MOVIE_RATING,
   UPDATE_MOVIE_RATING,
   GET_MOVIES_MATCHING_SEARCH
 } from '../actions/movies.js';
@@ -11,7 +12,7 @@ const initialState = {
   newRating: {
     movie: {
       id: '',
-      name: '',
+      title: '',
       friends: {
         sawIt: [],
         interested: []
@@ -55,6 +56,14 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         currentMovie: action.payload.movie
+      };
+    case ADD_MOVIE_RATING:
+      return {
+        ...state,
+        movies: {
+          ...state.movies,
+          [action.payload.movie.id]: action.payload.movie
+        }
       };
     case UPDATE_MOVIE_RATING:
       return {

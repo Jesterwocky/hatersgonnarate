@@ -2,57 +2,60 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { Friend } from './_StyledComponents.jsx';
+import { buttonColor, textColor, greenBanner } from '../util/constants.js';
+import { hasItem } from '../util/helpers.js';
 
-const Friends = styled.div`
+import { Button } from './_StyledComponents.jsx';
+import FriendSearch from './friends/FriendSearch.jsx';
+
+const Friends = styled.div.attrs({
+  className: 'selectable-friends'
+})`
+  display: flex;
 `;
 
-const SelectAFriend = Friend.extend`
-  color: black;
+const SelectableFriend = Button.extend.attrs({
+  className: 'selectable-friends-friend'
+})`
+  background-color: ${props => (props.isSelected ?
+    greenBanner['background-color'] : 'white')};
+  color: ${props => (props.isSelected ? 'white' : buttonColor)};
+  border: 1px solid ${props => (props.isSelected ? greenBanner.color : textColor)};
+  border-radius: 3px;
+  margin-right: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SelectFriends = ({
   friends,
-  taggedFriends,
-  onSelectFriend,
-  onUnselectFriend
+  onToggle
 }) => {
-  function isFriendTagged(friend) {
-    return taggedFriends.filter(tagged => tagged.id === friend.id).length > 0;
-  }
-
-  function getToggleSelectFriend(friend) {
-    if (isFriendTagged(friend)) {
-      return () => onUnselectFriend(friend);
-    }
-
-    return () => onSelectFriend(friend);
+  function getOnToggleFriend(friendKey) {
+    return () => onToggle(friendKey);
   }
 
   return (
     <Friends>
       {friends.map(friend => (
-        <SelectAFriend
-          key={`select-friend-${friend.id}`}
-          onClick={getToggleSelectFriend(friend)}
+        <SelectableFriend
+          isSelected={friend.isSelected}
+          key={`friend-${friend.friendKey}`}
+          onClick={getOnToggleFriend(friend.friendKey)}
         >
-          {friend.name}
-        </SelectAFriend>
+          {friend.username}
+        </SelectableFriend>
       ))}
+      <FriendSearch />
     </Friends>
   );
 };
 
 SelectFriends.propTypes = {
-  friends: PropTypes.array,
-  taggedFriends: PropTypes.array,
-  onSelectFriend: PropTypes.func.isRequired,
-  onUnselectFriend: PropTypes.func.isRequired
-};
-
-SelectFriends.defaultProps = {
-  friends: [],
-  taggedFriends: []
+  friends: PropTypes.array.isRequired,
+  onToggle: PropTypes.func.isRequired
 };
 
 export default SelectFriends;

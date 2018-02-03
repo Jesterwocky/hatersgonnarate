@@ -30,6 +30,71 @@ export const friends = {
   }
 };
 
+const movieData = {
+  ratings: {
+    user: '5',
+    friends: '3.5',
+    sitewide: '4.5'
+  },
+  tagline: 'It is a movie',
+  blurb: 'Things happen. Sometimes, they happen too much.',
+  activity: {
+    callouts: [],
+    friendComments: [
+      {
+        id: '1234567890',
+        username: friends['1234567890'].username,
+        snippet: 'Omg overrated'
+      },
+      {
+        id: '1234567891',
+        username: friends[1234567891].username,
+        snippet: 'movie was fantastic!'
+      },
+      {
+        id: '1234567892',
+        username: friends['1234567892'].username,
+        snippet: 'I have soo much to say'
+      }
+    ],
+    strangerComments: [
+      {
+        id: '9999999999',
+        username: 'youDunnoMe',
+        snippet: 'La la la la'
+      }
+    ]
+  },
+  friends: {
+    saw: {
+      total: '10',
+      friendDetails: [
+        {
+          ...friends['1234567890'],
+          rating: '3',
+          thoughts: 'I dont like music'
+        },
+        {
+          ...friends['1234567891'],
+          rating: '5',
+          thoughts: 'LOVE so much'
+        },
+        {
+          ...friends['1234567892'],
+          rating: '5',
+          thoughts: 'This movie is king'
+        }
+      ],
+      wantToSee: {
+        total: '1',
+        friendDetails: [
+          friends['1234567894']
+        ]
+      }
+    }
+  }
+};
+
 export const friendsFull = {
   1234567894: {
     id: '1234567894',
@@ -40,7 +105,7 @@ export const friendsFull = {
 
 export const movies = {
   '00001': {
-    name: 'Scott Pilgrim vs The World',
+    title: 'Scott Pilgrim vs The World',
     id: '00001',
     ratings: {
       user: '5',
@@ -123,7 +188,7 @@ export const movies = {
     }
   },
   '00002': {
-    name: 'Call Me By Your Name',
+    title: 'Call Me By Your Name',
     id: '00002',
     ratings: {
       user: '5',
@@ -220,7 +285,7 @@ export const movies = {
     }
   },
   '00003': {
-    name: 'Whiplash',
+    title: 'Whiplash',
     id: '00003',
     ratings: {
       user: '5',
@@ -271,6 +336,24 @@ export const movies = {
   }
 };
 
+export const extraMovies = {
+  '00004': {
+    id: '00004',
+    title: 'A Futile and Stupid Gesture',
+    ...movieData
+  },
+  '00005': {
+    id: '00005',
+    title: 'StarWars: The Last Jedi',
+    ...movieData
+  },
+  '00006': {
+    id: '00006',
+    title: 'StarWars: Rogue One',
+    ...movieData
+  }
+};
+
 export const matchingMoviesList = [
   {
     id: '00004',
@@ -285,6 +368,8 @@ export const matchingMoviesList = [
     title: 'StarWars: Rogue One'
   }
 ];
+
+export const matchingFriendsList = friends;
 
 export const modalMovieData = {
   '00004': {
@@ -334,12 +419,12 @@ export const modalMovieData = {
         friends['1234567894']
       ]
     }
-  },
+  }
 };
 
 export const reRateMovieData = {
   movieId: '0001',
-  movieName: 'Scott Pilgrim vs The World',
+  title: 'Scott Pilgrim vs The World',
   currentRating: '5',
   previousRatings: [
     {

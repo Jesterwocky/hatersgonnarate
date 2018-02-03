@@ -30,11 +30,13 @@ export const greenBanner = {
 export const themes = {
   LIGHT: 'LIGHT'
 };
+
 export const lightTheme = { // modals and stuff
   field: {
     color: buttonColor,
     'background-color': '#e7e7fb'
-  }
+  },
+  color: '#8685dc'
 };
 
 // misc

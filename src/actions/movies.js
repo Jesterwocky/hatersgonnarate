@@ -1,5 +1,6 @@
 import {
   movies as testMovies,
+  extraMovies,
   matchingMoviesList
 } from './_testData.js';
 
@@ -12,6 +13,7 @@ export const GET_MOVIES_MATCHING_SEARCH = 'GET_MOVIES_MATCHING_SEARCH';
 // vs saving new rating (which UPDATE_MOVIE_RATING does). Or put all the
 // newRating stuff in component state. Probably makes more sense
 export const UPDATE_MOVIE_RATING = 'UPDATE_MOVIE_RATING';
+export const ADD_MOVIE_RATING = 'ADD_MOVIE_RATING';
 
 // action creators
 function getMoviesAction(movies) {
@@ -32,7 +34,7 @@ function getMovieAction(movie) {
   };
 }
 
-function getMatchingMovies(searchMatches) {
+function getMatchingMoviesAction(searchMatches) {
   return {
     type: GET_MOVIES_MATCHING_SEARCH,
     payload: {
@@ -52,6 +54,15 @@ function updateMovieRatingAction(movieId, rating, remarks) {
   };
 }
 
+function addMovieRatingAction(movie) {
+  return {
+    type: ADD_MOVIE_RATING,
+    payload: {
+      movie
+    }
+  };
+}
+
 // action dispatchers
 export function getMovies(dispatch) {
   dispatch(getMoviesAction(testMovies));
@@ -62,11 +73,24 @@ export function getMovie(dispatch, id) {
 }
 
 export function findMatchingMovies(dispatch, movieString) {
-  dispatch(getMatchingMovies(matchingMoviesList));
+  dispatch(getMatchingMoviesAction(matchingMoviesList));
 }
 
-// TODO: save updated movie rating and ALSO get recently rated movies
-// and return them
+// TODO: make this an object (number of params keeps growing)
 export function updateMovieRating(dispatch, id, rating, remarks) {
   dispatch(updateMovieRatingAction(id, rating, remarks));
+}
+
+export function addMovieRating(dispatch, id, rating, remarks, taggedFriends) {
+  // TODO: save movie rating and ALSO get/return recently rated movies
+  // (including this one)
+  dispatch(addMovieRatingAction({
+    ...extraMovies[id],
+    ratings: {
+      ...extraMovies[id].ratings,
+      user: rating.toString()
+    },
+    remarks,
+    taggedFriends
+  }));
 }

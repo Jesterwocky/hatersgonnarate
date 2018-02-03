@@ -55,17 +55,6 @@ const SeeItButton = ModalButton.extend`
   min-height: unset;
 `;
 
-const CloseButton = styled.button`
-  border: none;
-  color: ${greenBanner.color};
-  background-color: transparent;
-  font-size: 18px;
-  font-weight: 600;
-  position: absolute;
-  top: 7px;
-  left: 7px;
-`;
-
 const NotSeenItBanner = ({ friendsInterested, onClose }) => (
   <ModalBanner onClose={onClose}>
     <BannerHeading>

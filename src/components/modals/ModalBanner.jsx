@@ -19,7 +19,6 @@ const Banner = styled.div.attrs({
   display: flex;
   align-items: center;
   justify-content: center;
-
   position: absolute;
   top: 15px;
   left: 0;
@@ -28,7 +27,9 @@ const Banner = styled.div.attrs({
   color: ${greenBanner.color};
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled.button.attrs({
+  className: 'modal-banner-closeicon'
+})`
   position: absolute;
   top: 7px;
   left: 7px;
@@ -41,7 +42,9 @@ const CloseButton = styled.button`
   font-weight: 600;
 `;
 
-const Content = styled.div``;
+const Content = styled.div.attrs({
+  className: 'modal-banner-content'
+})``;
 
 const ModalBanner = ({ onClose, children }) => (
   <Banner>

@@ -7,6 +7,7 @@ import {
   modalPadding,
   modalZIndex,
   modalContentZIndex,
+  lightTheme
 } from '../../util/constants.js';
 
 import { closeModal } from '../../actions/modals/modals.js';
@@ -38,11 +39,12 @@ const Overlay = styled.div.attrs({
 const ModalContent = styled.div.attrs({
   className: 'modal-content'
 })`
+  background-color: white;
+  color: ${lightTheme.color};
   margin: auto;
   width: 60vw;
   min-width: 700px;
   max-width: 915px;
-  background-color: white;
   padding: ${modalPadding};
   border-radius: 15px;
   z-index: ${modalContentZIndex};

@@ -49,7 +49,7 @@ const MoviesList = ({ movies = [], getMovie, updateRating }) => {
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
-    name: PropTypes.string,
+    title: PropTypes.string,
     blurb: PropTypes.string,
     ratings: PropTypes.shape({
       user: PropTypes.string,

@@ -1,4 +1,9 @@
-import { modalMovieData } from '../_testData.js';
+import {
+  modalMovieData,
+  friends as taggableFriends
+} from '../_testData.js';
+
+import hasItem from '../../util/helpers.js';
 
 // action types
 export const CLEAR_NEW_MOVIE = 'CLEAR_NEW_MOVIE';
@@ -27,29 +32,30 @@ function updateNewMovieRemarksAction(remarks) {
   };
 }
 
-function addFriendToTagActions(friend) {
+function addFriendToTagActions(friendKey) {
   return {
     type: ADD_FRIEND_TO_TAG,
     payload: {
-      friend
+      friendKey
     }
   };
 }
 
-function removeFriendToTagActions(friend) {
+function removeFriendToTagActions(friendKey) {
   return {
     type: REMOVE_FRIEND_TO_TAG,
     payload: {
-      friend
+      friendKey
     }
   };
 }
 
-export function addNewMovieAction(movie) {
+export function addNewMovieAction(movie, friends) {
   return {
     type: CHANGE_NEW_MOVIE,
     payload: {
-      movie
+      movie,
+      friends: taggableFriends
     }
   };
 }
@@ -67,18 +73,37 @@ export function updateNewMovieRemarks(dispatch, remarks) {
   dispatch(updateNewMovieRemarksAction(remarks));
 }
 
-export function addFriendToTag(dispatch, friend) {
-  dispatch(addFriendToTagActions(friend));
+// export function toggleFriendSelection(dispatch, friendKey) {
+//   return (getState) => {
+//     const currentState = getState();
+//     if (hasItem(
+//       currentState.newRating.taggedFriends,
+//       friendKey
+//     )) {
+//       dispatch(addFriendToTagActions(friendKey));
+//     } else {
+//       dispatch(removeFriendToTagActions(friendKey));
+//     }
+//   };
+// }
+
+// TODO: use thunks and getState (above) to check for friend in
+// tagged list already before dispatching action to add friend
+export function addFriendToTag(dispatch, friendKey) {
+  dispatch(addFriendToTagActions(friendKey));
 }
 
-export function removeFriendToTag(dispatch, friend) {
-  dispatch(removeFriendToTagActions(friend));
+export function removeFriendToTag(dispatch, friendKey) {
+  dispatch(removeFriendToTagActions(friendKey));
 }
 
 export function clearNewRating(dispatch) {
   dispatch(clearNewRatingAction);
 }
 
-export function addNewMovie(dispatch, movie) {
-  dispatch(addNewMovieAction(modalMovieData[movie.id]));
+export function addNewMovie(dispatch, movie, friends) {
+  dispatch(addNewMovieAction(
+    modalMovieData[movie.id],
+    taggableFriends
+  ));
 }

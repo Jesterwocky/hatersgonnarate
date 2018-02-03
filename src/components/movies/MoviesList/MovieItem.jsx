@@ -37,7 +37,7 @@ const Callouts = styled.div`
 
 const MovieItem = ({
   id,
-  name,
+  title,
   ratings,
   blurb,
   activity,
@@ -69,7 +69,7 @@ const MovieItem = ({
       key={`movie-${id}`}
       onClick={getMovie}
     >
-      <MovieTitle>{name}</MovieTitle>
+      <MovieTitle>{title}</MovieTitle>
 
       {haveNotSeenIt &&
         <Blurb>{blurb}</Blurb>
@@ -113,7 +113,7 @@ const MovieItem = ({
 
 MovieItem.propTypes = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   getMovie: PropTypes.func.isRequired,
   updateRating: PropTypes.func.isRequired,
   blurb: PropTypes.string,

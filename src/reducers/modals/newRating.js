@@ -19,7 +19,8 @@ const initialState = {
   },
   rating: null,
   remarks: '',
-  taggedFriends: []
+  taggedFriends: [],
+  friends: {}
 };
 
 function reducer(state = initialState, action) {
@@ -39,14 +40,16 @@ function reducer(state = initialState, action) {
     case ADD_FRIEND_TO_TAG:
       return {
         ...state,
-        taggedFriends: state.taggedFriends.concat(action.payload.friend)
+        taggedFriends: state.taggedFriends.concat([action.payload.friendKey])
       };
 
     case REMOVE_FRIEND_TO_TAG:
       return {
         ...state,
         taggedFriends: state.taggedFriends
-          .filter(friend => friend.id !== action.payload.friend.id)
+          .slice(0, state.taggedFriends.indexOf(action.payload.friendKey))
+          .concat(state.taggedFriends
+            .slice(state.taggedFriends.indexOf(action.payload.friendKey) + 1))
       };
 
     case CHANGE_NEW_MOVIE:
@@ -55,7 +58,8 @@ function reducer(state = initialState, action) {
         movie: {
           ...initialState.movie,
           ...action.payload.movie
-        }
+        },
+        friends: action.payload.friends
       };
 
     case CLEAR_NEW_MOVIE:

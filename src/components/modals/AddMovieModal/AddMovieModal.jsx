@@ -1,9 +1,11 @@
+// TODO: move AddMovieModal directory under movies
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { themes } from '../../../util/constants.js';
+import { themes, modalPadding } from '../../../util/constants.js';
+import { hasItem } from '../../../util/helpers.js';
 
 // import actions
 import { closeModal } from '../../../actions/modals/modals.js';
@@ -11,9 +13,11 @@ import {
   updateNewMovieRating,
   updateNewMovieRemarks,
   addNewMovie,
-  clearNewRating
+  clearNewRating,
+  addFriendToTag,
+  removeFriendToTag
 } from '../../../actions/modals/newRating.js';
-import { updateMovieRating } from '../../../actions/movies.js';
+import { addMovieRating } from '../../../actions/movies.js';
 
 // import styled components
 import Modal from '../Modal.jsx';
@@ -29,7 +33,7 @@ import {
 
 // import components
 import MovieRating from '../../movies/MovieRating/MovieRating.jsx';
-import AddMovieWithSearch from '../../movies/addMovie/AddMovieWithSearch.jsx';
+import MovieSearch from '../../movies/MovieSearch.jsx';
 import NotSeenItBanner from './NotSeenItBanner.jsx';
 import SelectFriends from '../../SelectFriends.jsx';
 
@@ -57,10 +61,16 @@ const MovieBlurb = ModalText.extend.attrs({
 `;
 
 // TODO: only show add button if user opens model without searching
-const ModalMovieSearch = styled(AddMovieWithSearch).attrs({
+const ModalMovieSearch = styled(MovieSearch).attrs({
   className: 'modal-addmovie-search',
   theme: themes.LIGHT
 })``;
+
+const PromptText = ModalText.extend.attrs({
+  className: 'modal-addmovie-prompt'
+})`
+  margin: 10px 0 5px;
+`;
 
 const RatingContainer = styled.div.attrs({
   className: 'modal-addmovie-rating-container'
@@ -84,9 +94,19 @@ const Remarks = ModalTextArea.extend.attrs({
   height: 75
 })``;
 
+const TagFriendsContainer = styled.div`
+  margin-top: 5px;
+`;
+
+const TagFriends = styled(SelectFriends).attrs({
+  className: 'modal-addmovie-tagfriends'
+})``;
+
 const ModalControls = styled.div.attrs({
   className: 'modal-addmovie-controls'
-})``;
+})`
+  margin-top: ${modalPadding};
+`;
 
 // component
 class AddMovieModal extends Component {
@@ -94,6 +114,8 @@ class AddMovieModal extends Component {
     showNotSeenItBanner: false
   }
 
+  // TODO: better way to do this? sometimes get
+  // errors about rendering in the middle of a render
   componentDidMount() {
     this.bannerTimer = setTimeout(() => {
       this.setState({
@@ -105,15 +127,29 @@ class AddMovieModal extends Component {
   onSave = () => {
     const {
       movie,
-      save,
+      saveRating,
       close,
+      clearRating,
       rating,
       remarks,
       taggedFriends
     } = this.props;
 
-    save(movie.id, { rating, remarks, taggedFriends });
+    saveRating(movie.id, rating, remarks, taggedFriends);
+    clearRating();
     close();
+  }
+
+  // TODO: use toggleFriendSelection action (to be added)
+  // instead of checking here
+  onToggleFriend = (friendKey) => {
+    const { taggedFriends, tagFriend, untagFriend } = this.props;
+
+    if (hasItem(taggedFriends, friendKey)) {
+      untagFriend(friendKey);
+    } else {
+      tagFriend(friendKey);
+    }
   }
 
   updateRatingAndStopBanner = (rating) => {
@@ -147,11 +183,10 @@ class AddMovieModal extends Component {
       movie,
       rating,
       remarks,
+      friends,
       taggedFriends,
       updateRemarks,
-      changeMovie,
-      tagFriend,
-      untagFriend
+      changeMovie
     } = this.props;
     const friendsInterested = ((movie.friends || {}).interested) || {};
     const savable = !!movie.id && !!rating;
@@ -196,24 +231,34 @@ class AddMovieModal extends Component {
             </RatingContainer>
 
             <RemarksContainer>
-              <ModalText>
+              <PromptText>
                 What did you think?
-              </ModalText>
+              </PromptText>
               <Remarks
                 onUpdateText={updateRemarks}
                 text={remarks}
               />
             </RemarksContainer>
 
-            <SelectFriends
-              friends={
-                Object.keys(movie.friends.interested)
-                .map(key => movie.friends.interested[key])
-              }
-              taggedFriends={taggedFriends}
-              onSelectFriend={tagFriend}
-              onUnselectFriend={untagFriend}
-            />
+            <TagFriendsContainer>
+              <PromptText>
+                Select friends - let them know you rated {movie.title}
+              </PromptText>
+              <TagFriends
+                friends={
+                  Object.keys(friends)
+                  .map(friendKey => ({
+                    ...friends[friendKey],
+                    // friendKey set explicitly in case friends
+                    // in future are ordered by something other than id
+                    // (like value indicating relevance in current context)
+                    friendKey: friends[friendKey].id,
+                    isSelected: hasItem(taggedFriends, friendKey)
+                  }))
+                }
+                onToggle={this.onToggleFriend}
+              />
+            </TagFriendsContainer>
 
           </ForSelectedMovie>
         }
@@ -221,7 +266,7 @@ class AddMovieModal extends Component {
         <ModalControls>
           <ModalButton
             onClick={this.onSave}
-            disabled={savable}
+            disabled={!savable}
           >
             Done
           </ModalButton>
@@ -249,7 +294,7 @@ AddMovieModal.propTypes = {
   tagFriend: PropTypes.func.isRequired,
   untagFriend: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
-  save: PropTypes.func.isRequired
+  saveRating: PropTypes.func.isRequired
 };
 
 AddMovieModal.defaultProps = {
@@ -276,13 +321,13 @@ function mapDispatchToProps(dispatch) {
   return {
     updateRating: rating => updateNewMovieRating(dispatch, rating),
     updateRemarks: remarks => updateNewMovieRemarks(dispatch, remarks),
-    tagFriend: remarks => addFriendToTag(dispatch, friend),
-    untagFriend: remarks => removeFriendToTag(dispatch, friend),
+    tagFriend: friendKey => addFriendToTag(dispatch, friendKey),
+    untagFriend: friendKey => removeFriendToTag(dispatch, friendKey),
     changeMovie: movie => addNewMovie(dispatch, movie),
     clearRating: () => clearNewRating(dispatch),
     close: () => closeModal(dispatch),
-    save: (movieId, rating, remarks) => (
-      updateMovieRating(dispatch, movieId, rating, remarks)
+    saveRating: (movieId, rating, remarks) => (
+      addMovieRating(dispatch, movieId, rating, remarks)
     )
   };
 }

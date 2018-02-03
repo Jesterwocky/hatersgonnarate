@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { getMovies, getMovie, updateMovieRating } from '../../actions/movies.js';
 import MoviesList from '../movies/MoviesList/MoviesList.jsx';
-import AddMovieWithSearch from '../movies/addMovie/AddMovieWithSearch.jsx';
+import MovieSearch from '../movies/MovieSearch.jsx';
 
 import {
   Page,
@@ -78,9 +78,9 @@ class HomePage extends Component {
 
           <MainContent>
 
-            <AddMovieWithSearch>
+            <MovieSearch>
               + Movie
-            </AddMovieWithSearch>
+            </MovieSearch>
           </MainContent>
 
         </HomeContent>

@@ -3,7 +3,7 @@ import { Button } from '../_StyledComponents.jsx';
 import TextBox from '../TextBox.jsx';
 import TextArea from '../TextArea.jsx';
 
-import { themes } from '../../util/constants.js';
+import { themes, lightTheme } from '../../util/constants.js';
 
 export const ModalTitle = styled.h1`
   margin-top: 0;
@@ -21,11 +21,12 @@ export const ModalHeading3 = styled.h3.attrs({
 `;
 
 export const ModalText = styled.p`
-  margin: 0 5px;
+  margin: 0;
 `;
 
 export const ModalButton = Button.extend`
   font-size: 14px;
+  background-color: ${props => (props.disabled ? lightTheme.field['background-color'] : '')};
 `;
 
 export const Friend = styled.span.attrs({
