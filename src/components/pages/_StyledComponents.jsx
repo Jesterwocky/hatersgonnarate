@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { footerHeight, pagePadding } from '../../util/constants.js';
+import { footerHeight, pagePadding } from '../../util/constants';
 
 export const Page = styled.div`
   // 100% of app height

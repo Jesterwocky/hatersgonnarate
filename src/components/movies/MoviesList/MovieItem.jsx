@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { DARK } from '../../../util/themes.js';
+import { DARK } from '../../../util/themes';
 
-import MovieRatings from './MovieRatings.jsx';
-import MovieCallout from './MovieCallout.jsx';
-import MovieComment from './MovieComment.jsx';
+import MovieRatings from './MovieRatings';
+import MovieCallout from './MovieCallout';
+import MovieComment from './MovieComment';
 
 import {
   ListItem,
-} from '../../_StyledComponents.jsx';
+} from '../../_StyledComponents';
 
 const Movie = ListItem.extend`
   padding: 14px;

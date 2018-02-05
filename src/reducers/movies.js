@@ -4,7 +4,7 @@ import {
   ADD_MOVIE_RATING,
   UPDATE_MOVIE_RATING,
   GET_MOVIES_MATCHING_SEARCH,
-} from '../actions/movies.js';
+} from '../actions/movies';
 
 const initialState = {
   movies: {},

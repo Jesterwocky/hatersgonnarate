@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import {
   ModalHeading3,
   ModalButton,
   Friend,
-} from '../_StyledComponents.jsx';
+} from '../_StyledComponents';
 
-import ModalBanner from '../ModalBanner.jsx';
+import { GREEN_BANNER } from '../../../util/themes';
+
+import ModalBanner from '../ModalBanner';
 
 const BannerHeading = ModalHeading3.extend.attrs({
   className: 'modal-addmovie-notseenit-heading',
@@ -52,27 +54,29 @@ const SeeItButton = ModalButton.extend`
 `;
 
 const NotSeenItBanner = ({ friendsInterested, onClose }) => (
-  <ModalBanner onClose={onClose}>
-    <BannerHeading>
-      Not seen it? {friendsInterested.length > 0 && 'These friends wanna watch it:'}
-      {' '}
-    </BannerHeading>
-    {friendsInterested.length > 0 &&
-      <InterestedFriends>
-        {friendsInterested.map(friend => (
-          <InterestedFriend key={`friend-${friend.id}`}>
-            {friend.username}
-          </InterestedFriend>
-        ))}
-      </InterestedFriends>
-    }
+  <ThemeProvider theme={GREEN_BANNER}>
+    <ModalBanner onClose={onClose}>
+      <BannerHeading>
+        Not seen it? {friendsInterested.length > 0 && 'These friends wanna watch it:'}
+        {' '}
+      </BannerHeading>
+      {friendsInterested.length > 0 &&
+        <InterestedFriends>
+          {friendsInterested.map(friend => (
+            <InterestedFriend key={`friend-${friend.id}`}>
+              {friend.username}
+            </InterestedFriend>
+          ))}
+        </InterestedFriends>
+      }
 
-    <SeeItButtons>
-      <SeeItButton>Ask who’s interested</SeeItButton>
-      <SeeItButton>Schedule movie night</SeeItButton>
-      <SeeItButton>Watch online</SeeItButton>
-    </SeeItButtons>
-  </ModalBanner>
+      <SeeItButtons>
+        <SeeItButton>Ask who’s interested</SeeItButton>
+        <SeeItButton>Schedule movie night</SeeItButton>
+        <SeeItButton>Watch online</SeeItButton>
+      </SeeItButtons>
+    </ModalBanner>
+  </ThemeProvider>
 );
 
 NotSeenItBanner.propTypes = {

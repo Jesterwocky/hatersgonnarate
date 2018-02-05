@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { ADD_MOVIE_MODAL } from '../util/constants.js';
-import { DARK } from '../util/themes.js';
+import { ADD_MOVIE_MODAL } from '../util/constants';
+import { DARK } from '../util/themes';
 
-import Footer from './Footer.jsx';
-import NavBar from './NavBar.jsx';
-import HomePage from './pages/HomePage.jsx';
-import AddMovieModal from './modals/AddMovieModal/AddMovieModal.jsx';
+import Footer from './Footer';
+import NavBar from './NavBar';
+import HomePage from './pages/HomePage';
+import AddMovieModal from './modals/AddMovieModal/AddMovieModal';
 
 export const PageBase = styled.div`
   font-family: sans-serif;

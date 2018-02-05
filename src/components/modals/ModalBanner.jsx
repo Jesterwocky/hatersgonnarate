@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { modalBannerZIndex } from '../../util/constants.js';
+import { modalBannerZIndex } from '../../util/constants';
 
-import { GREEN_BANNER } from '../../util/themes.js';
+import { GREEN_BANNER } from '../../util/themes';
 
 const defaultTheme = GREEN_BANNER;
 

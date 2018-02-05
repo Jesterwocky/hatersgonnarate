@@ -5,7 +5,7 @@ import {
   UPDATE_NEW_MOVIE_REMARKS,
   ADD_FRIEND_TO_TAG,
   REMOVE_FRIEND_TO_TAG,
-} from '../../actions/modals/newRating.js';
+} from '../../actions/modals/newRating';
 
 const initialState = {
   movie: {

@@ -1,11 +1,11 @@
 import { combineReducers, createStore } from 'redux';
 
-import { default as friends } from './reducers/friends.js';
-import { default as movies } from './reducers/movies.js';
-import { default as parties } from './reducers/parties.js';
-import { default as user } from './reducers/user.js';
-import { default as newRating } from './reducers/modals/newRating.js';
-import { default as modals } from './reducers/modals/modals.js';
+import { default as friends } from './reducers/friends';
+import { default as movies } from './reducers/movies';
+import { default as parties } from './reducers/parties';
+import { default as user } from './reducers/user';
+import { default as newRating } from './reducers/modals/newRating';
+import { default as modals } from './reducers/modals/modals';
 
 const store = createStore(combineReducers({
   user,

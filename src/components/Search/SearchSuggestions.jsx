@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { buttonMinHeight } from '../../util/constants.js';
-import { DARK } from '../../util/themes.js';
+import { buttonMinHeight } from '../../util/constants';
+import { DARK } from '../../util/themes';
 
 const Suggestions = styled.div.attrs({
   className: 'search-suggestions',

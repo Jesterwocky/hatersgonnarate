@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { DARK } from '../../../util/themes.js';
+import { DARK } from '../../../util/themes';
 
 const innerStarPercentReduction = 20;
 

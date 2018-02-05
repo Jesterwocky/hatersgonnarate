@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { buttonMinHeight } from '../../util/constants.js';
+import { buttonMinHeight } from '../../util/constants';
 
-import { Button } from '../_StyledComponents.jsx';
-import TextBox from '../TextBox.jsx';
-import SearchSuggestions from './SearchSuggestions.jsx';
+import { Button } from '../_StyledComponents';
+import TextBox from '../TextBox';
+import SearchSuggestions from './SearchSuggestions';
 
 const SearchContainer = styled.div.attrs({
   className: 'search',

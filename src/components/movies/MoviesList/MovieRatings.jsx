@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { hasKey } from '../../../util/helpers';
 
-import MovieRating from '../MovieRating/MovieRating.jsx';
+import MovieRating from '../MovieRating/MovieRating';
 
 const RatingsList = styled.div`
   font-size: 12px;

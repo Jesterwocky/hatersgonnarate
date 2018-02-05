@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Link } from './_StyledComponents.jsx';
-import { footerHeight, pagePadding } from '../util/constants.js';
-import { DARK } from '../util/themes.js';
+import { Link } from './_StyledComponents';
+import { footerHeight, pagePadding } from '../util/constants';
+import { DARK } from '../util/themes';
 
 const StyledNavBar = styled.div`
   width: 100%;

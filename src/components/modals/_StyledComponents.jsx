@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Button } from '../_StyledComponents.jsx';
-import TextBox from '../TextBox.jsx';
-import TextArea from '../TextArea.jsx';
+import { Button } from '../_StyledComponents';
+import TextBox from '../TextBox';
+import TextArea from '../TextArea';
 
-import { themes, LIGHT } from '../../util/themes.js';
+import { themes, LIGHT } from '../../util/themes';
 
 export const ModalTitle = styled.h1`
   margin-top: 0;

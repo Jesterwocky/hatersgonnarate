@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { updateMovieRating } from '../../../actions/movies.js';
+import { updateMovieRating } from '../../../actions/movies';
 
-import MovieItem from './MovieItem.jsx';
+import MovieItem from './MovieItem';
 
 import {
   Link,
   List,
   BlankListItem,
-} from '../../_StyledComponents.jsx';
+} from '../../_StyledComponents';
 
 const MoviesList = ({ movies = [], getMovie, updateRating }) => {
   const hasMovies = movies.length > 0;

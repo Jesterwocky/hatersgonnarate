@@ -2,21 +2,19 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import store from './store.js';
-import { Provider } from 'react-redux';
 
-import AppConnected from './AppConnected.jsx';
+import AppConnected from './AppConnected';
 
 document.addEventListener('DOMContentLoaded', () => {
   render(
     <AppConnected />,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
 
   if (module.hot) {
-    module.hot.accept('./AppConnected.jsx', () => {
+    module.hot.accept('./AppConnected', () => {
       render(
-        require('./AppConnected.jsx').default,
+        require('./AppConnected').default,
         document.getElementById('root'),
       );
     });

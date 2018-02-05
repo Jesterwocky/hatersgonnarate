@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import { getMovies, getMovie, updateMovieRating } from '../../actions/movies.js';
-import MoviesList from '../movies/MoviesList/MoviesList.jsx';
-import MovieSearch from '../movies/MovieSearch.jsx';
+import { getMovies, getMovie, updateMovieRating } from '../../actions/movies';
+import MoviesList from '../movies/MoviesList/MoviesList';
+import MovieSearch from '../movies/MovieSearch';
 
 import {
   Page,
@@ -13,7 +12,7 @@ import {
   SubHeading,
   Content,
   Column,
-} from './_StyledComponents.jsx';
+} from './_StyledComponents';
 
 const Home = Page.extend.attrs({
   className: 'page-home',

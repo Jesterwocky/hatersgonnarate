@@ -1,7 +1,7 @@
 import {
   GET_USER,
   UPDATE_USER,
-} from '../actions/user.js';
+} from '../actions/user';
 
 const initialState = {
   username: '',

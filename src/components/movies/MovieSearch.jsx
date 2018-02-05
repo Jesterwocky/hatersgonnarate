@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import styled from 'styled-components';
 
-import { ADD_MOVIE_MODAL } from '../../util/constants.js';
+import { ADD_MOVIE_MODAL } from '../../util/constants';
 
-import { findMatchingMovies } from '../../actions/movies.js';
-import { openModal } from '../../actions/modals/modals.js';
+import { findMatchingMovies } from '../../actions/movies';
+import { openModal } from '../../actions/modals/modals';
 
-import Search from '../Search/Search.jsx';
+import Search from '../Search/Search';
 
 const MovieSearch = ({
   matches,

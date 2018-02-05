@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { buttonMinHeight } from '../util/constants.js';
-import { DARK } from '../util/themes.js';
+import { buttonMinHeight } from '../util/constants';
+import { DARK } from '../util/themes';
 
 export const Link = styled.a`
   color: orange;

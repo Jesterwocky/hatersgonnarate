@@ -1,7 +1,7 @@
 import {
   GET_PARTIES,
   UPDATE_NEW_PARTY,
-} from '../actions/parties.js';
+} from '../actions/parties';
 
 const initialState = {
   parties: {

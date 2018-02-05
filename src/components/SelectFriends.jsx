@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { GREEN_BANNER, DARK } from '../util/themes.js';
+import { GREEN_BANNER, DARK } from '../util/themes';
 
-import { Button } from './_StyledComponents.jsx';
-import FriendSearch from './friends/FriendSearch.jsx';
+import { Button } from './_StyledComponents';
+import FriendSearch from './friends/FriendSearch';
 
 const Friends = styled.div.attrs({
   className: 'selectable-friends',

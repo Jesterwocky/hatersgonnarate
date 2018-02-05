@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { modalPadding } from '../../../util/constants.js';
-import { themes } from '../../../util/themes.js';
-import { hasItem } from '../../../util/helpers.js';
+import { modalPadding } from '../../../util/constants';
+import { hasItem } from '../../../util/helpers';
 
 // import actions
-import { closeModal } from '../../../actions/modals/modals.js';
+import { closeModal } from '../../../actions/modals/modals';
 import {
   updateNewMovieRating,
   updateNewMovieRemarks,
@@ -17,11 +16,11 @@ import {
   clearNewRating,
   addFriendToTag,
   removeFriendToTag,
-} from '../../../actions/modals/newRating.js';
-import { addMovieRating } from '../../../actions/movies.js';
+} from '../../../actions/modals/newRating';
+import { addMovieRating } from '../../../actions/movies';
 
 // import styled components
-import Modal from '../Modal.jsx';
+import Modal from '../Modal';
 import {
   ModalTitle,
   ModalHeading2,
@@ -30,13 +29,13 @@ import {
   ModalButton,
   ModalTextBox,
   ModalTextArea,
-} from '../_StyledComponents.jsx';
+} from '../_StyledComponents';
 
 // import components
-import MovieRating from '../../movies/MovieRating/MovieRating.jsx';
-import MovieSearch from '../../movies/MovieSearch.jsx';
-import NotSeenItBanner from './NotSeenItBanner.jsx';
-import SelectFriends from '../../SelectFriends.jsx';
+import MovieRating from '../../movies/MovieRating/MovieRating';
+import MovieSearch from '../../movies/MovieSearch';
+import NotSeenItBanner from './NotSeenItBanner';
+import SelectFriends from '../../SelectFriends';
 
 // styled components
 const AddMovie = styled(Modal).attrs({

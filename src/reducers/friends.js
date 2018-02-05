@@ -2,7 +2,7 @@ import {
   GET_FRIENDS,
   GET_FRIEND,
   GET_FRIENDS_MATCHING_SEARCH,
-} from '../actions/friends.js';
+} from '../actions/friends';
 
 const initialState = {
   friends: {},

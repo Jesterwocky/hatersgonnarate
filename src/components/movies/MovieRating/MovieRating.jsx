@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { movieRatingsOutOf } from '../../../util/constants.js';
+import { movieRatingsOutOf } from '../../../util/constants';
 
-import MovieRatingStar from './MovieRatingStar.jsx';
+import MovieRatingStar from './MovieRatingStar';
 
 const Rating = styled.div.attrs({
   className: 'movie-rating-stars',

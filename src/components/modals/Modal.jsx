@@ -7,11 +7,11 @@ import {
   modalPadding,
   modalZIndex,
   modalContentZIndex,
-} from '../../util/constants.js';
+} from '../../util/constants';
 
-import { LIGHT } from '../../util/themes.js';
+import { LIGHT } from '../../util/themes';
 
-import { closeModal } from '../../actions/modals/modals.js';
+import { closeModal } from '../../actions/modals/modals';
 
 const Container = styled.div.attrs({
   className: 'modal-container',

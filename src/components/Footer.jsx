@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Link } from './_StyledComponents.jsx';
-import { footerHeight, footerBackground, pagePadding } from '../util/constants.js';
-import { DARK } from '../util/constants.js';
+import { Link } from './_StyledComponents';
+import { footerHeight, pagePadding } from '../util/constants';
+import { DARK } from '../util/themes';
 
 const StyledFooter = styled.div`
   width: 100%;
@@ -14,7 +14,7 @@ const StyledFooter = styled.div`
   align-items: center;
   align-self: flex-end;
   color: white;
-  background-color: ${footerBackground};
+  background-color: ${DARK.footer.background};
   padding: 0 ${pagePadding};
   box-sizing: border-box; // don't count padding in width
 `;
@@ -43,11 +43,11 @@ const Footer = ({ isLoggedIn = false }) => (
 );
 
 Footer.propTypes = {
-  isLoggedIn: PropTypes.bool
+  isLoggedIn: PropTypes.bool,
 };
 
 Footer.defaultProps = {
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 export default Footer;
