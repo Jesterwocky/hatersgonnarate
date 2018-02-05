@@ -64,7 +64,7 @@ const MovieBlurb = ModalText.extend.attrs({
 // TODO: only show add button if user opens model without searching
 const ModalMovieSearch = styled(MovieSearch).attrs({
   className: 'modal-addmovie-search',
-  theme: themes.LIGHT,
+  // theme: themes.LIGHT,
 })``;
 
 const PromptText = ModalText.extend.attrs({
@@ -83,7 +83,7 @@ const RatingContainer = styled.div.attrs({
 const Rating = styled(MovieRating).attrs({
   className: 'modal-addmovie-rating-stars',
   width: 300, // needed by MovieRating to calc star width
-  theme: themes.LIGHT,
+  // theme: themes.LIGHT,
 })``;
 
 const RemarksContainer = styled.div.attrs({

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import {
   modalPadding,
@@ -41,7 +41,7 @@ const ModalContent = styled.div.attrs({
   className: 'modal-content',
 })`
   background-color: white;
-  color: ${LIGHT.color};
+  color: ${props => props.theme.color};
   margin: auto;
   width: 60vw;
   min-width: 700px;
@@ -53,12 +53,14 @@ const ModalContent = styled.div.attrs({
 `;
 
 const Modal = ({ children, close }) => (
-  <Container>
-    <Overlay onClick={close} />
-    <ModalContent>
-      {children}
-    </ModalContent>
-  </Container>
+  <ThemeProvider theme={LIGHT}>
+    <Container>
+      <Overlay onClick={close} />
+      <ModalContent>
+        {children}
+      </ModalContent>
+    </Container>
+  </ThemeProvider>
 );
 
 Modal.propTypes = {

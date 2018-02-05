@@ -96,7 +96,6 @@ class Search extends Component {
     const {
       children,
       matches,
-      theme,
       showButton = true,
       placeholder = 'search',
     } = this.props;
@@ -121,7 +120,6 @@ class Search extends Component {
             text={searchString}
             onUpdateText={this.onUpdateText}
             placeholder={placeholder}
-            theme={theme}
           />
         </SearchField>
       </SearchContainer>
@@ -136,7 +134,6 @@ Search.propTypes = {
   onConfirmFound: PropTypes.func,
   confirmOnSelect: PropTypes.bool,
   placeholder: PropTypes.string,
-  theme: PropTypes.string,
   showButton: PropTypes.bool,
   requireButtonClickForAction: PropTypes.bool,
   children: PropTypes.node,
@@ -149,7 +146,6 @@ Search.defaultProps = {
   onConfirmFound: null,
   confirmOnSelect: true,
   placeholder: 'search',
-  theme: '',
   showButton: true,
   requireButtonClickForAction: true,
   children: null,

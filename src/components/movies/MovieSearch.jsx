@@ -16,7 +16,6 @@ const MovieSearch = ({
   onMovieFound,
   openAddMovieModal,
   confirmOnSelect,
-  theme,
   children,
 }) => (
   <Search
@@ -24,7 +23,6 @@ const MovieSearch = ({
     findMatches={findMovies}
     onConfirmFound={onMovieFound || openAddMovieModal}
     confirmOnSelect={confirmOnSelect}
-    theme={theme}
     placeholder="Search for a movie"
   >
     {children}
@@ -36,7 +34,6 @@ MovieSearch.propTypes = {
   matches: PropTypes.array,
   findMovies: PropTypes.func,
   onMovieFound: PropTypes.func,
-  theme: PropTypes.string,
   confirmOnSelect: PropTypes.bool,
   children: PropTypes.node,
 };
@@ -45,7 +42,6 @@ MovieSearch.defaultProps = {
   matches: [],
   findMovies: null,
   onMovieFound: null,
-  theme: '',
   confirmOnSelect: false,
   children: null,
 };

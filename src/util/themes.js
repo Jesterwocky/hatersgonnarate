@@ -1,19 +1,22 @@
 // colors. dark colors are for main pages. light theme is for modals, etc.
-import {
-  pageBackgroundColor,
-  textColor,
-  movieTitleColor,
-  buttonBackground,
-  headerBackground,
-  footerBackground,
-  starColor,
-  starBackground,
-} from './constants.js';
+const pageBackgroundColor = '#2b3179';
+const buttonBackground = '#504dad';
+const headerBackground = '#1d1b67';
+const footerBackground = headerBackground;
+const starColor = '#fdc726';
+const starBackground = '#af8918';
+const movieTitleColor = '#ffcc3c';
+const textColor = '#bcbbff';
 
 export const themes = {
   DARK: 'DARK',
   LIGHT: 'LIGHT',
   GREENBANNER: 'GREENBANNER',
+};
+
+const starBaseStyling = {
+  color: starColor,
+  background: starBackground,
 };
 
 export const DARK = {
@@ -29,9 +32,13 @@ export const DARK = {
   footer: {
     background: footerBackground,
   },
+  field: {
+    background: headerBackground,
+    color: textColor,
+    placholderColor: '#56558c',
+  },
   star: {
-    color: starColor,
-    background: starBackground,
+    ...starBaseStyling,
   },
 };
 
@@ -41,10 +48,18 @@ export const LIGHT = { // modals and stuff
   field: {
     color: buttonBackground,
     background: '#e7e7fb',
+    placholderColor: '#bab8ea',
+  },
+  star: {
+    ...starBaseStyling,
+    hasBorder: true,
   },
 };
 
 export const GREEN_BANNER = {
   background: '#24e29d',
   color: '#0d9866',
+  star: {
+    ...starBaseStyling,
+  },
 };

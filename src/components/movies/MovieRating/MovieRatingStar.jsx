@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { DARK, themes } from '../../../util/themes.js';
+import { DARK } from '../../../util/themes.js';
 
 const innerStarPercentReduction = 20;
 
@@ -38,11 +38,14 @@ const ClippedStar = styled.div`
 const OuterClippedStar = ClippedStar.extend.attrs({
   className: 'star-outer-clip',
 })`
-  display: ${props => (props.theme === themes.LIGHT ? 'initial' : 'none')};
+  display: ${props => (
+    (props.theme.star || DARK.star).hasBorder ?
+      'initial' : 'none'
+  )};
 `;
 
 function getInnerStarSize(props) {
-  return props.theme === themes.LIGHT ?
+  return (props.theme.star || DARK.star).hasBorder ?
     100 - innerStarPercentReduction : 100;
 }
 
@@ -54,12 +57,10 @@ const InnerClippedStar = ClippedStar.extend.attrs({
 
   // for every 10 percentage points the inner star size is reduced
   // to produce a border, offset 5% to keep inner star centered
-  ${props => (props.theme === themes.LIGHT ?
-    `
-      top: ${5 * (innerStarPercentReduction / 10)}%;
-      left: ${5 * (innerStarPercentReduction / 10)}%;
-    `
-    : '')}
+  ${props => (props.theme.star || DARK.star).hasBorder && css`
+    top: ${5 * (innerStarPercentReduction / 10)}%;
+    left: ${5 * (innerStarPercentReduction / 10)}%;
+  `}
 `;
 
 const StarCore = styled.div`
@@ -82,12 +83,13 @@ const EmptyStar = StarCore.extend.attrs({
 const StarHalf = styled.div`
   width: 50%;
   background-color: ${props => (
-    props.filled ? DARK.star.color : 'transparent'
+    props.filled ?
+      (props.theme.star || DARK.star).color :
+      'transparent'
   )};
 `;
 
 const MovieRatingStar = ({
-  theme,
   starNumber,
   rating,
   canEdit,
@@ -102,15 +104,15 @@ const MovieRatingStar = ({
   return (
     <StarContainer>
 
-      <OuterClippedStar theme={theme}>
+      <OuterClippedStar>
         <StarBackgroundToMakeBorder />
       </OuterClippedStar>
 
-      <InnerClippedStar theme={theme}>
+      <InnerClippedStar>
         <EmptyStar />
       </InnerClippedStar>
 
-      <InnerClippedStar theme={theme}>
+      <InnerClippedStar>
         <StarHalf
           className="star-left"
           filled={rating >= starNumber - 0.5}
@@ -139,12 +141,10 @@ MovieRatingStar.propTypes = {
   rating: PropTypes.number.isRequired,
   canEdit: PropTypes.bool,
   onUpdateRating: PropTypes.func.isRequired,
-  theme: PropTypes.string,
 };
 
 MovieRatingStar.defaultProps = {
   canEdit: false,
-  theme: '',
 };
 
 export default MovieRatingStar;

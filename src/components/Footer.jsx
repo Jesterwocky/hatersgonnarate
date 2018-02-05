@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { Link } from './_StyledComponents.jsx';
 import { footerHeight, footerBackground, pagePadding } from '../util/constants.js';
+import { DARK } from '../util/constants.js';
 
 const StyledFooter = styled.div`
   width: 100%;
