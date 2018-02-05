@@ -6,6 +6,8 @@ import { modalBannerZIndex } from '../../util/constants.js';
 
 import { GREEN_BANNER } from '../../util/themes.js';
 
+const defaultTheme = GREEN_BANNER;
+
 const Banner = styled.div.attrs({
   className: 'modal-banner',
 })`
@@ -22,8 +24,8 @@ const Banner = styled.div.attrs({
   top: 15px;
   left: 0;
 
-  background-color: ${GREEN_BANNER.background};
-  color: ${GREEN_BANNER.color};
+  background-color: ${props => props.theme.background || defaultTheme.background};
+  color: ${props => props.theme.color || defaultTheme.color};
 `;
 
 const CloseButton = styled.button.attrs({
@@ -34,7 +36,7 @@ const CloseButton = styled.button.attrs({
   left: 7px;
 
   border: none;
-  color: ${GREEN_BANNER.color};
+  color: ${props => props.theme.color || defaultTheme.color};
   background-color: transparent;
 
   font-size: 18px;

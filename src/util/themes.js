@@ -11,7 +11,7 @@ const textColor = '#bcbbff';
 export const themes = {
   DARK: 'DARK',
   LIGHT: 'LIGHT',
-  GREENBANNER: 'GREENBANNER',
+  GREEN_BANNER: 'GREENBANNER',
 };
 
 const starBaseStyling = {
