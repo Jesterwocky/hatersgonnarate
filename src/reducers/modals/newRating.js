@@ -4,7 +4,7 @@ import {
   UPDATE_NEW_MOVIE_RATING,
   UPDATE_NEW_MOVIE_REMARKS,
   ADD_FRIEND_TO_TAG,
-  REMOVE_FRIEND_TO_TAG
+  REMOVE_FRIEND_TO_TAG,
 } from '../../actions/modals/newRating.js';
 
 const initialState = {
@@ -14,13 +14,13 @@ const initialState = {
     blurb: '',
     friends: {
       sawIt: [],
-      interested: []
-    }
+      interested: [],
+    },
   },
   rating: null,
   remarks: '',
   taggedFriends: [],
-  friends: {}
+  friends: {},
 };
 
 function reducer(state = initialState, action) {
@@ -28,19 +28,19 @@ function reducer(state = initialState, action) {
     case UPDATE_NEW_MOVIE_RATING:
       return {
         ...state,
-        rating: action.payload.rating
+        rating: action.payload.rating,
       };
 
     case UPDATE_NEW_MOVIE_REMARKS:
       return {
         ...state,
-        remarks: action.payload.remarks
+        remarks: action.payload.remarks,
       };
 
     case ADD_FRIEND_TO_TAG:
       return {
         ...state,
-        taggedFriends: state.taggedFriends.concat([action.payload.friendKey])
+        taggedFriends: state.taggedFriends.concat([action.payload.friendKey]),
       };
 
     case REMOVE_FRIEND_TO_TAG:
@@ -49,7 +49,7 @@ function reducer(state = initialState, action) {
         taggedFriends: state.taggedFriends
           .slice(0, state.taggedFriends.indexOf(action.payload.friendKey))
           .concat(state.taggedFriends
-            .slice(state.taggedFriends.indexOf(action.payload.friendKey) + 1))
+            .slice(state.taggedFriends.indexOf(action.payload.friendKey) + 1)),
       };
 
     case CHANGE_NEW_MOVIE:
@@ -57,9 +57,9 @@ function reducer(state = initialState, action) {
         ...initialState,
         movie: {
           ...initialState.movie,
-          ...action.payload.movie
+          ...action.payload.movie,
         },
-        friends: action.payload.friends
+        friends: action.payload.friends,
       };
 
     case CLEAR_NEW_MOVIE:

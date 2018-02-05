@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import { buttonColor, buttonMinHeight, buttonBoxShadow } from '../util/constants.js';
+import { buttonMinHeight } from '../util/constants.js';
+import { DARK } from '../util/themes.js';
 
 export const Link = styled.a`
   color: orange;
@@ -14,7 +15,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 2px;
   padding: 9px 7px;
-  background-color: ${buttonColor};
+  background-color: ${DARK.button.background};
   color: white;
   min-height: ${buttonMinHeight};
 

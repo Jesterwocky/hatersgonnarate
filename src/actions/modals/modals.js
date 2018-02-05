@@ -12,8 +12,8 @@ function openModalAction(modalName, data = {}) {
     type: OPEN_MODAL,
     payload: {
       modalName,
-      data
-    }
+      data,
+    },
   };
 }
 

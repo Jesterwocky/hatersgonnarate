@@ -9,21 +9,21 @@ import TextBox from '../TextBox.jsx';
 import SearchSuggestions from './SearchSuggestions.jsx';
 
 const SearchContainer = styled.div.attrs({
-  className: 'search'
+  className: 'search',
 })`
   width: 100%;
   display: flex;
 `;
 
 const AddButton = Button.extend.attrs({
-  className: 'search-button'
+  className: 'search-button',
 })`
   white-space: nowrap;
   margin-right: 10px;
 `;
 
 const SearchField = styled.div.attrs({
-  className: 'search-field'
+  className: 'search-field',
 })`
   position: relative;
   flex: 1;
@@ -31,7 +31,7 @@ const SearchField = styled.div.attrs({
 
 const SearchText = styled(TextBox).attrs({
   className: 'movie-search-searchtext',
-  height: buttonMinHeight
+  height: buttonMinHeight,
 })``;
 
 // TODO: listen for enter and interpret as Search click when component's focused
@@ -39,7 +39,7 @@ class Search extends Component {
   state = {
     searchString: '',
     selection: {},
-    showSuggestions: false
+    showSuggestions: false,
   }
 
   onUpdateText = (text) => {
@@ -49,7 +49,7 @@ class Search extends Component {
     this.setState({
       selection: {},
       searchString: text,
-      showSuggestions: !(text === '')
+      showSuggestions: !(text === ''),
     });
   }
 
@@ -69,7 +69,7 @@ class Search extends Component {
         selection,
         // TODO: have one common property name for all searchable things, like 'searchName'
         searchString: selection.title || selection.username,
-        showSuggestions: false
+        showSuggestions: false,
       });
     }
   }
@@ -83,14 +83,14 @@ class Search extends Component {
     this.setState({
       searchString: '',
       selection: {},
-      showSuggestions: false
+      showSuggestions: false,
     });
   }
 
   render() {
     const {
       searchString,
-      showSuggestions
+      showSuggestions,
     } = this.state;
 
     const {
@@ -98,7 +98,7 @@ class Search extends Component {
       matches,
       theme,
       showButton = true,
-      placeholder = 'search'
+      placeholder = 'search',
     } = this.props;
 
     return (
@@ -139,7 +139,7 @@ Search.propTypes = {
   theme: PropTypes.string,
   showButton: PropTypes.bool,
   requireButtonClickForAction: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 Search.defaultProps = {
@@ -152,7 +152,7 @@ Search.defaultProps = {
   theme: '',
   showButton: true,
   requireButtonClickForAction: true,
-  children: null
+  children: null,
 };
 
 export default Search;

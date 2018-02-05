@@ -1,7 +1,7 @@
 import {
   movies as testMovies,
   extraMovies,
-  matchingMoviesList
+  matchingMoviesList,
 } from './_testData.js';
 
 // action types
@@ -20,8 +20,8 @@ function getMoviesAction(movies) {
   return {
     type: GET_MOVIES,
     payload: {
-      movies
-    }
+      movies,
+    },
   };
 }
 
@@ -29,8 +29,8 @@ function getMovieAction(movie) {
   return {
     type: GET_MOVIE,
     payload: {
-      movie
-    }
+      movie,
+    },
   };
 }
 
@@ -38,8 +38,8 @@ function getMatchingMoviesAction(searchMatches) {
   return {
     type: GET_MOVIES_MATCHING_SEARCH,
     payload: {
-      searchMatches
-    }
+      searchMatches,
+    },
   };
 }
 
@@ -49,8 +49,8 @@ function updateMovieRatingAction(movieId, rating, remarks) {
     payload: {
       movieId,
       rating,
-      remarks
-    }
+      remarks,
+    },
   };
 }
 
@@ -58,8 +58,8 @@ function addMovieRatingAction(movie) {
   return {
     type: ADD_MOVIE_RATING,
     payload: {
-      movie
-    }
+      movie,
+    },
   };
 }
 
@@ -88,9 +88,9 @@ export function addMovieRating(dispatch, id, rating, remarks, taggedFriends) {
     ...extraMovies[id],
     ratings: {
       ...extraMovies[id].ratings,
-      user: rating.toString()
+      user: rating.toString(),
     },
     remarks,
-    taggedFriends
+    taggedFriends,
   }));
 }

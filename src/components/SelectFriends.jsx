@@ -2,25 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { buttonColor, textColor, greenBanner } from '../util/constants.js';
-import { hasItem } from '../util/helpers.js';
+import { GREEN_BANNER, DARK } from '../util/themes.js';
 
 import { Button } from './_StyledComponents.jsx';
 import FriendSearch from './friends/FriendSearch.jsx';
 
 const Friends = styled.div.attrs({
-  className: 'selectable-friends'
+  className: 'selectable-friends',
 })`
   display: flex;
 `;
 
 const SelectableFriend = Button.extend.attrs({
-  className: 'selectable-friends-friend'
+  className: 'selectable-friends-friend',
 })`
   background-color: ${props => (props.isSelected ?
-    greenBanner['background-color'] : 'white')};
-  color: ${props => (props.isSelected ? 'white' : buttonColor)};
-  border: 1px solid ${props => (props.isSelected ? greenBanner.color : textColor)};
+    GREEN_BANNER.background : 'white')};
+  color: ${props => (props.isSelected ? 'white' : DARK.button.background)};
+  border: 1px solid ${props => (props.isSelected ? GREEN_BANNER.color : DARK.color)};
   border-radius: 3px;
   margin-right: 5px;
 
@@ -31,7 +30,7 @@ const SelectableFriend = Button.extend.attrs({
 
 const SelectFriends = ({
   friends,
-  onToggle
+  onToggle,
 }) => {
   function getOnToggleFriend(friendKey) {
     return () => onToggle(friendKey);
@@ -55,7 +54,7 @@ const SelectFriends = ({
 
 SelectFriends.propTypes = {
   friends: PropTypes.array.isRequired,
-  onToggle: PropTypes.func.isRequired
+  onToggle: PropTypes.func.isRequired,
 };
 
 export default SelectFriends;

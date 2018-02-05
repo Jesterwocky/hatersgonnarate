@@ -9,7 +9,7 @@ import MovieItem from './MovieItem.jsx';
 import {
   Link,
   List,
-  BlankListItem
+  BlankListItem,
 } from '../../_StyledComponents.jsx';
 
 const MoviesList = ({ movies = [], getMovie, updateRating }) => {
@@ -54,24 +54,24 @@ MoviesList.propTypes = {
     ratings: PropTypes.shape({
       user: PropTypes.string,
       friends: PropTypes.string,
-      sitewide: PropTypes.string
-    })
+      sitewide: PropTypes.string,
+    }),
   })),
   getMovie: PropTypes.func.isRequired,
-  updateRating: PropTypes.func.isRequired
+  updateRating: PropTypes.func.isRequired,
 };
 
 MoviesList.defaultProps = {
-  movies: []
+  movies: [],
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateRating: (id, rating) => updateMovieRating(dispatch, id, rating)
+    updateRating: (id, rating) => updateMovieRating(dispatch, id, rating),
   };
 }
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(MoviesList);

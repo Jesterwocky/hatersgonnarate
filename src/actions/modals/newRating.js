@@ -18,8 +18,8 @@ function updateNewMovieRatingAction(rating) {
   return {
     type: UPDATE_NEW_MOVIE_RATING,
     payload: {
-      rating
-    }
+      rating,
+    },
   };
 }
 
@@ -27,8 +27,8 @@ function updateNewMovieRemarksAction(remarks) {
   return {
     type: UPDATE_NEW_MOVIE_REMARKS,
     payload: {
-      remarks
-    }
+      remarks,
+    },
   };
 }
 
@@ -36,8 +36,8 @@ function addFriendToTagActions(friendKey) {
   return {
     type: ADD_FRIEND_TO_TAG,
     payload: {
-      friendKey
-    }
+      friendKey,
+    },
   };
 }
 
@@ -45,8 +45,8 @@ function removeFriendToTagActions(friendKey) {
   return {
     type: REMOVE_FRIEND_TO_TAG,
     payload: {
-      friendKey
-    }
+      friendKey,
+    },
   };
 }
 
@@ -55,13 +55,13 @@ export function addNewMovieAction(movie, friends) {
     type: CHANGE_NEW_MOVIE,
     payload: {
       movie,
-      friends: taggableFriends
-    }
+      friends: taggableFriends,
+    },
   };
 }
 
 const clearNewRatingAction = {
-  type: CLEAR_NEW_MOVIE
+  type: CLEAR_NEW_MOVIE,
 };
 
 // action dispatchers
@@ -104,6 +104,6 @@ export function clearNewRating(dispatch) {
 export function addNewMovie(dispatch, movie, friends) {
   dispatch(addNewMovieAction(
     modalMovieData[movie.id],
-    taggableFriends
+    taggableFriends,
   ));
 }

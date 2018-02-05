@@ -12,28 +12,28 @@ import {
   // Heading,
   SubHeading,
   Content,
-  Column
+  Column,
 } from './_StyledComponents.jsx';
 
 const Home = Page.extend.attrs({
-  className: 'page-home'
+  className: 'page-home',
 })``;
 
 const HomeContent = Content.extend.attrs({
-  className: 'page-home-content'
+  className: 'page-home-content',
 })``;
 
 const MainContent = Column.extend.attrs({
-  className: 'page-home-main'
+  className: 'page-home-main',
 })``;
 
 const MoviesSidebar = Column.extend.attrs({
   sidebar: 'true',
-  className: 'page-home-sidebar'
+  className: 'page-home-sidebar',
 })``;
 
 const HomeSubHeading = SubHeading.extend.attrs({
-  className: 'page-home-subheading'
+  className: 'page-home-subheading',
 })`
   font-size: 20px;
   display: flex;
@@ -93,11 +93,10 @@ HomePage.propTypes = {
   movies: PropTypes.object,
   getMovies: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,
-  updateMovieRating: PropTypes.func.isRequired
 };
 
 HomePage.defaultProps = {
-  movies: []
+  movies: [],
 };
 
 function mapStateToProps(state) {
@@ -114,5 +113,5 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(HomePage);

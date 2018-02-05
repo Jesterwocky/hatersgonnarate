@@ -1,10 +1,10 @@
 import {
   OPEN_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
 } from '../../actions/modals/modals.js';
 
 const initialState = {
-  modalName: null
+  modalName: null,
 };
 
 function reducer(state = initialState, action) {
@@ -13,12 +13,12 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         modalName: action.payload.modalName,
-        data: action.payload.data
+        data: action.payload.data,
       };
     case CLOSE_MODAL:
       return {
         modalName: null,
-        data: {}
+        data: {},
       };
     default:
       return state;

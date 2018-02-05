@@ -1,13 +1,13 @@
 import {
   GET_FRIENDS,
   GET_FRIEND,
-  GET_FRIENDS_MATCHING_SEARCH
+  GET_FRIENDS_MATCHING_SEARCH,
 } from '../actions/friends.js';
 
 const initialState = {
   friends: {},
   searchMatches: [],
-  currentFriend: {}
+  currentFriend: {},
 };
 
 function reducer(state = initialState, action) {
@@ -17,18 +17,18 @@ function reducer(state = initialState, action) {
         ...state,
         friends: {
           ...state.friends,
-          ...action.payload.friends
-        }
+          ...action.payload.friends,
+        },
       };
     case GET_FRIEND:
       return {
         ...state,
-        currentFriend: action.payload.friend
+        currentFriend: action.payload.friend,
       };
     case GET_FRIENDS_MATCHING_SEARCH:
       return {
         ...state,
-        searchMatches: action.payload.searchMatches
+        searchMatches: action.payload.searchMatches,
       };
     default:
       return state;

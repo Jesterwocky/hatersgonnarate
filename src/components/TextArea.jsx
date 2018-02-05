@@ -2,17 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {
-  buttonMinHeight,
-  headerColor,
-  fieldOnWhiteColor,
-  textColor,
-  themes,
-  lightTheme
-} from '../util/constants.js';
+import { DARK, LIGHT, themes } from '../util/themes.js';
 
 const Area = styled.textarea.attrs({
-  className: 'text-area'
+  className: 'text-area',
 })`
   flex: 1;
   font-size: 16px;
@@ -26,13 +19,13 @@ const Area = styled.textarea.attrs({
   height: ${props => (props.height ? `${props.height}px` : 'auto')};
   background-color: ${props => (
     props.theme === themes.LIGHT ?
-      lightTheme.field['background-color'] :
-      headerColor
+      LIGHT.fieldBackground :
+      DARK.header.background
   )};
   color: ${props => (
     props.theme === themes.LIGHT ?
-      lightTheme.field.color :
-      textColor
+      LIGHT.fieldColor :
+      DARK.color
   )};
 `;
 
@@ -57,14 +50,14 @@ TextArea.propTypes = {
   text: PropTypes.string,
   placeholder: PropTypes.string,
   onUpdateText: PropTypes.func,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 };
 
 TextArea.defaultProps = {
   text: '',
   placeholder: '',
   onUpdateText: null,
-  theme: ''
+  theme: '',
 };
 
 export default TextArea;

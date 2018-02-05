@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { Link } from './_StyledComponents.jsx';
-import { footerHeight, footerColor, pagePadding } from '../util/constants.js';
+import { footerHeight, footerBackground, pagePadding } from '../util/constants.js';
 
 const StyledFooter = styled.div`
   width: 100%;
@@ -13,7 +13,7 @@ const StyledFooter = styled.div`
   align-items: center;
   align-self: flex-end;
   color: white;
-  background-color: ${footerColor};
+  background-color: ${footerBackground};
   padding: 0 ${pagePadding};
   box-sizing: border-box; // don't count padding in width
 `;

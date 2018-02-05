@@ -7,8 +7,8 @@ export function getParties() {
   return {
     type: GET_PARTIES,
     payload: {
-      parties
-    }
+      parties,
+    },
   };
 }
 
@@ -16,7 +16,7 @@ export function updateNewParty(details) {
   return {
     type: UPDATE_NEW_PARTY,
     payload: {
-      details
-    }
+      details,
+    },
   };
 }

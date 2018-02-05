@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { ADD_MOVIE_MODAL, pageBackgroundColor, textColor } from '../util/constants.js';
+import { ADD_MOVIE_MODAL } from '../util/constants.js';
+import { DARK } from '../util/themes.js';
 
 import Footer from './Footer.jsx';
 import NavBar from './NavBar.jsx';
@@ -15,27 +17,32 @@ export const PageBase = styled.div`
   box-sizing: border-box; // ignore page padding in vh calc
   display: flex;
   flex-direction: column;
-  background-color: ${pageBackgroundColor};
-  color: ${textColor};
+  background-color: ${DARK.background};
+  color: ${DARK.color};
 `;
 
-const App = ({ openModal }) => {
-  return (
-    <PageBase>
-      <NavBar />
-      <HomePage />
-      <Footer />
-      {openModal === ADD_MOVIE_MODAL &&
-        <AddMovieModal />
-      }
-    </PageBase>
-  );
-}
+const App = ({ openModal }) => (
+  <PageBase>
+    <NavBar />
+    <HomePage />
+    <Footer />
+    {openModal === ADD_MOVIE_MODAL &&
+      <AddMovieModal />
+    }
+  </PageBase>
+);
 
+App.propTypes = {
+  openModal: PropTypes.string,
+};
+
+App.defaultProps = {
+  openModal: null,
+};
 
 function mapStateToProps(state) {
   return {
-    openModal: state.modals.modalName
+    openModal: state.modals.modalName,
   };
 }
 

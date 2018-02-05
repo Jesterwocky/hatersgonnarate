@@ -7,8 +7,8 @@ export function getUser() {
   return {
     type: GET_USER,
     payload: {
-      user
-    }
+      user,
+    },
   };
 }
 
@@ -16,7 +16,7 @@ export function updateUser(data) {
   return {
     type: GET_USER,
     payload: {
-      user: data
-    }
+      user: data,
+    },
   };
 }

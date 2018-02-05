@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
+import { buttonMinHeight } from '../util/constants.js';
 import {
-  buttonMinHeight,
-  headerColor,
-  textColor,
+  DARK,
+  LIGHT,
   themes,
-  lightTheme
-} from '../util/constants.js';
+} from '../util/themes.js';
 
 const Field = styled.input.attrs({
   type: 'text',
-  className: 'text-box'
+  className: 'text-box',
 })`
   flex: 1;
   font-size: 14px;
@@ -23,23 +22,28 @@ const Field = styled.input.attrs({
   width: 100%;
   min-height: ${buttonMinHeight};
   height: ${props => (props.height ? `${props.height}px` : 'auto')};
-  background-color: ${props => (
-    props.theme === themes.LIGHT ?
-      lightTheme.field['background-color'] :
-      headerColor
-  )};
-  color: ${props => (
-    props.theme === themes.LIGHT ?
-      lightTheme.field.color :
-      textColor
-  )};
+  color: ${DARK.color};
+  background-color: ${DARK.header.background};
+
+  &::placeholder {
+    color: #56558c; // TODO: darken DARK.color
+  }
+
+  ${props => props.theme === themes.LIGHT && css`
+    color: ${LIGHT.field.color};
+    background-color: ${LIGHT.field.background}
+
+    &::placeholder {
+      color: #d4d4f3; // TODO: lighten DARK.color
+    }
+  `}
 `;
 
 const TextBox = ({
   text,
   placeholder,
   onUpdateText,
-  theme
+  theme,
 }) => {
   function onChange(e) {
     if (typeof onUpdateText === 'function') {
@@ -61,14 +65,14 @@ TextBox.propTypes = {
   text: PropTypes.string,
   placeholder: PropTypes.string,
   onUpdateText: PropTypes.func,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 };
 
 TextBox.defaultProps = {
   text: '',
   placeholder: '',
   onUpdateText: null,
-  theme: ''
+  theme: '',
 };
 
 export default TextBox;

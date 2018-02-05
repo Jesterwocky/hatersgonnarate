@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     module.hot.accept('./AppConnected.jsx', () => {
       render(
         require('./AppConnected.jsx').default,
-        document.getElementById('root')
+        document.getElementById('root'),
       );
     });
   }

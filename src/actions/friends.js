@@ -10,8 +10,8 @@ function getFriendsAction(friends) {
   return {
     type: GET_FRIENDS,
     payload: {
-      friends
-    }
+      friends,
+    },
   };
 }
 
@@ -19,17 +19,17 @@ function getFriendAction(friend) {
   return {
     type: GET_FRIEND,
     payload: {
-      friend
-    }
-  }
+      friend,
+    },
+  };
 }
 
 function getMatchingFriendsAction(searchMatches) {
   return {
     type: GET_FRIENDS_MATCHING_SEARCH,
     payload: {
-      searchMatches
-    }
+      searchMatches,
+    },
   };
 }
 

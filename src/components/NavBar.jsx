@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { Link } from './_StyledComponents.jsx';
-import { footerHeight, headerColor, pagePadding } from '../util/constants.js';
+import { footerHeight, pagePadding } from '../util/constants.js';
+import { DARK } from '../util/themes.js';
 
 const StyledNavBar = styled.div`
   width: 100%;
@@ -12,7 +13,7 @@ const StyledNavBar = styled.div`
   justify-content: space-between;
   align-items: center;
   color: white;
-  background-color: ${headerColor};
+  background-color: ${DARK.header.background};
   padding: 0 ${pagePadding};
   box-sizing: border-box; // don't count padding in width
 `;
@@ -41,11 +42,11 @@ const NavBar = ({ isLoggedIn = false }) => (
 );
 
 NavBar.propTypes = {
-  isLoggedIn: PropTypes.bool
+  isLoggedIn: PropTypes.bool,
 };
 
 NavBar.defaultProps = {
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 export default NavBar;

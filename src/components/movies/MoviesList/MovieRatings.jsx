@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { defaultStarsWidth, textColor } from '../../../util/constants.js';
 import { hasKey } from '../../../util/helpers';
 
 import MovieRating from '../MovieRating/MovieRating.jsx';
@@ -27,7 +26,7 @@ const RatingsHeading = styled.span`
 const ratingLabels = {
   user: 'Me',
   friends: 'Friends',
-  sitewide: 'Everybody'
+  sitewide: 'Everybody',
 };
 
 const MovieRatings = ({ ratings = {}, movieId, updateRating }) => (
@@ -64,13 +63,13 @@ MovieRatings.propTypes = {
   ratings: PropTypes.shape({
     user: PropTypes.string,
     friends: PropTypes.string,
-    sitewide: PropTypes.string
+    sitewide: PropTypes.string,
   }),
-  updateRating: PropTypes.func.isRequired
+  updateRating: PropTypes.func.isRequired,
 };
 
 MovieRatings.defaultProps = {
-  ratings: {}
+  ratings: {},
 };
 
 export default MovieRatings;

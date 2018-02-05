@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { starColor, starBackground, themes } from '../../../util/constants.js';
+import { DARK, themes } from '../../../util/themes.js';
 
 const innerStarPercentReduction = 20;
 
 const StarContainer = styled.div.attrs({
-  className: 'star'
+  className: 'star',
 })`
   width: 100%;
   height: 100%;
@@ -36,7 +36,7 @@ const ClippedStar = styled.div`
 `;
 
 const OuterClippedStar = ClippedStar.extend.attrs({
-  className: 'star-outer-clip'
+  className: 'star-outer-clip',
 })`
   display: ${props => (props.theme === themes.LIGHT ? 'initial' : 'none')};
 `;
@@ -47,7 +47,7 @@ function getInnerStarSize(props) {
 }
 
 const InnerClippedStar = ClippedStar.extend.attrs({
-  className: 'star-inner-clip'
+  className: 'star-inner-clip',
 })`
   width: ${getInnerStarSize}%;
   height: ${getInnerStarSize}%;
@@ -68,13 +68,13 @@ const StarCore = styled.div`
 `;
 
 const StarBackgroundToMakeBorder = StarCore.extend.attrs({
-  className: 'star-border'
+  className: 'star-border',
 })`
   background-color: #af8918;
 `;
 
 const EmptyStar = StarCore.extend.attrs({
-  className: 'star-empty'
+  className: 'star-empty',
 })`
   background-color: white;
 `;
@@ -82,7 +82,7 @@ const EmptyStar = StarCore.extend.attrs({
 const StarHalf = styled.div`
   width: 50%;
   background-color: ${props => (
-    props.filled ? starColor : 'transparent'
+    props.filled ? DARK.star.color : 'transparent'
   )};
 `;
 
@@ -91,7 +91,7 @@ const MovieRatingStar = ({
   starNumber,
   rating,
   canEdit,
-  onUpdateRating
+  onUpdateRating,
 }) => {
   // TODO: better way to prevent click on a friend's rating or
   // sitewide rating from updating your rating (vs relying on 'edit' prop)
@@ -129,7 +129,7 @@ const MovieRatingStar = ({
             null
           }
         />
-    </InnerClippedStar>
+      </InnerClippedStar>
     </StarContainer>
   );
 };
@@ -139,12 +139,12 @@ MovieRatingStar.propTypes = {
   rating: PropTypes.number.isRequired,
   canEdit: PropTypes.bool,
   onUpdateRating: PropTypes.func.isRequired,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 };
 
 MovieRatingStar.defaultProps = {
   canEdit: false,
-  theme: ''
+  theme: '',
 };
 
 export default MovieRatingStar;

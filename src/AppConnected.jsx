@@ -1,8 +1,7 @@
 import React from 'react';
-import { render } from 'react-dom';
-import store from './store.js';
 import { Provider } from 'react-redux';
 
+import store from './store.js';
 import App from './components/App.jsx';
 
 const AppConnected = () => (

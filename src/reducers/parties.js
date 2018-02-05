@@ -1,15 +1,15 @@
 import {
   GET_PARTIES,
-  UPDATE_NEW_PARTY
+  UPDATE_NEW_PARTY,
 } from '../actions/parties.js';
 
 const initialState = {
   parties: {
     past: { total: '', partyDetails: {} },
-    upcoming: { total: '', partyDetails: {} }
+    upcoming: { total: '', partyDetails: {} },
   },
   currentParty: {},
-  newParty: {}
+  newParty: {},
 };
 
 function reducer(state = initialState, action) {
@@ -17,15 +17,15 @@ function reducer(state = initialState, action) {
     case GET_PARTIES:
       return {
         ...state,
-        parties: action.payload.parties
+        parties: action.payload.parties,
       };
     case UPDATE_NEW_PARTY:
       return {
         ...state,
         newParty: {
           ...state.newParty,
-          ...action.payload.details
-        }
+          ...action.payload.details,
+        },
       };
     default:
       return state;

@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {
-  modalBannerZIndex,
-  greenBanner
-} from '../../util/constants.js';
+import { modalBannerZIndex } from '../../util/constants.js';
+
+import { GREEN_BANNER } from '../../util/themes.js';
 
 const Banner = styled.div.attrs({
-  className: 'modal-banner'
+  className: 'modal-banner',
 })`
   z-index: ${modalBannerZIndex};
   box-sizing: border-box;
@@ -23,19 +22,19 @@ const Banner = styled.div.attrs({
   top: 15px;
   left: 0;
 
-  background-color: ${greenBanner['background-color']};
-  color: ${greenBanner.color};
+  background-color: ${GREEN_BANNER.background};
+  color: ${GREEN_BANNER.color};
 `;
 
 const CloseButton = styled.button.attrs({
-  className: 'modal-banner-closeicon'
+  className: 'modal-banner-closeicon',
 })`
   position: absolute;
   top: 7px;
   left: 7px;
 
   border: none;
-  color: ${greenBanner.color};
+  color: ${GREEN_BANNER.color};
   background-color: transparent;
 
   font-size: 18px;
@@ -47,7 +46,7 @@ const CloseButton = styled.button.attrs({
 `;
 
 const Content = styled.div.attrs({
-  className: 'modal-banner-content'
+  className: 'modal-banner-content',
 })``;
 
 const ModalBanner = ({ onClose, children }) => (
@@ -63,11 +62,11 @@ const ModalBanner = ({ onClose, children }) => (
 
 ModalBanner.propTypes = {
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 ModalBanner.defaultProps = {
-  children: null
+  children: null,
 };
 
 export default ModalBanner;

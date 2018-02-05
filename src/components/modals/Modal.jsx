@@ -7,13 +7,14 @@ import {
   modalPadding,
   modalZIndex,
   modalContentZIndex,
-  lightTheme
 } from '../../util/constants.js';
+
+import { LIGHT } from '../../util/themes.js';
 
 import { closeModal } from '../../actions/modals/modals.js';
 
 const Container = styled.div.attrs({
-  className: 'modal-container'
+  className: 'modal-container',
 })`
   position: fixed;
   display: flex;
@@ -24,7 +25,7 @@ const Container = styled.div.attrs({
 `;
 
 const Overlay = styled.div.attrs({
-  className: 'modal-overlay'
+  className: 'modal-overlay',
 })`
   position: absolute;
   top: 0;
@@ -37,10 +38,10 @@ const Overlay = styled.div.attrs({
 `;
 
 const ModalContent = styled.div.attrs({
-  className: 'modal-content'
+  className: 'modal-content',
 })`
   background-color: white;
-  color: ${lightTheme.color};
+  color: ${LIGHT.color};
   margin: auto;
   width: 60vw;
   min-width: 700px;
@@ -61,16 +62,17 @@ const Modal = ({ children, close }) => (
 );
 
 Modal.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  close: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    close: () => closeModal(dispatch)
+    close: () => closeModal(dispatch),
   };
 }
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Modal);

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { buttonMinHeight, buttonColor, themes } from '../../util/constants.js';
+import { buttonMinHeight } from '../../util/constants.js';
+import { DARK } from '../../util/themes.js';
 
 const Suggestions = styled.div.attrs({
-  className: 'search-suggestions'
+  className: 'search-suggestions',
 })`
   position: absolute;
   top: ${buttonMinHeight};
@@ -14,13 +15,13 @@ const Suggestions = styled.div.attrs({
   border-bottom-left-radius: 2px;
   padding: 5px;
 
-  background-color: ${buttonColor};
+  background-color: ${DARK.button.background};
   color: white;
   font-size: 14px;
 `;
 
 const Suggestion = styled.div.attrs({
-  className: 'movie-search-options-option'
+  className: 'movie-search-options-option',
 })`
   white-space: nowrap;
   padding: 7px 0;
@@ -52,7 +53,7 @@ const SearchSuggestions = ({ suggestions, onSelectSuggestion }) => {
 
 SearchSuggestions.propTypes = {
   suggestions: PropTypes.array.isRequired,
-  onSelectSuggestion: PropTypes.func.isRequired
+  onSelectSuggestion: PropTypes.func.isRequired,
 };
 
 export default SearchSuggestions;

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { themes, modalPadding } from '../../../util/constants.js';
+import { modalPadding } from '../../../util/constants.js';
+import { themes } from '../../../util/themes.js';
 import { hasItem } from '../../../util/helpers.js';
 
 // import actions
@@ -15,7 +16,7 @@ import {
   addNewMovie,
   clearNewRating,
   addFriendToTag,
-  removeFriendToTag
+  removeFriendToTag,
 } from '../../../actions/modals/newRating.js';
 import { addMovieRating } from '../../../actions/movies.js';
 
@@ -28,7 +29,7 @@ import {
   ModalText,
   ModalButton,
   ModalTextBox,
-  ModalTextArea
+  ModalTextArea,
 } from '../_StyledComponents.jsx';
 
 // import components
@@ -39,15 +40,15 @@ import SelectFriends from '../../SelectFriends.jsx';
 
 // styled components
 const AddMovie = styled(Modal).attrs({
-  className: 'modal-add-movie'
+  className: 'modal-add-movie',
 })``;
 
 const ForSelectedMovie = styled.div.attrs({
-  className: 'modal-addmovie-forselectedmovie'
+  className: 'modal-addmovie-forselectedmovie',
 })``;
 
 const MovieTitle = ModalHeading2.extend.attrs({
-  className: 'modal-addmovie-title'
+  className: 'modal-addmovie-title',
 })`
   font-size: 30px;
   color: black;
@@ -55,7 +56,7 @@ const MovieTitle = ModalHeading2.extend.attrs({
 `;
 
 const MovieBlurb = ModalText.extend.attrs({
-  className: 'modal-addmovie-blurb'
+  className: 'modal-addmovie-blurb',
 })`
   margin-bottom: 15px;
 `;
@@ -63,17 +64,17 @@ const MovieBlurb = ModalText.extend.attrs({
 // TODO: only show add button if user opens model without searching
 const ModalMovieSearch = styled(MovieSearch).attrs({
   className: 'modal-addmovie-search',
-  theme: themes.LIGHT
+  theme: themes.LIGHT,
 })``;
 
 const PromptText = ModalText.extend.attrs({
-  className: 'modal-addmovie-prompt'
+  className: 'modal-addmovie-prompt',
 })`
   margin: 10px 0 5px;
 `;
 
 const RatingContainer = styled.div.attrs({
-  className: 'modal-addmovie-rating-container'
+  className: 'modal-addmovie-rating-container',
 })`
   display: flex;
   justify-content: center;
@@ -82,28 +83,28 @@ const RatingContainer = styled.div.attrs({
 const Rating = styled(MovieRating).attrs({
   className: 'modal-addmovie-rating-stars',
   width: 300, // needed by MovieRating to calc star width
-  theme: themes.LIGHT
+  theme: themes.LIGHT,
 })``;
 
 const RemarksContainer = styled.div.attrs({
-  className: 'modal-addmovie-remarks'
+  className: 'modal-addmovie-remarks',
 })``;
 
 const Remarks = ModalTextArea.extend.attrs({
   className: 'modal-addmovie-rating-stars',
-  height: 75
+  height: 75,
 })``;
 
 const TagFriendsContainer = styled.div`
-  margin-top: 5px;
+  margin-top: 5px;,
 `;
 
 const TagFriends = styled(SelectFriends).attrs({
-  className: 'modal-addmovie-tagfriends'
+  className: 'modal-addmovie-tagfriends',
 })``;
 
 const ModalControls = styled.div.attrs({
-  className: 'modal-addmovie-controls'
+  className: 'modal-addmovie-controls',
 })`
   margin-top: ${modalPadding};
 `;
@@ -111,7 +112,7 @@ const ModalControls = styled.div.attrs({
 // component
 class AddMovieModal extends Component {
   state = {
-    showNotSeenItBanner: false
+    showNotSeenItBanner: false,
   }
 
   // TODO: better way to do this? sometimes get
@@ -119,7 +120,7 @@ class AddMovieModal extends Component {
   componentDidMount() {
     this.bannerTimer = setTimeout(() => {
       this.setState({
-        showNotSeenItBanner: true
+        showNotSeenItBanner: true,
       });
     }, 3000);
   }
@@ -132,7 +133,7 @@ class AddMovieModal extends Component {
       clearRating,
       rating,
       remarks,
-      taggedFriends
+      taggedFriends,
     } = this.props;
 
     saveRating(movie.id, rating, remarks, taggedFriends);
@@ -161,20 +162,20 @@ class AddMovieModal extends Component {
 
     if (this.state.showNotSeenItBanner) {
       this.setState({
-        showNotSeenItBanner: false
+        showNotSeenItBanner: false,
       });
     }
   }
 
   closeNotSeenIt = () => {
     this.setState({
-      showNotSeenItBanner: false
+      showNotSeenItBanner: false,
     });
   }
 
   openNotSeenIt = () => {
     this.setState({
-      showNotSeenItBanner: true
+      showNotSeenItBanner: true,
     });
   }
 
@@ -186,7 +187,7 @@ class AddMovieModal extends Component {
       friends,
       taggedFriends,
       updateRemarks,
-      changeMovie
+      changeMovie,
     } = this.props;
     const friendsInterested = ((movie.friends || {}).interested) || {};
     const savable = !!movie.id && !!rating;
@@ -256,7 +257,7 @@ class AddMovieModal extends Component {
                     // in future are ordered by something other than id
                     // (like value indicating relevance in current context)
                     friendKey: friends[friendKey].id,
-                    isSelected: hasItem(taggedFriends, friendKey)
+                    isSelected: hasItem(taggedFriends, friendKey),
                   }))
                 }
                 onToggle={this.onToggleFriend}
@@ -297,7 +298,7 @@ AddMovieModal.propTypes = {
   tagFriend: PropTypes.func.isRequired,
   untagFriend: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
-  saveRating: PropTypes.func.isRequired
+  saveRating: PropTypes.func.isRequired,
 };
 
 AddMovieModal.defaultProps = {
@@ -305,7 +306,7 @@ AddMovieModal.defaultProps = {
   rating: null,
   remarks: '',
   friends: {},
-  taggedFriends: []
+  taggedFriends: [],
 };
 
 // connect and export
@@ -315,7 +316,7 @@ function mapStateToProps(state) {
     rating: state.newRating.rating,
     remarks: state.newRating.remarks,
     friends: state.newRating.friends,
-    taggedFriends: state.newRating.taggedFriends
+    taggedFriends: state.newRating.taggedFriends,
   };
 }
 
@@ -331,11 +332,11 @@ function mapDispatchToProps(dispatch) {
     close: () => closeModal(dispatch),
     saveRating: (movieId, rating, remarks) => (
       addMovieRating(dispatch, movieId, rating, remarks)
-    )
+    ),
   };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(AddMovieModal);

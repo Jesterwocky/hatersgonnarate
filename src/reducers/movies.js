@@ -3,7 +3,7 @@ import {
   GET_MOVIE,
   ADD_MOVIE_RATING,
   UPDATE_MOVIE_RATING,
-  GET_MOVIES_MATCHING_SEARCH
+  GET_MOVIES_MATCHING_SEARCH,
 } from '../actions/movies.js';
 
 const initialState = {
@@ -15,14 +15,14 @@ const initialState = {
       title: '',
       friends: {
         sawIt: [],
-        interested: []
-      }
+        interested: [],
+      },
     },
     rating: '',
     remarks: '',
-    taggedFriends: []
+    taggedFriends: [],
   },
-  currentMovie: {}
+  currentMovie: {},
 };
 
 function reducer(state = initialState, action) {
@@ -36,9 +36,9 @@ function reducer(state = initialState, action) {
         ratings: {
           ...movie.ratings,
           user: ratingAsString,
-          userRemarks: remarks
-        }
-      }
+          userRemarks: remarks,
+        },
+      },
     };
   }
 
@@ -49,21 +49,21 @@ function reducer(state = initialState, action) {
         ...state,
         movies: {
           ...state.movies,
-          ...action.payload.movies
-        }
+          ...action.payload.movies,
+        },
       };
     case GET_MOVIE:
       return {
         ...state,
-        currentMovie: action.payload.movie
+        currentMovie: action.payload.movie,
       };
     case ADD_MOVIE_RATING:
       return {
         ...state,
         movies: {
           ...state.movies,
-          [action.payload.movie.id]: action.payload.movie
-        }
+          [action.payload.movie.id]: action.payload.movie,
+        },
       };
     case UPDATE_MOVIE_RATING:
       return {
@@ -73,14 +73,14 @@ function reducer(state = initialState, action) {
           ...getMovieWithUpdatedRating(
             action.payload.movieId,
             action.payload.rating,
-            action.payload.remarks
-          )
-        }
+            action.payload.remarks,
+          ),
+        },
       };
     case GET_MOVIES_MATCHING_SEARCH:
       return {
         ...state,
-        searchMatches: action.payload.searchMatches
+        searchMatches: action.payload.searchMatches,
       };
     default:
       return state;

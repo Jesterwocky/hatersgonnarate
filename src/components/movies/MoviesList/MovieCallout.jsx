@@ -40,16 +40,16 @@ const FightingWords = styled.div`
   margin-top: 5px;
 `;
 
-const typeLabels = {
-  shame: 'Shame',
-  applaud: 'Agree'
-};
+// const typeLabels = {
+//   shame: 'Shame',
+//   applaud: 'Agree'
+// };
 
 const MovieCallout = ({
   fromFriend,
   toFriend,
   type,
-  starter
+  starter,
 }) => (
   <CalloutContainer type={type}>
     <Versus>
@@ -69,13 +69,13 @@ const MovieCallout = ({
 
 MovieCallout.propTypes = {
   fromFriend: PropTypes.shape({
-    username: PropTypes.string
+    username: PropTypes.string,
   }).isRequired,
   toFriend: PropTypes.shape({
-    username: PropTypes.string
+    username: PropTypes.string,
   }).isRequired,
   type: PropTypes.string.isRequired,
-  starter: PropTypes.string.isRequired
-}
+  starter: PropTypes.string.isRequired,
+};
 
 export default MovieCallout;

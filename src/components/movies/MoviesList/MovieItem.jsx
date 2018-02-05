@@ -2,27 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { movieTitleColor, headerColor } from '../../../util/constants.js';
+import { DARK } from '../../../util/themes.js';
 
 import MovieRatings from './MovieRatings.jsx';
 import MovieCallout from './MovieCallout.jsx';
 import MovieComment from './MovieComment.jsx';
 
 import {
-  ListItem
+  ListItem,
 } from '../../_StyledComponents.jsx';
 
 const Movie = ListItem.extend`
   padding: 14px;
   margin-bottom: 10px;
   border-radius: 5px;
-  background-color: ${headerColor};
+  background-color: ${DARK.header.background};
 `;
 
 const MovieTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
-  color: ${movieTitleColor};
+  color: ${DARK.movieTitleColor};
   margin: 0 0 5px 0;
 `;
 
@@ -43,7 +43,7 @@ const MovieItem = ({
   activity,
 
   getMovie,
-  updateRating
+  updateRating,
 }) => {
   const hasCallouts =
     activity &&
@@ -117,12 +117,14 @@ MovieItem.propTypes = {
   getMovie: PropTypes.func.isRequired,
   updateRating: PropTypes.func.isRequired,
   blurb: PropTypes.string,
-  ratings: PropTypes.object
+  ratings: PropTypes.object,
+  activity: PropTypes.object,
 };
 
 MovieItem.defaultProps = {
   ratings: {},
   blurb: '',
+  activity: {},
 };
 
 export default MovieItem;

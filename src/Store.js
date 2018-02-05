@@ -13,7 +13,7 @@ const store = createStore(combineReducers({
   friends,
   parties,
   newRating,
-  modals
+  modals,
 }));
 
 export default store;

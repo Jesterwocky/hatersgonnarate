@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import {
-  modalBannerZIndex,
-  greenBanner
-} from '../../../util/constants.js';
-import {
   ModalHeading3,
   ModalButton,
-  Friend
+  Friend,
 } from '../_StyledComponents.jsx';
 
 import ModalBanner from '../ModalBanner.jsx';
 
 const BannerHeading = ModalHeading3.extend.attrs({
-  className: 'modal-addmovie-notseenit-heading'
+  className: 'modal-addmovie-notseenit-heading',
 })`
   font-style: italic;
   margin: 0 0 5px;
@@ -23,7 +19,7 @@ const BannerHeading = ModalHeading3.extend.attrs({
 `;
 
 const InterestedFriends = styled.div.attrs({
-  className: 'modal-addmovie-friendsInterested'
+  className: 'modal-addmovie-friendsInterested',
 })`
   font-size: 12px;
   margin-bottom: 5px;
@@ -33,7 +29,7 @@ const InterestedFriends = styled.div.attrs({
 `;
 
 const InterestedFriend = Friend.extend.attrs({
-  className: 'modal-addmovie-friendname'
+  className: 'modal-addmovie-friendname',
 })`
   background-color: white;
   padding: 5px 7px;
@@ -81,11 +77,11 @@ const NotSeenItBanner = ({ friendsInterested, onClose }) => (
 
 NotSeenItBanner.propTypes = {
   friendsInterested: PropTypes.array,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };
 
 NotSeenItBanner.defaultProps = {
-  friendsInterested: []
+  friendsInterested: [],
 };
 
 export default NotSeenItBanner;
