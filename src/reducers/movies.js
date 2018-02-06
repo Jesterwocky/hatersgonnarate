@@ -9,19 +9,6 @@ import {
 const initialState = {
   movies: {},
   searchMatches: [],
-  newRating: {
-    movie: {
-      id: '',
-      title: '',
-      friends: {
-        sawIt: [],
-        interested: [],
-      },
-    },
-    rating: '',
-    remarks: '',
-    taggedFriends: [],
-  },
   currentMovie: {},
 };
 

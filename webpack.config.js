@@ -7,12 +7,12 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'app'),
     filename: 'bundle.js',
-    publicPath: 'app/'
+    publicPath: 'app/',
   },
   watch: true,
   devServer: {
     contentBase: path.resolve(__dirname),
-    hot: true
+    hot: true,
   },
   module: {
     rules: [
@@ -24,28 +24,28 @@ module.exports = {
             loader: 'babel-loader',
             query: {
               presets: ['react', 'es2015'],
-              plugins: ['transform-class-properties']
-            }
-          }
+              plugins: ['transform-class-properties'],
+            },
+          },
         ],
         include: [
-          path.resolve(__dirname, 'src')
-        ]
+          path.resolve(__dirname, 'src'),
+        ],
       },
       {
         test: /\css?$/,
-        loader: 'style!css-loader'
-      }
-    ]
+        loader: 'style!css-loader',
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   stats: {
-    colors: true
+    colors: true,
   },
   devtool: 'inline-source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 };

@@ -32,16 +32,14 @@ const MovieSearch = ({
 MovieSearch.propTypes = {
   openAddMovieModal: PropTypes.func.isRequired,
   matches: PropTypes.array,
-  findMovies: PropTypes.func,
-  onMovieFound: PropTypes.func,
+  findMovies: PropTypes.func.isRequired,
+  onMovieFound: PropTypes.func.isRequired,
   confirmOnSelect: PropTypes.bool,
   children: PropTypes.node,
 };
 
 MovieSearch.defaultProps = {
   matches: [],
-  findMovies: null,
-  onMovieFound: null,
   confirmOnSelect: false,
   children: null,
 };

@@ -130,9 +130,7 @@ class Search extends Component {
 Search.propTypes = {
   findMatches: PropTypes.func,
   matches: PropTypes.array,
-  onSelectSuggestion: PropTypes.func,
   onConfirmFound: PropTypes.func,
-  confirmOnSelect: PropTypes.bool,
   placeholder: PropTypes.string,
   showButton: PropTypes.bool,
   requireButtonClickForAction: PropTypes.bool,
@@ -141,10 +139,8 @@ Search.propTypes = {
 
 Search.defaultProps = {
   matches: [],
-  onSelectSuggestion: null,
   findMatches: null,
   onConfirmFound: null,
-  confirmOnSelect: true,
   placeholder: 'search',
   showButton: true,
   requireButtonClickForAction: true,

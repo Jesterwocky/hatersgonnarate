@@ -8,8 +8,6 @@ import MovieSearch from '../movies/MovieSearch';
 
 import {
   Page,
-  // Heading,
-  SubHeading,
   Content,
   Column,
 } from './_StyledComponents';
@@ -30,15 +28,6 @@ const MoviesSidebar = Column.extend.attrs({
   sidebar: 'true',
   className: 'page-home-sidebar',
 })``;
-
-const HomeSubHeading = SubHeading.extend.attrs({
-  className: 'page-home-subheading',
-})`
-  font-size: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 
 class HomePage extends Component {
   componentWillMount() {
