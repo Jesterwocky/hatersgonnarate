@@ -1,6 +1,7 @@
 import {
-  movies as testMovies,
+  ratedMovies,
   extraMovies,
+  allMovies,
   matchingMoviesList,
 } from './_testData.js';
 
@@ -65,11 +66,11 @@ function addMovieRatingAction(movie) {
 
 // action dispatchers
 export function getMovies(dispatch) {
-  dispatch(getMoviesAction(testMovies));
+  dispatch(getMoviesAction(allMovies));
 }
 
 export function getMovie(dispatch, id) {
-  dispatch(getMovieAction(testMovies[id]));
+  dispatch(getMovieAction(ratedMovies[id]));
 }
 
 export function findMatchingMovies(dispatch, movieString) {

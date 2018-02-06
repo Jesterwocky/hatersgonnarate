@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import styled from 'styled-components';
 
 import { ADD_MOVIE_MODAL } from '../../util/constants';
 
 import { findMatchingMovies } from '../../actions/movies';
-import { openModal } from '../../actions/modals/modals';
+import { openModal } from '../../actions/modals';
 
 import Search from '../Search/Search';
 
@@ -33,13 +32,14 @@ MovieSearch.propTypes = {
   openAddMovieModal: PropTypes.func.isRequired,
   matches: PropTypes.array,
   findMovies: PropTypes.func.isRequired,
-  onMovieFound: PropTypes.func.isRequired,
+  onMovieFound: PropTypes.func,
   confirmOnSelect: PropTypes.bool,
   children: PropTypes.node,
 };
 
 MovieSearch.defaultProps = {
   matches: [],
+  onMovieFound: null,
   confirmOnSelect: false,
   children: null,
 };
@@ -56,7 +56,9 @@ function mapDispatchToProps(dispatch) {
     openAddMovieModal: movie => openModal(
       dispatch,
       ADD_MOVIE_MODAL,
-      { movie },
+      {
+        movieId: movie.id,
+      },
     ),
   };
 }

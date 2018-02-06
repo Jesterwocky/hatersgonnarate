@@ -1,191 +1,256 @@
 const userData = {
-  profilePicUrl: 'http://s266.photobucket.com/user/Fenrisfil/media/shepard-funny-face.jpg'
+  profilePicUrl: 'http://s266.photobucket.com/user/Fenrisfil/media/shepard-funny-face.jpg',
 };
 
 export const friends = {
   1234567890: {
     id: '1234567890',
     username: 'Frankfurt',
-    ...userData
+    ...userData,
   },
   1234567891: {
     id: '1234567891',
     username: 'Lenore',
-    ...userData
+    ...userData,
   },
   1234567892: {
     id: '1234567892',
     username: 'Nancy',
-    ...userData
+    ...userData,
   },
   1234567893: {
     id: '1234567893',
     username: 'Watson',
-    ...userData
+    ...userData,
   },
   1234567894: {
     id: '1234567894',
     username: 'Julie',
-    ...userData
-  }
+    ...userData,
+  },
 };
+
+export const contextualFriends = [
+  {
+    id: '1234567890',
+    username: friends['1234567890'].username,
+    saw: true,
+    wantToSee: false,
+    rating: '3',
+  },
+  {
+    id: '1234567891',
+    username: friends['1234567891'].username,
+    saw: true,
+    wantToSee: false,
+    rating: '5',
+  },
+  {
+    id: '1234567892',
+    username: friends['1234567892'].username,
+    saw: true,
+    wantToSee: false,
+    rating: '5',
+  },
+  {
+    id: '1234567894',
+    username: friends['1234567894'].username,
+    saw: false,
+    wantToSee: true,
+  },
+];
 
 const movieData = {
   ratings: {
-    user: '5',
+    user: '',
     friends: '3.5',
-    sitewide: '4.5'
+    sitewide: '4.5',
   },
   tagline: 'It is a movie',
-  blurb: 'Things happen. Sometimes, they happen too much.',
-  activity: {
-    callouts: [],
-    friendComments: [
+  blurb: 'The movie that changed everything',
+  callouts: [
+    {
+      id: '0002',
+      fromFriend: {
+        id: '1234567890',
+        username: friends['1234567890'].username,
+        profilePicUrl: userData.profilePicUrl,
+      },
+      toFriend: {
+        id: '1234567891',
+        username: friends[1234567891].username,
+        profilePicUrl: userData.profilePicUrl,
+      },
+      type: 'shame',
+      starter: 'You gotta be kidding me, dude!',
+    },
+    {
+      id: '0003',
+      fromFriend: {
+        id: '1234567891',
+        username: friends[1234567891].username,
+        profilePicUrl: userData.profilePicUrl,
+      },
+      toFriend: {
+        id: '1234567892',
+        username: friends['1234567892'].username,
+        profilePicUrl: userData.profilePicUrl,
+      },
+      type: 'applaud',
+      starter: 'I almost fell asleep, too',
+    },
+  ],
+  comments: {
+    byFriends: [
       {
         id: '1234567890',
         username: friends['1234567890'].username,
-        snippet: 'Omg overrated'
+        snippet: 'SO GOOD!!',
       },
       {
         id: '1234567891',
         username: friends[1234567891].username,
-        snippet: 'movie was fantastic!'
+        snippet: 'Meeehhhhh',
       },
       {
         id: '1234567892',
         username: friends['1234567892'].username,
-        snippet: 'I have soo much to say'
-      }
+        snippet: 'I fell asleep.',
+      },
     ],
-    strangerComments: [
-      {
-        id: '9999999999',
-        username: 'youDunnoMe',
-        snippet: 'La la la la'
-      }
-    ]
   },
+  byStrangers: [
+    {
+      id: '9999999999',
+      username: 'youDunnoMe',
+      snippet: 'La la la la',
+    },
+  ],
   friends: {
-    saw: {
-      total: '10',
-      friendDetails: [
-        {
-          ...friends['1234567890'],
-          rating: '3',
-          thoughts: 'I dont like music'
-        },
-        {
-          ...friends['1234567891'],
-          rating: '5',
-          thoughts: 'LOVE so much'
-        },
-        {
-          ...friends['1234567892'],
-          rating: '5',
-          thoughts: 'This movie is king'
-        }
-      ],
-      wantToSee: {
-        total: '1',
-        friendDetails: [
-          friends['1234567894']
-        ]
-      }
-    }
-  }
+    1234567890: {
+      username: friends[1234567890].username,
+      saw: true,
+      wantToSee: false,
+      rating: '5',
+      commentSnippet: 'SO GOOD!!',
+    },
+    1234567891: {
+      username: friends[1234567891].username,
+      saw: true,
+      wantToSee: false,
+      rating: '2',
+      commentSnippet: 'Meeehhhhh',
+    },
+    1234567892: {
+      username: friends[1234567892].username,
+      saw: true,
+      wantToSee: false,
+      rating: '3',
+      commentSnippet: 'I fell asleep.',
+    },
+    1234567894: {
+      username: friends[1234567894].username,
+      saw: false,
+      wantToSee: true,
+    },
+  },
 };
 
 export const friendsFull = {
   1234567894: {
     id: '1234567894',
     username: 'Julie',
-    topMovies: []
-  }
+    topMovies: [],
+  },
 };
 
-export const movies = {
+export const ratedMovies = {
   '00001': {
     title: 'Scott Pilgrim vs The World',
     id: '00001',
     ratings: {
       user: '5',
       friends: '4.5',
-      sitewide: '3.5'
+      sitewide: '3.5',
     },
     tagline: 'It is a movie',
     blurb: 'A guy fights some guys... and one girl!',
-    activity: {
-      callouts: [
-        {
-          id: '0001',
-          fromFriend: {
-            id: '1234567891',
-            username: friends[1234567891].username,
-            profilePicUrl: userData.profilePicUrl
-          },
-          toFriend: {
-            id: '1234567890',
-            username: friends['1234567890'].username,
-            profilePicUrl: userData.profilePicUrl
-          },
-          type: 'shame',
-          starter: 'This was a MASTERPIECE!'
+    callouts: [
+      {
+        id: '0001',
+        fromFriend: {
+          id: '1234567891',
+          username: friends[1234567891].username,
+          profilePicUrl: userData.profilePicUrl,
         },
-      ],
-      friendComments: [
+        toFriend: {
+          id: '1234567890',
+          username: friends['1234567890'].username,
+          profilePicUrl: userData.profilePicUrl,
+        },
+        type: 'shame',
+        starter: 'This was a MASTERPIECE!',
+      },
+    ],
+    comments: {
+      byFriends: [
         {
           id: '1234567890',
           username: friends['1234567890'].username,
-          snippet: 'Omg overrated'
+          snippet: 'Omg overrated',
         },
         {
           id: '1234567891',
           username: friends[1234567891].username,
-          snippet: 'movie was fantastic!'
+          snippet: 'movie was fantastic!',
         },
         {
           id: '1234567892',
           username: friends['1234567892'].username,
-          snippet: 'I have soo much to say'
-        }
+          snippet: 'I have soo much to say',
+        },
       ],
-      strangerComments: [
+      byStrangers: [
         {
           id: '9999999999',
           username: 'youDunnoMe',
-          snippet: 'La la la la'
-        }
-      ]
+          snippet: 'La la la la',
+        },
+      ],
     },
     friends: {
-      saw: {
-        total: '10',
-        friendDetails: [
-          {
-            ...friends['1234567890'],
-            rating: '1',
-            thoughts: 'Omg overrated'
-          },
-          {
-            ...friends['1234567891'],
-            rating: '5',
-            thoughts: 'movie was fantastic!'
-          },
-          {
-            ...friends['1234567892'],
-            rating: '4.5',
-            thoughts: 'I have soo much to say about this movie'
-          }
-        ],
-        wantToSee: {
-          total: '2',
-          friendDetails: [
-            friends['1234567893'],
-            friends['1234567894']
-          ]
-        }
-      }
-    }
+      1234567890: {
+        username: friends[1234567890].username,
+        saw: true,
+        wantToSee: false,
+        rating: '1',
+        commentSnippet: 'Omg overrated',
+      },
+      1234567891: {
+        username: friends[1234567891].username,
+        saw: true,
+        wantToSee: false,
+        rating: '5',
+        commentSnippet: 'movie was fantastic!',
+      },
+      1234567892: {
+        username: friends['1234567892'].username,
+        saw: true,
+        wantToSee: false,
+        rating: '4.5',
+        commentSnippet: 'I have soo much to say about this movie',
+      },
+      1234567893: {
+        username: friends['1234567893'].username,
+        saw: false,
+        wantToSee: true,
+      },
+      1234567894: {
+        username: friends['1234567894'].username,
+        saw: false,
+        wantToSee: true,
+      },
+    },
   },
   '00002': {
     title: 'Call Me By Your Name',
@@ -193,96 +258,96 @@ export const movies = {
     ratings: {
       user: '5',
       friends: '3.5',
-      sitewide: '4.5'
+      sitewide: '4.5',
     },
     tagline: 'The older guy is not 35.',
     blurb: 'That guy looks 35!',
-    activity: {
-      callouts: [
-        {
-          id: '0002',
-          fromFriend: {
-            id: '1234567890',
-            username: friends['1234567890'].username,
-            profilePicUrl: userData.profilePicUrl
-          },
-          toFriend: {
-            id: '1234567891',
-            username: friends[1234567891].username,
-            profilePicUrl: userData.profilePicUrl
-          },
-          type: 'shame',
-          starter: 'You gotta be kidding me, dude!'
+    callouts: [
+      {
+        id: '0002',
+        fromFriend: {
+          id: '1234567890',
+          username: friends['1234567890'].username,
+          profilePicUrl: userData.profilePicUrl,
         },
-        {
-          id: '0003',
-          fromFriend: {
-            id: '1234567891',
-            username: friends[1234567891].username,
-            profilePicUrl: userData.profilePicUrl
-          },
-          toFriend: {
-            id: '1234567892',
-            username: friends['1234567892'].username,
-            profilePicUrl: userData.profilePicUrl
-          },
-          type: 'applaud',
-          starter: 'I almost fell asleep, too'
-        }
-      ],
-      friendComments: [
+        toFriend: {
+          id: '1234567891',
+          username: friends[1234567891].username,
+          profilePicUrl: userData.profilePicUrl,
+        },
+        type: 'shame',
+        starter: 'You gotta be kidding me, dude!',
+      },
+      {
+        id: '0003',
+        fromFriend: {
+          id: '1234567891',
+          username: friends[1234567891].username,
+          profilePicUrl: userData.profilePicUrl,
+        },
+        toFriend: {
+          id: '1234567892',
+          username: friends['1234567892'].username,
+          profilePicUrl: userData.profilePicUrl,
+        },
+        type: 'applaud',
+        starter: 'I almost fell asleep, too',
+      },
+    ],
+    comments: {
+      byFriends: [
         {
           id: '1234567890',
           username: friends['1234567890'].username,
-          snippet: 'SO GOOD!!'
+          snippet: 'SO GOOD!!',
         },
         {
           id: '1234567891',
           username: friends[1234567891].username,
-          snippet: 'Meeehhhhh'
+          snippet: 'Meeehhhhh',
         },
         {
           id: '1234567892',
           username: friends['1234567892'].username,
-          snippet: 'I fell asleep.'
-        }
+          snippet: 'I fell asleep.',
+        },
       ],
-      strangerComments: [
-        {
-          id: '9999999999',
-          username: 'youDunnoMe',
-          snippet: 'La la la la'
-        }
-      ]
     },
+    byStrangers: [
+      {
+        id: '9999999999',
+        username: 'youDunnoMe',
+        snippet: 'La la la la',
+      },
+    ],
     friends: {
-      saw: {
-        total: '10',
-        friendDetails: [
-          {
-            ...friends['1234567890'],
-            rating: '5',
-            thoughts: 'SO GOOD!!'
-          },
-          {
-            ...friends['1234567891'],
-            rating: '2',
-            thoughts: 'Meeehhhhh'
-          },
-          {
-            ...friends['1234567892'],
-            rating: '3',
-            thoughts: 'I fell asleep.'
-          }
-        ],
-        wantToSee: {
-          total: '1',
-          friendDetails: [
-            friends['1234567894']
-          ]
-        }
-      }
-    }
+      1234567890: {
+        username: friends[1234567890].username,
+        saw: true,
+        wantToSee: false,
+        rating: '5',
+        commentSnippet: 'SO GOOD!!',
+      },
+      1234567891: {
+        username: friends[1234567891].username,
+        saw: true,
+        wantToSee: false,
+        rating: '2',
+        commentSnippet: 'Meeehhhhh',
+      },
+      1234567892: {
+        username: friends[1234567892].username,
+        saw: true,
+        wantToSee: false,
+        rating: '3',
+        commentSnippet: 'I fell asleep.',
+      },
+      1234567894: {
+        username: friends[1234567894].username,
+        saw: false,
+        wantToSee: true,
+      },
+    },
   },
   '00003': {
     title: 'Whiplash',
@@ -290,83 +355,82 @@ export const movies = {
     ratings: {
       user: '5',
       friends: '3.5',
-      sitewide: '4.5'
+      sitewide: '4.5',
     },
     tagline: 'It is not about Indiana Jones',
     blurb: 'NOT MY TEMPO',
-    activity: {
-      callouts: [],
-      friendComments: [],
-      strangerComments: [
+    callouts: [],
+    comments: {
+      byFriends: [],
+      byStrangers: [
         {
           id: '9999999999',
           username: 'youDunnoMe',
-          snippet: 'La la la la'
-        }
-      ]
+          snippet: 'La la la la',
+        },
+      ],
     },
     friends: {
-      saw: {
-        total: '10',
-        friendDetails: [
-          {
-            ...friends['1234567890'],
-            rating: '3',
-            thoughts: 'I dont like music'
-          },
-          {
-            ...friends['1234567891'],
-            rating: '5',
-            thoughts: 'LOVE so much'
-          },
-          {
-            ...friends['1234567892'],
-            rating: '5',
-            thoughts: 'This movie is king'
-          }
-        ],
-        wantToSee: {
-          total: '1',
-          friendDetails: [
-            friends['1234567894']
-          ]
-        }
-      }
-    }
-  }
+      1234567890: {
+        saw: true,
+        wantToSee: false,
+        rating: '3',
+        commentSnippet: 'I dont like music',
+      },
+      1234567891: {
+        saw: true,
+        wantToSee: false,
+        rating: '5',
+        commentSnippet: 'LOVE so much',
+      },
+      1234567892: {
+        saw: true,
+        wantToSee: false,
+        rating: '5',
+        commentSnippet: 'This movie is king',
+      },
+      1234567894: {
+        saw: false,
+        wantToSee: true,
+        commentSnippet: 'I wanna see it, but I dont wanna pay for it',
+      },
+    },
+  },
 };
 
 export const extraMovies = {
   '00004': {
     id: '00004',
     title: 'A Futile and Stupid Gesture',
-    ...movieData
+    ...movieData,
   },
   '00005': {
     id: '00005',
     title: 'StarWars: The Last Jedi',
-    ...movieData
+    ...movieData,
   },
   '00006': {
     id: '00006',
     title: 'StarWars: Rogue One',
-    ...movieData
-  }
+    ...movieData,
+  },
 };
+
+export const allMovies = Object.assign({}, ratedMovies, extraMovies);
 
 export const matchingMoviesList = [
   {
     id: '00004',
-    title: 'A Futile and Stupid Gesture'
+    title: 'A Futile and Stupid Gesture',
   },
   {
     id: '00005',
-    title: 'StarWars: The Last Jedi'
+    title: 'StarWars: The Last Jedi',
   },
   {
     id: '00006',
-    title: 'StarWars: Rogue One'
-  }
+    title: 'StarWars: Rogue One',
+  },
 ];
 
 export const matchingFriendsList = friends;
@@ -379,14 +443,14 @@ export const modalMovieData = {
     friends: {
       sawIt: [
         friends['1234567890'],
-        friends['1234567891']
+        friends['1234567891'],
       ],
       interested: [
         friends['1234567892'],
         friends['1234567893'],
-        friends['1234567894']
-      ]
-    }
+        friends['1234567894'],
+      ],
+    },
   },
   '00005': {
     id: '00005',
@@ -395,14 +459,14 @@ export const modalMovieData = {
     friends: {
       sawIt: [
         friends['1234567890'],
-        friends['1234567891']
+        friends['1234567891'],
       ],
       interested: [
         friends['1234567892'],
         friends['1234567893'],
-        friends['1234567894']
-      ]
-    }
+        friends['1234567894'],
+      ],
+    },
   },
   '00006': {
     id: '00006',
@@ -411,15 +475,15 @@ export const modalMovieData = {
     friends: {
       sawIt: [
         friends['1234567890'],
-        friends['1234567891']
+        friends['1234567891'],
       ],
       interested: [
         friends['1234567892'],
         friends['1234567893'],
-        friends['1234567894']
-      ]
-    }
-  }
+        friends['1234567894'],
+      ],
+    },
+  },
 };
 
 export const reRateMovieData = {
@@ -430,14 +494,14 @@ export const reRateMovieData = {
     {
       dateTime: 'yesterday',
       remarks: 'I mixed this up with another movie',
-      context: '2 months after first rating'
+      context: '2 months after first rating',
     },
     {
       dateTime: 'Jan 1, 2017',
       remarks: 'I mixed this up with another movie',
-      context: '2 months after first rating'
-    }
-  ]
+      context: '2 months after first rating',
+    },
+  ],
 };
 
 export const parties = {
@@ -445,10 +509,10 @@ export const parties = {
   pending: { total: 1, partyDetails: {} },
   upcoming: { total: 1, partyDetails: {} },
   newParty: {
-    movie: movies[0],
+    movie: ratedMovies[0],
     friends: [
       friends['1234567890'],
-      friends['1234567891']
+      friends['1234567891'],
     ],
     secret: true,
     when: {
@@ -457,10 +521,10 @@ export const parties = {
       year: '2018',
       time: {
         hours: '12',
-        minutes: '30'
-      }
+        minutes: '30',
+      },
     },
     location: 'some location indicator',
-    about: "Let's decide once and for all!!!"
-  }
+    about: "Let's decide once and for all!!!",
+  },
 };

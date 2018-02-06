@@ -35,34 +35,26 @@ const Callouts = styled.div`
   margin-top: 14px;
 `;
 
+const commentLimit = 3;
+
 const MovieItem = ({
   id,
   title,
-  ratings,
   blurb,
-  activity,
+  ratings,
+  callouts,
+  comments,
 
   getMovie,
   updateRating,
 }) => {
-  const hasCallouts =
-    activity &&
-    activity.callouts
-    && activity.callouts.length > 0;
+  const hasCallouts = callouts && callouts.length > 0;
 
-  const hasFriendComments =
-    !hasCallouts &&
-    activity &&
-    activity.friendComments.length > 0;
+  const hasFriendComments = comments &&
+    (comments.byFriend || []).length > 0;
 
-  const hasStrangerComments =
-    !hasCallouts &&
-    !hasFriendComments &&
-    activity &&
-    activity.strangerComments &&
-    activity.strangerComments.length > 0;
-
-  const haveNotSeenIt = false;
+  const hasStrangerComments = comments &&
+    (comments.byStrangers || []).length > 0;
 
   return (
     <Movie
@@ -70,10 +62,6 @@ const MovieItem = ({
       onClick={getMovie}
     >
       <MovieTitle>{title}</MovieTitle>
-
-      {haveNotSeenIt &&
-        <Blurb>{blurb}</Blurb>
-      }
 
       <MovieRatings
         movieId={id}
@@ -83,7 +71,7 @@ const MovieItem = ({
 
       {hasCallouts &&
         <Callouts>
-          {activity.callouts.map(callout => (
+          {callouts.map(callout => (
             <MovieCallout
               key={`callout-${callout.id}`}
               {...callout}
@@ -92,20 +80,22 @@ const MovieItem = ({
         </Callouts>
       }
 
-      {hasFriendComments && activity.friendComments.map(friendComment => (
-        <MovieComment
-          key={`comment-${id}-${friendComment.username}`}
-          type="friend"
-          {...friendComment}
-        />
+      {!hasCallouts && hasFriendComments &&
+        comments.byFriends.slice(0, commentLimit).map(friendComment => (
+          <MovieComment
+            key={`comment-${id}-${friendComment.username}`}
+            type="friend"
+            {...friendComment}
+          />
       ))}
 
-      {hasStrangerComments && activity.strangerComments.map(strangerComment => (
-        <MovieComment
-          key={`comment-${id}-${strangerComment.username}`}
-          type="friend"
-          {...strangerComment}
-        />
+      {!hasCallouts && !hasFriendComments && hasStrangerComments &&
+        comments.byStrangers.slice(0, commentLimit).map(strangerComment => (
+          <MovieComment
+            key={`comment-${id}-${strangerComment.username}`}
+            type="friend"
+            {...strangerComment}
+          />
       ))}
     </Movie>
   );
@@ -114,17 +104,20 @@ const MovieItem = ({
 MovieItem.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  getMovie: PropTypes.func.isRequired,
-  updateRating: PropTypes.func.isRequired,
   blurb: PropTypes.string,
   ratings: PropTypes.object,
-  activity: PropTypes.object,
+  callouts: PropTypes.array,
+  comments: PropTypes.object,
+
+  getMovie: PropTypes.func.isRequired,
+  updateRating: PropTypes.func.isRequired,
 };
 
 MovieItem.defaultProps = {
-  ratings: {},
   blurb: '',
-  activity: {},
+  ratings: {},
+  callouts: [],
+  comments: {},
 };
 
 export default MovieItem;

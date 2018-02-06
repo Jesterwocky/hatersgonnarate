@@ -1,7 +1,7 @@
 import {
   OPEN_MODAL,
   CLOSE_MODAL,
-} from '../../actions/modals/modals';
+} from '../actions/modals';
 
 const initialState = {
   modalName: null,

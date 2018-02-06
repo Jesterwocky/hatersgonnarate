@@ -11,7 +11,7 @@ import {
 
 import { LIGHT } from '../../util/themes';
 
-import { closeModal } from '../../actions/modals/modals';
+import { closeModal } from '../../actions/modals';
 
 const Container = styled.div.attrs({
   className: 'modal-container',

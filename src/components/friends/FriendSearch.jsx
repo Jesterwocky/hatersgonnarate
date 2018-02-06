@@ -1,4 +1,5 @@
-import React, { connect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Search from '../Search/Search';
 import {

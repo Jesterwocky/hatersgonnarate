@@ -7,6 +7,7 @@ import {
 } from '../actions/movies';
 
 const initialState = {
+  // TODO: differentiate rated vs unrated movies ?
   movies: {},
   searchMatches: [],
   currentMovie: {},

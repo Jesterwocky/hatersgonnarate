@@ -44,9 +44,9 @@ class HomePage extends Component {
 
     if (!movies) return [];
 
-    return Object.keys(movies).map(id => (
-      movies[id]
-    ));
+    return Object.keys(movies)
+      .filter(id => !!movies[id].ratings.user)
+      .map(id => movies[id]);
   }
 
   render() {

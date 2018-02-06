@@ -47,7 +47,6 @@ const SelectFriends = ({
           {friend.username}
         </SelectableFriend>
       ))}
-      <FriendSearch />
     </Friends>
   );
 };

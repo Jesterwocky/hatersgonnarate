@@ -12,7 +12,11 @@ import {
   BlankListItem,
 } from '../../_StyledComponents';
 
-const MoviesList = ({ movies = [], getMovie, updateRating }) => {
+const MoviesList = ({
+  movies = [],
+  getMovie,
+  updateRating,
+}) => {
   const hasMovies = movies.length > 0;
 
   function getUpdateRating(movieId) {
@@ -51,11 +55,8 @@ MoviesList.propTypes = {
     id: PropTypes.string,
     title: PropTypes.string,
     blurb: PropTypes.string,
-    ratings: PropTypes.shape({
-      user: PropTypes.string,
-      friends: PropTypes.string,
-      sitewide: PropTypes.string,
-    }),
+    ratings: PropTypes.object,
+    comments: PropTypes.object,
   })),
   getMovie: PropTypes.func.isRequired,
   updateRating: PropTypes.func.isRequired,
@@ -65,6 +66,12 @@ MoviesList.defaultProps = {
   movies: [],
 };
 
+function mapStateToProps(state) {
+  return {
+    friends: state.friends.friends,
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     updateRating: (id, rating) => updateMovieRating(dispatch, id, rating),
@@ -72,6 +79,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(MoviesList);

@@ -1,9 +1,7 @@
 import {
   modalMovieData,
-  friends as taggableFriends
+  contextualFriends
 } from '../_testData.js';
-
-import hasItem from '../../util/helpers.js';
 
 // action types
 export const CLEAR_NEW_MOVIE = 'CLEAR_NEW_MOVIE';
@@ -15,54 +13,83 @@ export const REMOVE_FRIEND_TO_TAG = 'REMOVE_FRIEND_TO_TAG';
 
 // action creators
 function updateNewMovieRatingAction(rating) {
-  return {
-    type: UPDATE_NEW_MOVIE_RATING,
-    payload: {
-      rating,
-    },
+  return (dispatch, getState) => {
+    const { selectedMovieId } = getState().new.rating;
+
+    dispatch({
+      type: UPDATE_NEW_MOVIE_RATING,
+      payload: {
+        movieId: selectedMovieId,
+        rating,
+      },
+    });
   };
 }
 
 function updateNewMovieRemarksAction(remarks) {
-  return {
-    type: UPDATE_NEW_MOVIE_REMARKS,
-    payload: {
-      remarks,
-    },
+  return (dispatch, getState) => {
+    const { selectedMovieId } = getState().new.rating;
+
+    dispatch({
+      type: UPDATE_NEW_MOVIE_REMARKS,
+      payload: {
+        movieId: selectedMovieId,
+        remarks,
+      },
+    });
   };
 }
 
 function addFriendToTagActions(friendKey) {
-  return {
-    type: ADD_FRIEND_TO_TAG,
-    payload: {
-      friendKey,
-    },
+  return (dispatch, getState) => {
+    const { selectedMovieId } = getState().new.rating;
+
+    dispatch({
+      type: ADD_FRIEND_TO_TAG,
+      payload: {
+        movieId: selectedMovieId,
+        friendKey,
+      },
+    });
   };
 }
 
 function removeFriendToTagActions(friendKey) {
-  return {
-    type: REMOVE_FRIEND_TO_TAG,
-    payload: {
-      friendKey,
-    },
+  return (dispatch, getState) => {
+    const { selectedMovieId } = getState().new.rating;
+
+    dispatch({
+      type: REMOVE_FRIEND_TO_TAG,
+      payload: {
+        movieId: selectedMovieId,
+        friendKey,
+      },
+    });
   };
 }
 
-export function addNewMovieAction(movie, friends) {
+export function addNewMovieAction(movieId, friends) {
   return {
     type: CHANGE_NEW_MOVIE,
     payload: {
-      movie,
-      friends: taggableFriends,
+      movieId,
+      friends,
     },
   };
 }
 
-const clearNewRatingAction = {
-  type: CLEAR_NEW_MOVIE,
-};
+export function clearNewRatingAction() {
+  return (dispatch, getState) => {
+    const { selectedMovieId } = getState().new.rating;
+
+    dispatch({
+      type: CLEAR_NEW_MOVIE,
+      payload: {
+        movieId: selectedMovieId,
+      },
+    });
+  };
+}
 
 // action dispatchers
 export function updateNewMovieRating(dispatch, rating) {
@@ -74,8 +101,8 @@ export function updateNewMovieRemarks(dispatch, remarks) {
 }
 
 // export function toggleFriendSelection(dispatch, friendKey) {
-//   return (getState) => {
-//     const currentState = getState();
+//   return (dispatch, getState) => {
+//     const currentState = getState().new.rating;
 //     if (hasItem(
 //       currentState.newRating.taggedFriends,
 //       friendKey
@@ -98,12 +125,12 @@ export function removeFriendToTag(dispatch, friendKey) {
 }
 
 export function clearNewRating(dispatch) {
-  dispatch(clearNewRatingAction);
+  dispatch(clearNewRatingAction());
 }
 
-export function addNewMovie(dispatch, movie, friends) {
+export function addNewMovie(dispatch, movieId, friends) {
   dispatch(addNewMovieAction(
-    modalMovieData[movie.id],
-    taggableFriends,
+    movieId,
+    contextualFriends,
   ));
 }

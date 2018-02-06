@@ -8,7 +8,7 @@ import { modalPadding } from '../../../util/constants';
 import { hasItem } from '../../../util/helpers';
 
 // import actions
-import { closeModal } from '../../../actions/modals/modals';
+import { closeModal } from '../../../actions/modals';
 import {
   updateNewMovieRating,
   updateNewMovieRemarks,
@@ -16,7 +16,7 @@ import {
   clearNewRating,
   addFriendToTag,
   removeFriendToTag,
-} from '../../../actions/modals/newRating';
+} from '../../../actions/unsavedData/newRating';
 import { addMovieRating } from '../../../actions/movies';
 
 // import styled components
@@ -126,16 +126,20 @@ class AddMovieModal extends Component {
 
   onSave = () => {
     const {
-      movie,
+      selectedMovieId,
+      ratingData,
       saveRating,
       close,
       clearRating,
+    } = this.props;
+
+    const {
       rating,
       remarks,
       taggedFriends,
-    } = this.props;
+    } = ratingData[selectedMovieId];
 
-    saveRating(movie.id, rating, remarks, taggedFriends);
+    saveRating(selectedMovieId, rating, remarks, taggedFriends);
     clearRating();
     close();
   }
@@ -143,7 +147,14 @@ class AddMovieModal extends Component {
   // TODO: use toggleFriendSelection action (to be added)
   // instead of checking here
   onToggleFriend = (friendKey) => {
-    const { taggedFriends, tagFriend, untagFriend } = this.props;
+    const {
+      selectedMovieId,
+      ratingData,
+      tagFriend,
+      untagFriend,
+    } = this.props;
+
+    const { taggedFriends } = ratingData[selectedMovieId];
 
     if (hasItem(taggedFriends, friendKey)) {
       untagFriend(friendKey);
@@ -180,16 +191,28 @@ class AddMovieModal extends Component {
 
   render() {
     const {
-      movie,
-      rating,
-      remarks,
-      friends,
-      taggedFriends,
+      selectedMovieId,
+      ratingData,
+
+      movies,
+
       updateRemarks,
       changeMovie,
     } = this.props;
-    const friendsInterested = ((movie.friends || {}).interested) || {};
-    const savable = !!movie.id && !!rating;
+
+    const {
+      rating,
+      remarks,
+      contextualFriends = [],
+      taggedFriends = [],
+    } = ratingData[selectedMovieId] || {};
+
+    const movie = movies[selectedMovieId];
+
+    const friendsInterested = contextualFriends
+      .filter(friend => friend.wantToSee);
+
+    const savable = !!selectedMovieId && !!rating;
 
     // TODO: if select movie they already saw, indicate re-rating
     // and show different options (like no "not seen it")
@@ -197,7 +220,7 @@ class AddMovieModal extends Component {
     // to people who are interested in seeing the movie
     return (
       <AddMovie>
-        {movie.id && this.state.showNotSeenItBanner &&
+        {selectedMovieId && this.state.showNotSeenItBanner &&
           <NotSeenItBanner
             friendsInterested={friendsInterested}
             onClose={this.closeNotSeenIt}
@@ -210,23 +233,22 @@ class AddMovieModal extends Component {
 
         <ModalMovieSearch
           onConfirmSelection={changeMovie}
-          showButton={!movie.id}
+          showButton={!selectedMovieId}
         >
           change movie
         </ModalMovieSearch>
 
-        <MovieTitle>{movie.title}</MovieTitle>
-
-        <MovieBlurb>
-          {movie.blurb}
-        </MovieBlurb>
-
-        {movie.id &&
+        {selectedMovieId &&
           <ForSelectedMovie>
+            <MovieTitle>{movie.title}</MovieTitle>
+
+            <MovieBlurb>
+              {movie.blurb}
+            </MovieBlurb>
 
             <RatingContainer>
               <Rating
-                movieId={movie.id}
+                movieId={selectedMovieId}
                 rating={rating}
                 onUpdateRating={this.updateRatingAndStopBanner}
                 canEdit
@@ -249,13 +271,12 @@ class AddMovieModal extends Component {
               </PromptText>
               <TagFriends
                 friends={
-                  Object.keys(friends)
-                  .map(friendKey => ({
-                    ...friends[friendKey],
+                  Object.keys(contextualFriends).map(friendKey => ({
+                    ...contextualFriends[friendKey],
                     // friendKey set explicitly in case friends
                     // in future are ordered by something other than id
                     // (like value indicating relevance in current context)
-                    friendKey: friends[friendKey].id,
+                    friendKey: contextualFriends[friendKey].id,
                     isSelected: hasItem(taggedFriends, friendKey),
                   }))
                 }
@@ -282,14 +303,10 @@ class AddMovieModal extends Component {
 
 // props
 AddMovieModal.propTypes = {
-  movie: PropTypes.object,
-  rating: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  remarks: PropTypes.string,
-  friends: PropTypes.object,
-  taggedFriends: PropTypes.array,
+  selectedMovieId: PropTypes.string,
+  ratingData: PropTypes.object, // keys are movie IDs
+  movies: PropTypes.object,
+
   updateRating: PropTypes.func.isRequired,
   updateRemarks: PropTypes.func.isRequired,
   clearRating: PropTypes.func.isRequired,
@@ -301,21 +318,17 @@ AddMovieModal.propTypes = {
 };
 
 AddMovieModal.defaultProps = {
-  movie: {},
-  rating: null,
-  remarks: '',
-  friends: {},
-  taggedFriends: [],
+  selectedMovieId: '',
+  ratingData: {},
+  movies: {},
 };
 
 // connect and export
 function mapStateToProps(state) {
   return {
-    movie: state.newRating.movie,
-    rating: state.newRating.rating,
-    remarks: state.newRating.remarks,
-    friends: state.newRating.friends,
-    taggedFriends: state.newRating.taggedFriends,
+    selectedMovieId: state.new.rating.selectedMovieId,
+    ratingData: state.new.rating.data,
+    movies: state.movies.movies,
   };
 }
 
@@ -326,12 +339,13 @@ function mapDispatchToProps(dispatch) {
     updateRemarks: remarks => updateNewMovieRemarks(dispatch, remarks),
     tagFriend: friendKey => addFriendToTag(dispatch, friendKey),
     untagFriend: friendKey => removeFriendToTag(dispatch, friendKey),
-    changeMovie: movie => addNewMovie(dispatch, movie),
+    changeMovie: movieId => addNewMovie(dispatch, movieId),
     clearRating: () => clearNewRating(dispatch),
     close: () => closeModal(dispatch),
     saveRating: (movieId, rating, remarks) => (
       addMovieRating(dispatch, movieId, rating, remarks)
     ),
+    getRelatedFriend: friendId => getFriendForNewRating(dispatch, friendId),
   };
 }
 

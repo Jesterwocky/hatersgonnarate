@@ -40,11 +40,6 @@ const FightingWords = styled.div`
   margin-top: 5px;
 `;
 
-// const typeLabels = {
-//   shame: 'Shame',
-//   applaud: 'Agree'
-// };
-
 const MovieCallout = ({
   fromFriend,
   toFriend,
