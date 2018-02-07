@@ -433,7 +433,8 @@ export const matchingMoviesList = [
   },
 ];
 
-export const matchingFriendsList = friends;
+export const matchingFriendsList = Object.keys(friends)
+  .map(friendKey => friends[friendKey]);
 
 export const modalMovieData = {
   '00004': {

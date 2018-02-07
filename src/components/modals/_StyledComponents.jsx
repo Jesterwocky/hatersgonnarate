@@ -26,7 +26,7 @@ export const ModalText = styled.p`
 
 export const ModalButton = Button.extend`
   font-size: 14px;
-  background-color: ${props => (props.disabled ? LIGHT.field.background : '')};
+  background-color: ${props => (props.disabled ? LIGHT.button.disabledBackground : '')};
 `;
 
 export const Friend = styled.span.attrs({

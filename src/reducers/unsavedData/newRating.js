@@ -3,8 +3,9 @@ import {
   CHANGE_NEW_MOVIE,
   UPDATE_NEW_MOVIE_RATING,
   UPDATE_NEW_MOVIE_REMARKS,
-  ADD_FRIEND_TO_TAG,
-  REMOVE_FRIEND_TO_TAG,
+  ADD_TAG_FRIEND,
+  REMOVE_TAG_FRIEND,
+  ADD_AND_TAG_CONTEXTUAL_FRIEND,
 } from '../../actions/unsavedData/newRating';
 
 const initialMovieState = {
@@ -27,17 +28,27 @@ function movieRatingReducer(state = initialMovieState, action) {
         ...state,
         rating: action.payload.rating,
       };
+
     case UPDATE_NEW_MOVIE_REMARKS:
       return {
         ...state,
         remarks: action.payload.remarks,
       };
-    case ADD_FRIEND_TO_TAG:
+
+    case ADD_AND_TAG_CONTEXTUAL_FRIEND:
+      return {
+        ...state,
+        contextualFriends: state.contextualFriends.concat([action.payload.friend]),
+        taggedFriends: state.taggedFriends.concat([action.payload.friend.id]),
+      };
+
+    case ADD_TAG_FRIEND:
       return {
         ...state,
         taggedFriends: state.taggedFriends.concat([action.payload.friendKey]),
       };
-    case REMOVE_FRIEND_TO_TAG: {
+
+    case REMOVE_TAG_FRIEND: {
       const indexOfFriend = state.taggedFriends.indexOf(action.payload.friendKey);
       return {
         ...state,
@@ -45,6 +56,7 @@ function movieRatingReducer(state = initialMovieState, action) {
           .concat(state.taggedFriends.slice(indexOfFriend + 1)),
       };
     }
+
     default:
       return state;
   }
@@ -59,47 +71,18 @@ const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_NEW_MOVIE_RATING:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [action.payload.movieId]: movieRatingReducer(
-            state.data[action.payload.movieId],
-            action,
-          ),
-        },
-      };
     case UPDATE_NEW_MOVIE_REMARKS:
+    case ADD_AND_TAG_CONTEXTUAL_FRIEND:
+    case ADD_TAG_FRIEND:
+    case REMOVE_TAG_FRIEND:
       return {
         ...state,
         data: {
-          ...state.data,
           [action.payload.movieId]: movieRatingReducer(
             state.data[action.payload.movieId],
             action,
           ),
         },
-      };
-
-    case ADD_FRIEND_TO_TAG:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [action.payload.movieId]: movieRatingReducer(
-            state.data[action.payload.movieId],
-            action,
-          ),
-        },
-      };
-
-    case REMOVE_FRIEND_TO_TAG:
-      return {
-        ...state,
-        [action.payload.movieId]: movieRatingReducer(
-          state.data[action.payload.movieId],
-          action,
-        ),
       };
 
     case CHANGE_NEW_MOVIE:

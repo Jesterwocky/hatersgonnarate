@@ -8,9 +8,7 @@ import { GREEN_BANNER } from '../../util/themes';
 
 const defaultTheme = GREEN_BANNER;
 
-const Banner = styled.div.attrs({
-  className: 'modal-banner',
-})`
+const Banner = styled.div`
   z-index: ${modalBannerZIndex};
   box-sizing: border-box;
   width: 100%;
@@ -51,8 +49,8 @@ const Content = styled.div.attrs({
   className: 'modal-banner-content',
 })``;
 
-const ModalBanner = ({ onClose, children }) => (
-  <Banner>
+const ModalBanner = ({ onClose, children, className }) => (
+  <Banner className={`modal-banner ${className}`}>
     <CloseButton onClick={onClose}>
       x
     </CloseButton>
@@ -65,10 +63,12 @@ const ModalBanner = ({ onClose, children }) => (
 ModalBanner.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 ModalBanner.defaultProps = {
   children: null,
+  className: '',
 };
 
 export default ModalBanner;

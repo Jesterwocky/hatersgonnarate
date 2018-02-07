@@ -12,6 +12,13 @@ import { GREEN_BANNER } from '../../../util/themes';
 
 import ModalBanner from '../ModalBanner';
 
+const NotSeenIt = styled(ModalBanner).attrs({
+  className: 'modal-addmovie-notseenit',
+})`
+  top: 200px;
+  height: 130px;
+`;
+
 const BannerHeading = ModalHeading3.extend.attrs({
   className: 'modal-addmovie-notseenit-heading',
 })`
@@ -55,7 +62,7 @@ const SeeItButton = ModalButton.extend`
 
 const NotSeenItBanner = ({ friendsInterested, onClose }) => (
   <ThemeProvider theme={GREEN_BANNER}>
-    <ModalBanner onClose={onClose}>
+    <NotSeenIt onClose={onClose}>
       <BannerHeading>
         Not seen it? {friendsInterested.length > 0 && 'These friends wanna watch it:'}
         {' '}
@@ -75,7 +82,7 @@ const NotSeenItBanner = ({ friendsInterested, onClose }) => (
         <SeeItButton>Schedule movie night</SeeItButton>
         <SeeItButton>Watch online</SeeItButton>
       </SeeItButtons>
-    </ModalBanner>
+    </NotSeenIt>
   </ThemeProvider>
 );
 

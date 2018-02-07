@@ -37,9 +37,7 @@ const Overlay = styled.div.attrs({
   z-index: ${modalZIndex};
 `;
 
-const ModalContent = styled.div.attrs({
-  className: 'modal-content',
-})`
+const ModalContent = styled.div`
   background-color: white;
   color: ${props => props.theme.color};
   margin: auto;
@@ -52,9 +50,9 @@ const ModalContent = styled.div.attrs({
   position: relative; // to position banner
 `;
 
-const Modal = ({ children, close }) => (
+const Modal = ({ children, close, className }) => (
   <ThemeProvider theme={LIGHT}>
-    <Container>
+    <Container className={`modal-content ${className}`}>
       <Overlay onClick={close} />
       <ModalContent>
         {children}
@@ -66,6 +64,11 @@ const Modal = ({ children, close }) => (
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   close: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+Modal.defaultProps = {
+  className: '',
 };
 
 function mapDispatchToProps(dispatch) {

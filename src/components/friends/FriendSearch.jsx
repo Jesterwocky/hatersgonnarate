@@ -3,46 +3,32 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Search from '../Search/Search';
 import {
-  findFriendsByNameOrUsername,
-  findFriendsByAttributes,
-  FIND_FRIEND_BY_NAME,
+  findFriendByName,
+  findPersonByIdentifier,
   FIND_PERSON_BY_IDENTIFIER,
-  FIND_FRIENDS_BY_ATTRIBUTES,
 } from '../../actions/friends';
 
 const FriendSearch = ({
-  matches,
   findBy,
-  findFriend,
-  findPerson,
   onFriendFound,
   children,
+
+  matches,
+  findFriend,
+  findPerson,
 }) => (
   <Search
     matches={matches}
-    findFriends={
+    findMatches={
       findBy === FIND_PERSON_BY_IDENTIFIER ?
         findPerson : findFriend
     }
-    onFriendFound={onFriendFound}
+    onConfirmFound={onFriendFound}
     placeholder="Find a friend"
   >
     {children}
   </Search>
 );
-
-function mapStateToProps(state) {
-  return {
-    matches: state.friends.searchMatches,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    findFriend: text => findFriendByName(dispatch, text),
-    findPerson: identifier => findPersonByIdentifier(dispatch, identifier),
-  };
-}
 
 FriendSearch.propTypes = {
   findBy: PropTypes.string,
@@ -58,6 +44,19 @@ FriendSearch.defaultProps = {
   matches: [],
   children: null,
 };
+
+function mapStateToProps(state) {
+  return {
+    matches: state.friends.searchMatches,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    findFriend: text => findFriendByName(dispatch, text),
+    findPerson: identifier => findPersonByIdentifier(dispatch, identifier),
+  };
+}
 
 export default connect(
   mapStateToProps,

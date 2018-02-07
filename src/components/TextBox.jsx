@@ -9,7 +9,6 @@ const defaultTheme = DARK;
 
 const Field = styled.input.attrs({
   type: 'text',
-  className: 'text-box',
 })`
   flex: 1;
   font-size: 14px;
@@ -33,7 +32,7 @@ const TextBox = ({
   text,
   placeholder,
   onUpdateText,
-  theme,
+  className,
 }) => {
   function onChange(e) {
     if (typeof onUpdateText === 'function') {
@@ -43,7 +42,7 @@ const TextBox = ({
 
   return (
     <Field
-      theme={theme}
+      className={`text-box ${className}`}
       value={text}
       onChange={onChange}
       placeholder={placeholder}
@@ -55,12 +54,14 @@ TextBox.propTypes = {
   text: PropTypes.string,
   placeholder: PropTypes.string,
   onUpdateText: PropTypes.func,
+  className: PropTypes.string,
 };
 
 TextBox.defaultProps = {
   text: '',
   placeholder: '',
   onUpdateText: null,
+  className: '',
 };
 
 export default TextBox;

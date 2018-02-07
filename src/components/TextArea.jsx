@@ -6,9 +6,7 @@ import { DARK } from '../util/themes';
 
 const defaultTheme = DARK;
 
-const Area = styled.textarea.attrs({
-  className: 'text-area',
-})`
+const Area = styled.textarea`
   flex: 1;
   font-size: 16px;
   padding: 15px;
@@ -23,7 +21,12 @@ const Area = styled.textarea.attrs({
   background-color: ${props => (props.theme.field || defaultTheme.field).background};
 `;
 
-const TextArea = ({ text, placeholder, onUpdateText }) => {
+const TextArea = ({
+  text,
+  placeholder,
+  onUpdateText,
+  className,
+}) => {
   function onChange(e) {
     if (typeof onUpdateText === 'function') {
       onUpdateText(e.currentTarget.value);
@@ -32,6 +35,7 @@ const TextArea = ({ text, placeholder, onUpdateText }) => {
 
   return (
     <Area
+      className={`text-area ${className}`}
       value={text}
       onChange={onChange}
       placeholder={placeholder}
@@ -43,12 +47,14 @@ TextArea.propTypes = {
   text: PropTypes.string,
   placeholder: PropTypes.string,
   onUpdateText: PropTypes.func,
+  className: PropTypes.string,
 };
 
 TextArea.defaultProps = {
   text: '',
   placeholder: '',
   onUpdateText: null,
+  className: '',
 };
 
 export default TextArea;

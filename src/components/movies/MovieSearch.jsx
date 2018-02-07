@@ -15,18 +15,24 @@ const MovieSearch = ({
   onMovieFound,
   openAddMovieModal,
   confirmOnSelect,
+  showButton,
   children,
-}) => (
-  <Search
-    matches={matches}
-    findMatches={findMovies}
-    onConfirmFound={onMovieFound || openAddMovieModal}
-    confirmOnSelect={confirmOnSelect}
-    placeholder="Search for a movie"
-  >
-    {children}
-  </Search>
-);
+  className,
+}) => {
+  return (
+    <Search
+      className={`search ${className}`}
+      matches={matches}
+      findMatches={findMovies}
+      onConfirmFound={onMovieFound || openAddMovieModal}
+      confirmOnSelect={confirmOnSelect}
+      showButton={showButton}
+      placeholder="Search for a movie"
+    >
+      {children}
+    </Search>
+  );
+};
 
 MovieSearch.propTypes = {
   openAddMovieModal: PropTypes.func.isRequired,
@@ -34,14 +40,18 @@ MovieSearch.propTypes = {
   findMovies: PropTypes.func.isRequired,
   onMovieFound: PropTypes.func,
   confirmOnSelect: PropTypes.bool,
+  showButton: PropTypes.bool,
   children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 MovieSearch.defaultProps = {
   matches: [],
   onMovieFound: null,
   confirmOnSelect: false,
+  showButton: true,
   children: null,
+  className: '',
 };
 
 function mapStateToProps(state) {

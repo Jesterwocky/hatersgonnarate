@@ -16,6 +16,7 @@ import {
   clearNewRating,
   addFriendToTag,
   removeFriendToTag,
+  addAndTagContextualFriend,
 } from '../../../actions/unsavedData/newRating';
 import { addMovieRating } from '../../../actions/movies';
 
@@ -63,8 +64,9 @@ const MovieBlurb = ModalText.extend.attrs({
 // TODO: only show add button if user opens model without searching
 const ModalMovieSearch = styled(MovieSearch).attrs({
   className: 'modal-addmovie-search',
-  // theme: themes.LIGHT,
-})``;
+})`
+  margin-bottom: ${props => (props.giveExtraSpace ? '15px' : '0')};
+`;
 
 const PromptText = ModalText.extend.attrs({
   className: 'modal-addmovie-prompt',
@@ -82,7 +84,6 @@ const RatingContainer = styled.div.attrs({
 const Rating = styled(MovieRating).attrs({
   className: 'modal-addmovie-rating-stars',
   width: 300, // needed by MovieRating to calc star width
-  // theme: themes.LIGHT,
 })``;
 
 const RemarksContainer = styled.div.attrs({
@@ -177,6 +178,10 @@ class AddMovieModal extends Component {
     }
   }
 
+  rateDifferentMovie = (movie) => {
+    this.props.changeMovie(movie.id);
+  }
+
   closeNotSeenIt = () => {
     this.setState({
       showNotSeenItBanner: false,
@@ -193,11 +198,9 @@ class AddMovieModal extends Component {
     const {
       selectedMovieId,
       ratingData,
-
       movies,
-
       updateRemarks,
-      changeMovie,
+      addAndTagFriend,
     } = this.props;
 
     const {
@@ -220,7 +223,7 @@ class AddMovieModal extends Component {
     // to people who are interested in seeing the movie
     return (
       <AddMovie>
-        {selectedMovieId && this.state.showNotSeenItBanner &&
+        {!!selectedMovieId && this.state.showNotSeenItBanner &&
           <NotSeenItBanner
             friendsInterested={friendsInterested}
             onClose={this.closeNotSeenIt}
@@ -232,13 +235,15 @@ class AddMovieModal extends Component {
         </ModalTitle>
 
         <ModalMovieSearch
-          onConfirmSelection={changeMovie}
-          showButton={!selectedMovieId}
+          onMovieFound={this.rateDifferentMovie}
+          confirmOnSelect={!selectedMovieId}
+          showButton={!!selectedMovieId}
+          giveExtraSpace={!selectedMovieId}
         >
           change movie
         </ModalMovieSearch>
 
-        {selectedMovieId &&
+        {!!selectedMovieId &&
           <ForSelectedMovie>
             <MovieTitle>{movie.title}</MovieTitle>
 
@@ -271,31 +276,26 @@ class AddMovieModal extends Component {
               </PromptText>
               <TagFriends
                 friends={
-                  Object.keys(contextualFriends).map(friendKey => ({
-                    ...contextualFriends[friendKey],
-                    // friendKey set explicitly in case friends
-                    // in future are ordered by something other than id
-                    // (like value indicating relevance in current context)
-                    friendKey: contextualFriends[friendKey].id,
-                    isSelected: hasItem(taggedFriends, friendKey),
+                  contextualFriends.map(friend => ({
+                    ...friend,
+                    isSelected: hasItem(taggedFriends, friend.id),
                   }))
                 }
                 onToggle={this.onToggleFriend}
+                onFriendFound={addAndTagFriend}
               />
             </TagFriendsContainer>
 
+            <ModalControls>
+              <ModalButton
+                onClick={this.onSave}
+                disabled={!savable}
+              >
+                Done
+              </ModalButton>
+            </ModalControls>
           </ForSelectedMovie>
         }
-
-        <ModalControls>
-          <ModalButton
-            onClick={this.onSave}
-            disabled={!savable}
-          >
-            Done
-          </ModalButton>
-        </ModalControls>
-
       </AddMovie>
     );
   }
@@ -313,6 +313,7 @@ AddMovieModal.propTypes = {
   changeMovie: PropTypes.func.isRequired,
   tagFriend: PropTypes.func.isRequired,
   untagFriend: PropTypes.func.isRequired,
+  addAndTagFriend: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   saveRating: PropTypes.func.isRequired,
 };
@@ -339,13 +340,13 @@ function mapDispatchToProps(dispatch) {
     updateRemarks: remarks => updateNewMovieRemarks(dispatch, remarks),
     tagFriend: friendKey => addFriendToTag(dispatch, friendKey),
     untagFriend: friendKey => removeFriendToTag(dispatch, friendKey),
+    addAndTagFriend: friend => addAndTagContextualFriend(dispatch, friend),
     changeMovie: movieId => addNewMovie(dispatch, movieId),
     clearRating: () => clearNewRating(dispatch),
     close: () => closeModal(dispatch),
     saveRating: (movieId, rating, remarks) => (
       addMovieRating(dispatch, movieId, rating, remarks)
     ),
-    getRelatedFriend: friendId => getFriendForNewRating(dispatch, friendId),
   };
 }
 

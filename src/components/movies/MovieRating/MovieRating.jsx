@@ -6,9 +6,7 @@ import { movieRatingsOutOf } from '../../../util/constants';
 
 import MovieRatingStar from './MovieRatingStar';
 
-const Rating = styled.div.attrs({
-  className: 'movie-rating-stars',
-})`
+const Rating = styled.div`
   width: ${props => props.width}px;
   height: ${props => props.width / movieRatingsOutOf}px;
   display: grid;
@@ -22,8 +20,10 @@ const MovieRating = ({
   canEdit = false,
   rating = 0.5,
   onUpdateRating,
+  className,
 }) => (
   <Rating
+    className={`movie-rating-stars ${className}`}
     width={width}
     canEdit={canEdit}
   >
@@ -50,11 +50,13 @@ MovieRating.propTypes = {
   ]),
   onUpdateRating: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
+  className: PropTypes.string,
 };
 
 MovieRating.defaultProps = {
   canEdit: false,
   rating: 0.5,
+  className: '',
 };
 
 export default MovieRating;

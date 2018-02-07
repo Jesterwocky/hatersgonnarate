@@ -47,12 +47,15 @@ export const LIGHT = { // modals and stuff
   color: '#8685dc',
   field: {
     color: buttonBackground,
-    background: '#e7e7fb',
+    background: '#f4f4fd',
     placholderColor: '#bab8ea',
   },
   star: {
     ...starBaseStyling,
     hasBorder: true,
+  },
+  button: {
+    disabledBackground: '#dadaf7',
   },
 };
 

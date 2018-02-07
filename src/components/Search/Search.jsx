@@ -8,9 +8,7 @@ import { Button } from '../_StyledComponents';
 import TextBox from '../TextBox';
 import SearchSuggestions from './SearchSuggestions';
 
-const SearchContainer = styled.div.attrs({
-  className: 'search',
-})`
+const SearchContainer = styled.div`
   width: 100%;
   display: flex;
 `;
@@ -63,7 +61,7 @@ class Search extends Component {
     // but no click is required, selecting a suggestion is equivalent to
     // selecting a suggestion AND then clicking search/ go / add
     if (!showButton || !requireButtonClickForAction) {
-      this.confirmFoundAndClearSearch();
+      this.confirmFoundAndClearSearch(selection);
     } else {
       this.setState({
         selection,
@@ -97,11 +95,12 @@ class Search extends Component {
       children,
       matches,
       showButton = true,
+      className,
       placeholder = 'search',
     } = this.props;
 
     return (
-      <SearchContainer>
+      <SearchContainer className={`search ${className}`}>
         {showButton &&
           <AddButton onClick={this.onItemFound}>
             {children || '+'}
@@ -128,23 +127,23 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  findMatches: PropTypes.func,
+  findMatches: PropTypes.func.isRequired,
+  onConfirmFound: PropTypes.func.isRequired,
   matches: PropTypes.array,
-  onConfirmFound: PropTypes.func,
   placeholder: PropTypes.string,
   showButton: PropTypes.bool,
   requireButtonClickForAction: PropTypes.bool,
   children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 Search.defaultProps = {
   matches: [],
-  findMatches: null,
-  onConfirmFound: null,
   placeholder: 'search',
   showButton: true,
   requireButtonClickForAction: true,
   children: null,
+  className: '',
 };
 
 export default Search;
