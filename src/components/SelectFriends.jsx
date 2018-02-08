@@ -12,11 +12,14 @@ const SelectFriendsContainer = styled.div.attrs({
   className: 'selectfriends',
 })`
   display: flex;
+  flex-direction: column;
 `;
 
 const Friends = styled.div.attrs({
   className: 'selectfriends-friends',
-})``;
+})`
+  margin-bottom: 5px;
+`;
 
 const Friend = Button.extend.attrs({
   className: 'selectfriends-friend',
@@ -26,11 +29,15 @@ const Friend = Button.extend.attrs({
   color: ${props => (props.isSelected ?
     'white' : DARK.button.background
   )};
-  border: 2px solid ${props => (props.isSelected ?
-    '#4fc196' : '#e4e4ff'
+  border: 1px solid ${props => (props.isSelected ?
+    GREEN.background : '#e4e4ff'
   )};
   border-radius: 2px;
-  margin-right: 5px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  padding: 0 10px;
+  font-size: 12px;
+  height: 32px;
 
   &:hover {
     cursor: pointer;
@@ -42,11 +49,16 @@ const SelectFriends = ({
   friends,
   onToggle,
   onFriendFound,
-  className,
   allowSearch = true,
 }) => {
   function getOnToggleFriend(id) {
     return () => onToggle(id);
+  }
+
+  function onFind(friend) {
+    if (Object.keys(friend).length === 0) return;
+
+    onFriendFound(friend);
   }
 
   return (
@@ -64,7 +76,7 @@ const SelectFriends = ({
       </Friends>
       {allowSearch &&
         <FriendSearch
-          onFriendFound={onFriendFound}
+          onFriendFound={onFind}
         />
       }
     </SelectFriendsContainer>
@@ -76,12 +88,10 @@ SelectFriends.propTypes = {
   friends: PropTypes.array.isRequired,
   onToggle: PropTypes.func.isRequired,
   onFriendFound: PropTypes.func.isRequired,
-  className: PropTypes.string,
   allowSearch: PropTypes.bool,
 };
 
 SelectFriends.defaultProps = {
-  className: '',
   allowSearch: true,
 };
 

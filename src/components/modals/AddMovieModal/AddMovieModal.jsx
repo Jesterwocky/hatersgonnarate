@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import { modalPadding } from '../../../util/constants';
 import { hasItem } from '../../../util/helpers';
+import { FIELD_SIZE_SMALL, FIELD_SIZE_NORMAL } from '../../../util/themes';
 
 // import actions
 import { closeModal } from '../../../actions/modals';
@@ -55,17 +56,20 @@ const MovieBlurb = ModalText.extend.attrs({
   margin-bottom: 15px;
 `;
 
-// TODO: only show add button if user opens model without searching
-const ModalMovieSearch = styled(MovieSearch).attrs({
-  className: 'modal-addmovie-search',
+const ModalMovieSearchContainer = styled.div.attrs({
+  className: 'modal-addmovie-searchcontainer',
 })`
-  margin-bottom: ${props => (props.giveExtraSpace ? '15px' : '0')};
+  margin-bottom: ${props => (props.modalContainsOnlySearch ? '15px' : '0')}
 `;
 
 const PromptText = ModalText.extend.attrs({
   className: 'modal-addmovie-prompt',
 })`
   margin: 10px 0 5px;
+`;
+
+const RemarksPromptText = PromptText.extend`
+  margin-top: 3px;
 `;
 
 const RatingContainer = styled.div.attrs({
@@ -225,14 +229,18 @@ class AddMovieModal extends Component {
           Rate Movie
         </ModalTitle>
 
-        <ModalMovieSearch
-          onMovieFound={this.rateDifferentMovie}
-          confirmOnSelect={!selectedMovieId}
-          showButton={!!selectedMovieId}
-          giveExtraSpace={!selectedMovieId}
-        >
-          change movie
-        </ModalMovieSearch>
+        <ThemeProvider theme={selectedMovieId ? FIELD_SIZE_SMALL : FIELD_SIZE_NORMAL}>
+          <ModalMovieSearchContainer modalContainsOnlySearch={!selectedMovieId}>
+            <MovieSearch
+              onMovieFound={this.rateDifferentMovie}
+              confirmOnSelect={!selectedMovieId}
+              showButton={!!selectedMovieId}
+              giveExtraSpace={!selectedMovieId}
+            >
+              change movie
+            </MovieSearch>
+          </ModalMovieSearchContainer>
+        </ThemeProvider>
 
         {!!selectedMovieId &&
           <ForSelectedMovie>
@@ -252,9 +260,9 @@ class AddMovieModal extends Component {
             </RatingContainer>
 
             <RemarksContainer>
-              <PromptText>
+              <RemarksPromptText>
                 What did you think?
-              </PromptText>
+              </RemarksPromptText>
               <Remarks
                 onUpdateText={updateRemarks}
                 text={remarks}
@@ -265,16 +273,19 @@ class AddMovieModal extends Component {
               <PromptText>
                 Select friends - let them know you rated {movie.title}
               </PromptText>
-              <SelectFriends
-                friends={
-                  contextualFriends.map(friend => ({
-                    ...friend,
-                    isSelected: hasItem(taggedFriends, friend.id),
-                  }))
-                }
-                onToggle={this.onToggleFriend}
-                onFriendFound={addAndTagFriend}
-              />
+
+              <ThemeProvider theme={FIELD_SIZE_SMALL}>
+                <SelectFriends
+                  friends={
+                    contextualFriends.map(friend => ({
+                      ...friend,
+                      isSelected: hasItem(taggedFriends, friend.id),
+                    }))
+                  }
+                  onToggle={this.onToggleFriend}
+                  onFriendFound={addAndTagFriend}
+                />
+              </ThemeProvider>
             </TagFriendsContainer>
 
             <ModalControls>

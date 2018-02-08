@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { buttonMinHeight } from '../util/constants';
-import { DARK } from '../util/themes';
+import { DARK, FIELD_SIZE_NORMAL } from '../util/themes';
 
-const defaultTheme = DARK;
+const defaultTheme = { ...DARK, ...FIELD_SIZE_NORMAL };
 
 const TextBox = styled.input.attrs({
   type: 'text',
@@ -15,15 +14,16 @@ const TextBox = styled.input.attrs({
 })`
   flex: 1;
   font-size: 14px;
-  padding: 0 15px;
   border: none;
   border-radius: 2px;
   box-sizing: border-box;
   width: 100%;
-  min-height: ${buttonMinHeight};
-  height: ${props => (props.height ? `${props.height}px` : 'auto')};
   color: ${props => (props.theme.field || defaultTheme.field).color};
   background-color: ${props => (props.theme.field || defaultTheme.field).background};
+  font-size: ${props => props.theme.fieldFontSize || defaultTheme.fieldFontSize}px;
+  height: ${props => props.theme.fieldHeight || defaultTheme.fieldHeight}px;
+  padding: 0 ${props => props.theme.buttonPadding || defaultTheme.buttonPadding}px;
+  margin-right: ${props => props.theme.buttonMargin || defaultTheme.buttonMargin}px;
 
   &::placeholder {
     // TODO: darken dark color and lighten light color using percents

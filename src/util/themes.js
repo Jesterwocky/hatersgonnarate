@@ -12,6 +12,8 @@ export const themes = {
   DARK: 'DARK',
   LIGHT: 'LIGHT',
   GREEN: 'GREEN',
+  FIELD_SIZE_NORMAL: 'FIELD_SIZE_NORMAL',
+  FIELD_SIZE_SMALL: 'FIELD_SIZE_SMALL',
 };
 
 const starBaseStyling = {
@@ -67,7 +69,7 @@ export const GREEN = {
   },
 };
 
-// Banner position themes
+// Banner position
 export const BANNER = {
   THIN_TOP: {
     bannerThickness: 95,
@@ -75,6 +77,21 @@ export const BANNER = {
   },
   WIDE_CENTERED: {
     bannerThickness: 130,
-    distanceFromTop: 200,
+    distanceFromTop: 190,
   },
+};
+
+// Search sizes
+export const FIELD_SIZE_SMALL = {
+  fieldHeight: 32,
+  fieldFontSize: 12,
+  buttonPadding: 13,
+  buttonMargin: 5,
+};
+
+export const FIELD_SIZE_NORMAL = {
+  fieldHeight: 37,
+  fieldFontSize: 14,
+  buttonPadding: 15,
+  buttonMargin: 10,
 };

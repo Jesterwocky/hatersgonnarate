@@ -15,7 +15,6 @@ const AddButton = Button.extend.attrs({
   className: 'search-button',
 })`
   white-space: nowrap;
-  margin-right: 10px;
 `;
 
 const SearchField = styled.div.attrs({
@@ -92,12 +91,11 @@ class Search extends Component {
       children,
       matches,
       showButton = true,
-      className,
       placeholder = 'search',
     } = this.props;
 
     return (
-      <SearchContainer className={`search ${className}`}>
+      <SearchContainer className="search">
         {showButton &&
           <AddButton onClick={this.onItemFound}>
             {children || '+'}
@@ -131,7 +129,6 @@ Search.propTypes = {
   showButton: PropTypes.bool,
   requireButtonClickForAction: PropTypes.bool,
   children: PropTypes.node,
-  className: PropTypes.string,
 };
 
 Search.defaultProps = {
@@ -140,7 +137,6 @@ Search.defaultProps = {
   showButton: true,
   requireButtonClickForAction: true,
   children: null,
-  className: '',
 };
 
 export default Search;

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-import { buttonMinHeight } from '../util/constants';
-import { DARK } from '../util/themes';
+import { DARK, FIELD_SIZE_NORMAL } from '../util/themes';
+
+const defaultFieldSize = FIELD_SIZE_NORMAL;
 
 export const Link = styled.a`
   color: orange;
@@ -9,14 +10,16 @@ export const Link = styled.a`
 `;
 
 export const Button = styled.button`
-  font-size: 14px;
+  // padding results in square button when title is 1 character long
+  margin-right: ${props => props.theme.buttonMargin || defaultFieldSize.buttonMargin}px;
+  padding: 0 ${props => props.theme.buttonPadding || defaultFieldSize.buttonPadding}px;
+  height: ${props => props.theme.fieldHeight || defaultFieldSize.fieldHeight}px;
+  font-size: ${props => props.theme.fieldFontSize || defaultFieldSize.fieldFontSize}px;
   font-weight: 400;
   border: none;
   border-radius: 2px;
-  padding: 0 15px; // results in square button when title is 1 character long
   background-color: ${DARK.button.background};
   color: white;
-  height: ${buttonMinHeight};
 
   &:hover {
     cursor: pointer;
