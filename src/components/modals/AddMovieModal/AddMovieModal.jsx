@@ -37,7 +37,7 @@ import NotSeenItBanner from './NotSeenItBanner';
 import SelectFriends from '../../SelectFriends';
 
 // styled components
-const AddMovie = styled(Modal).attrs({
+const AddMovieModalContainer = styled(Modal).attrs({
   className: 'modal-add-movie',
 })``;
 
@@ -220,10 +220,10 @@ class AddMovieModal extends Component {
     // TODO: allow friend search, and show friend suggestions in addition
     // to people who are interested in seeing the movie
     return (
-      <AddMovie>
+      <AddMovieModalContainer>
         {!!selectedMovieId && this.state.showNotSeenItBanner &&
           <NotSeenItBanner
-            friendsInterested={friendsInterested}
+            friends={friendsInterested}
             onClose={this.closeNotSeenIt}
           />
         }
@@ -294,7 +294,7 @@ class AddMovieModal extends Component {
             </ModalControls>
           </ForSelectedMovie>
         }
-      </AddMovie>
+      </AddMovieModalContainer>
     );
   }
 }

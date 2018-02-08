@@ -13,7 +13,7 @@ import {
 } from '../../_StyledComponents';
 
 const Movie = ListItem.extend`
-  padding: 14px;
+  padding: 18px;
   margin-bottom: 10px;
   border-radius: 5px;
   background-color: ${DARK.header.background};
