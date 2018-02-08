@@ -1,7 +1,6 @@
 import {
-  modalMovieData,
-  contextualFriends
-} from '../_testData.js';
+  contextualFriends,
+} from '../_testData';
 
 import { hasItem } from '../../util/helpers';
 

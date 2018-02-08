@@ -11,13 +11,12 @@ export const Link = styled.a`
 export const Button = styled.button`
   font-size: 14px;
   font-weight: 400;
-  min-width: 65px;
   border: none;
   border-radius: 2px;
-  padding: 9px 7px;
+  padding: 0 15px; // results in square button when title is 1 character long
   background-color: ${DARK.button.background};
   color: white;
-  min-height: ${buttonMinHeight};
+  height: ${buttonMinHeight};
 
   &:hover {
     cursor: pointer;

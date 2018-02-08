@@ -25,10 +25,8 @@ import Modal from '../Modal';
 import {
   ModalTitle,
   ModalHeading2,
-  ModalHeading3,
   ModalText,
   ModalButton,
-  ModalTextBox,
   ModalTextArea,
 } from '../_StyledComponents';
 

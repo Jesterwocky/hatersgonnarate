@@ -40,6 +40,9 @@ const TextBox = ({
     }
   }
 
+  // TODO: for all shared regular components, make it so you don't need to wrap
+  // them to make them styled OR at least don't have to explicitly pass the
+  // className like you see here
   return (
     <Field
       className={`text-box ${className}`}
