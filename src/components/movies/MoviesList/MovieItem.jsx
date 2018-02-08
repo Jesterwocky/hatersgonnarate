@@ -26,11 +26,6 @@ const MovieTitle = styled.h3`
   margin: 0 0 5px 0;
 `;
 
-const Blurb = styled.p`
-  font-size: 11px;
-  margin: 5p 0;
-`;
-
 const Callouts = styled.div`
   margin-top: 14px;
 `;
@@ -103,7 +98,6 @@ const MovieItem = ({
 MovieItem.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  blurb: PropTypes.string,
   ratings: PropTypes.object,
   callouts: PropTypes.array,
   comments: PropTypes.object,
@@ -113,7 +107,6 @@ MovieItem.propTypes = {
 };
 
 MovieItem.defaultProps = {
-  blurb: '',
   ratings: {},
   callouts: [],
   comments: {},
