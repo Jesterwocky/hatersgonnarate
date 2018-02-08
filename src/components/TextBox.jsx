@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,8 +6,12 @@ import { DARK } from '../util/themes';
 
 const defaultTheme = DARK;
 
-const Field = styled.input.attrs({
+const TextBox = styled.input.attrs({
   type: 'text',
+  className: 'textbox',
+  placeholder: props => props.placeholder,
+  onChange: props => e => props.onUpdateText(e.currentTarget.value),
+  value: props => props.text,
 })`
   flex: 1;
   font-size: 14px;
@@ -28,43 +31,15 @@ const Field = styled.input.attrs({
   }
 `;
 
-const TextBox = ({
-  text,
-  placeholder,
-  onUpdateText,
-  className,
-}) => {
-  function onChange(e) {
-    if (typeof onUpdateText === 'function') {
-      onUpdateText(e.currentTarget.value);
-    }
-  }
-
-  // TODO: for all shared regular components, make it so you don't need to wrap
-  // them to make them styled OR at least don't have to explicitly pass the
-  // className like you see here
-  return (
-    <Field
-      className={`text-box ${className}`}
-      value={text}
-      onChange={onChange}
-      placeholder={placeholder}
-    />
-  );
-};
-
 TextBox.propTypes = {
   text: PropTypes.string,
   placeholder: PropTypes.string,
-  onUpdateText: PropTypes.func,
-  className: PropTypes.string,
+  onUpdateText: PropTypes.func.isRequired,
 };
 
 TextBox.defaultProps = {
   text: '',
   placeholder: '',
-  onUpdateText: null,
-  className: '',
 };
 
 export default TextBox;

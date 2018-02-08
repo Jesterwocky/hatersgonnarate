@@ -27,9 +27,8 @@ const SearchField = styled.div.attrs({
   flex: 1;
 `;
 
-const SearchText = styled(TextBox).attrs({
+const SearchText = TextBox.extend.attrs({
   className: 'movie-search-searchtext',
-  height: buttonMinHeight,
 })``;
 
 // TODO: listen for enter and interpret as Search click when component's focused

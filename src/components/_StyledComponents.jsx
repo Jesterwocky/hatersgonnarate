@@ -34,11 +34,3 @@ export const ListItem = styled.div`
 export const BlankListItem = styled.div`
 
 `;
-
-// export const Friend = styled.div.attrs({
-//   className: 'modal-addmovie-friendname'
-// })`
-//   background-color: white;
-//   padding: 5px 7px;
-//   margin: 0 5px;
-// `;

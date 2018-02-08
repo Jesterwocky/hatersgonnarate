@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -6,7 +5,12 @@ import { DARK } from '../util/themes';
 
 const defaultTheme = DARK;
 
-const Area = styled.textarea`
+const TextArea = styled.textarea.attrs({
+  className: 'textarea',
+  placeholder: props => props.placeholder,
+  onChange: props => e => props.onUpdateText(e.currentTarget.value),
+  value: props => props.text,
+})`
   flex: 1;
   font-size: 16px;
   padding: 15px;
@@ -21,40 +25,15 @@ const Area = styled.textarea`
   background-color: ${props => (props.theme.field || defaultTheme.field).background};
 `;
 
-const TextArea = ({
-  text,
-  placeholder,
-  onUpdateText,
-  className,
-}) => {
-  function onChange(e) {
-    if (typeof onUpdateText === 'function') {
-      onUpdateText(e.currentTarget.value);
-    }
-  }
-
-  return (
-    <Area
-      className={`text-area ${className}`}
-      value={text}
-      onChange={onChange}
-      placeholder={placeholder}
-    />
-  );
-};
-
 TextArea.propTypes = {
   text: PropTypes.string,
   placeholder: PropTypes.string,
-  onUpdateText: PropTypes.func,
-  className: PropTypes.string,
+  onUpdateText: PropTypes.func.isRequired,
 };
 
 TextArea.defaultProps = {
   text: '',
   placeholder: '',
-  onUpdateText: null,
-  className: '',
 };
 
 export default TextArea;

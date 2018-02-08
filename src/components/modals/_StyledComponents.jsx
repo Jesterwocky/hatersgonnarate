@@ -37,7 +37,7 @@ export const Friend = styled.span.attrs({
   margin: 0 5px;
 `;
 
-export const ModalTextBox = styled(TextBox).attrs({
+export const ModalTextBox = TextBox.extend.attrs({
   className: 'modal-textbox',
   theme: themes.LIGHT,
 })``;

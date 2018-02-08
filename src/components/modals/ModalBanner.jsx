@@ -8,18 +8,21 @@ import { GREEN_BANNER } from '../../util/themes';
 
 const defaultTheme = GREEN_BANNER;
 
+const defaultHeight = 95;
+const defaultTop = 15;
+
 const Banner = styled.div`
   z-index: ${modalBannerZIndex};
   box-sizing: border-box;
   width: 100%;
-  height: 95px;
+  height: ${props => (props.bannerHeight || defaultHeight)}px;
   padding: 15px 50px;
 
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 15px;
+  top: ${props => (props.distanceFromContentTop || defaultTop)}px;
   left: 0;
 
   background-color: ${props => props.theme.background || defaultTheme.background};
@@ -30,8 +33,8 @@ const CloseButton = styled.button.attrs({
   className: 'modal-banner-closeicon',
 })`
   position: absolute;
-  top: 7px;
-  left: 7px;
+  top: 10px;
+  left: 10px;
 
   border: none;
   color: ${props => props.theme.color || defaultTheme.color};
