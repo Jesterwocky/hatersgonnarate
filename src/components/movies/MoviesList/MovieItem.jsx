@@ -40,7 +40,6 @@ const commentLimit = 3;
 const MovieItem = ({
   id,
   title,
-  blurb,
   ratings,
   callouts,
   comments,

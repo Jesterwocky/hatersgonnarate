@@ -11,7 +11,7 @@ const textColor = '#bcbbff';
 export const themes = {
   DARK: 'DARK',
   LIGHT: 'LIGHT',
-  GREEN_BANNER: 'GREENBANNER',
+  GREEN: 'GREEN',
 };
 
 const starBaseStyling = {
@@ -59,10 +59,22 @@ export const LIGHT = { // modals and stuff
   },
 };
 
-export const GREEN_BANNER = {
+export const GREEN = {
   background: '#24e29d',
   color: '#0d9866',
   star: {
     ...starBaseStyling,
+  },
+};
+
+// Banner position themes
+export const BANNER = {
+  THIN_TOP: {
+    bannerThickness: 95,
+    distanceFromTop: 15,
+  },
+  WIDE_CENTERED: {
+    bannerThickness: 130,
+    distanceFromTop: 200,
   },
 };

@@ -3,24 +3,15 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 
 import {
-  ModalBanner,
-  BannerCloseButton,
   ModalHeading3,
   ModalButton,
   Friend,
 } from '../_StyledComponents';
 
-import { GREEN_BANNER } from '../../../util/themes';
-import { ModalBanner, BannerCloseButton } from '../ModalBanner';
+import { GREEN, BANNER } from '../../../util/themes';
+import ModalBanner from '../ModalBanner';
 
 // STYLED COMPONENTS
-const Banner = ModalBanner.extend.attrs({
-  className: 'modal-addmovie-notseenit',
-})`
-  height: 130px;
-  top: 200px;
-`;
-
 const BannerHeading = ModalHeading3.extend.attrs({
   className: 'modal-addmovie-notseenit-heading',
 })`
@@ -56,8 +47,11 @@ const SeeItButton = ModalButton.extend`
 
 // COMPONENT
 const NotSeenItBanner = ({ friends, onClose }) => (
-  <ThemeProvider theme={GREEN_BANNER}>
-    <Banner>
+  <ThemeProvider theme={{ ...GREEN, ...BANNER.WIDE_CENTERED }}>
+    <ModalBanner
+      className="banner-notseenit"
+      onClose={onClose}
+    >
       <BannerHeading>
         Not seen it? {friends.length > 0 && 'These friends wanna watch it:'}
         {' '}
@@ -78,14 +72,14 @@ const NotSeenItBanner = ({ friends, onClose }) => (
         <SeeItButton>Schedule movie night</SeeItButton>
         <SeeItButton>Watch online</SeeItButton>
       </SeeItButtons>
-    </Banner>
+    </ModalBanner>
   </ThemeProvider>
 );
 
 // PROPS AND EXPORT
 NotSeenItBanner.propTypes = {
-  friends: PropTypes.array,
   onClose: PropTypes.func.isRequired,
+  friends: PropTypes.array,
 };
 
 NotSeenItBanner.defaultProps = {

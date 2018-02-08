@@ -27,8 +27,8 @@ import {
   ModalHeading2,
   ModalText,
   ModalButton,
-  ModalTextArea,
 } from '../_StyledComponents';
+import TextArea from '../../TextArea';
 
 // import components
 import MovieRating from '../../movies/MovieRating/MovieRating';
@@ -37,10 +37,6 @@ import NotSeenItBanner from './NotSeenItBanner';
 import SelectFriends from '../../SelectFriends';
 
 // styled components
-const AddMovieModalContainer = styled(Modal).attrs({
-  className: 'modal-add-movie',
-})``;
-
 const ForSelectedMovie = styled.div.attrs({
   className: 'modal-addmovie-forselectedmovie',
 })``;
@@ -85,21 +81,18 @@ const Rating = styled(MovieRating).attrs({
 })``;
 
 const RemarksContainer = styled.div.attrs({
-  className: 'modal-addmovie-remarks',
+  className: 'modal-addmovie-remarkscontainer',
 })``;
 
-const Remarks = ModalTextArea.extend.attrs({
-  className: 'modal-addmovie-rating-stars',
-  height: 75,
-})``;
+const Remarks = TextArea.extend.attrs({
+  className: 'modal-addmovie-remarks',
+})`
+  height: 75px;
+`;
 
 const TagFriendsContainer = styled.div`
   margin-top: 5px;,
 `;
-
-const TagFriends = styled(SelectFriends).attrs({
-  className: 'modal-addmovie-tagfriends',
-})``;
 
 const ModalControls = styled.div.attrs({
   className: 'modal-addmovie-controls',
@@ -220,7 +213,7 @@ class AddMovieModal extends Component {
     // TODO: allow friend search, and show friend suggestions in addition
     // to people who are interested in seeing the movie
     return (
-      <AddMovieModalContainer>
+      <Modal className="modal-add-movie">
         {!!selectedMovieId && this.state.showNotSeenItBanner &&
           <NotSeenItBanner
             friends={friendsInterested}
@@ -272,7 +265,7 @@ class AddMovieModal extends Component {
               <PromptText>
                 Select friends - let them know you rated {movie.title}
               </PromptText>
-              <TagFriends
+              <SelectFriends
                 friends={
                   contextualFriends.map(friend => ({
                     ...friend,
@@ -294,7 +287,7 @@ class AddMovieModal extends Component {
             </ModalControls>
           </ForSelectedMovie>
         }
-      </AddMovieModalContainer>
+      </Modal>
     );
   }
 }

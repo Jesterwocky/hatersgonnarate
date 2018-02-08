@@ -2,25 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { GREEN_BANNER, DARK } from '../util/themes';
+import { GREEN, DARK } from '../util/themes';
 
 import { Button } from './_StyledComponents';
 import FriendSearch from './friends/FriendSearch';
 
-// STYLES
-const SelectableFriendsContainer = styled.div`
+// STYLED COMPONENTS
+const SelectFriendsContainer = styled.div.attrs({
+  className: 'selectfriends',
+})`
   display: flex;
 `;
 
 const Friends = styled.div.attrs({
-  className: 'selectablefriends-friends',
+  className: 'selectfriends-friends',
 })``;
 
 const Friend = Button.extend.attrs({
-  className: 'selectablefriends-friend',
+  className: 'selectfriends-friend',
 })`
   background-color: ${props => (props.isSelected ?
-    GREEN_BANNER.background : 'white')};
+    GREEN.background : 'white')};
   color: ${props => (props.isSelected ?
     'white' : DARK.button.background
   )};
@@ -48,7 +50,7 @@ const SelectFriends = ({
   }
 
   return (
-    <SelectableFriendsContainer className={`selectablefriends-friends ${className}`}>
+    <SelectFriendsContainer>
       <Friends>
         {friends.map(friend => (
           <Friend
@@ -65,7 +67,7 @@ const SelectFriends = ({
           onFriendFound={onFriendFound}
         />
       }
-    </SelectableFriendsContainer>
+    </SelectFriendsContainer>
   );
 };
 

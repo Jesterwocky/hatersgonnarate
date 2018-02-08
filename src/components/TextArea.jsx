@@ -20,7 +20,6 @@ const TextArea = styled.textarea.attrs({
   width: 100%;
   min-width: 100%; // prevent weird resizing (e.g., in chrome)
   min-height: 70px;
-  height: ${props => (props.height ? `${props.height}px` : 'auto')};
   color: ${props => (props.theme.field || defaultTheme.field).color};
   background-color: ${props => (props.theme.field || defaultTheme.field).background};
 `;

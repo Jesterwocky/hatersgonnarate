@@ -4,29 +4,29 @@ import styled from 'styled-components';
 
 import { modalBannerZIndex } from '../../util/constants';
 
-import { GREEN_BANNER } from '../../util/themes';
+import { GREEN, BANNER } from '../../util/themes';
 
-const defaultTheme = GREEN_BANNER;
-
-const defaultHeight = 95;
-const defaultTop = 15;
+const defaultTheme = {
+  ...GREEN,
+  ...BANNER.THIN_TOP,
+};
 
 const Banner = styled.div`
   z-index: ${modalBannerZIndex};
   box-sizing: border-box;
   width: 100%;
-  height: ${props => (props.bannerHeight || defaultHeight)}px;
+  height: ${props => (props.theme || defaultTheme).bannerThickness}px;
   padding: 15px 50px;
 
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: ${props => (props.distanceFromContentTop || defaultTop)}px;
+  top: ${props => (props.theme || defaultTheme).distanceFromTop}px;
   left: 0;
 
-  background-color: ${props => props.theme.background || defaultTheme.background};
-  color: ${props => props.theme.color || defaultTheme.color};
+  background-color: ${props => (props.theme || defaultTheme).background};
+  color: ${props => (props.theme || defaultTheme).color};
 `;
 
 const CloseButton = styled.button.attrs({
