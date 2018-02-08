@@ -20,7 +20,7 @@ const Container = styled.div.attrs({
   display: flex;
   width: 100vw;
   height: 100vh;
-  padding: ${modalPadding};
+  padding: ${modalPadding}px;
   box-sizing: border-box;
 `;
 
@@ -44,7 +44,7 @@ const ModalContent = styled.div`
   width: 60vw;
   min-width: 700px;
   max-width: 915px;
-  padding: ${modalPadding};
+  padding: ${modalPadding}px;
   border-radius: 15px;
   z-index: ${modalContentZIndex};
   position: relative; // to position banner

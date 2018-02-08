@@ -4,13 +4,16 @@ import { Button } from '../_StyledComponents';
 import { LIGHT } from '../../util/themes';
 
 export const ModalTitle = styled.h1`
-  margin-top: 0;
   font-size: 20px;
+  margin-top: -5px;
+  margin-bottom: 10px;
 `;
 
 export const ModalHeading2 = styled.h2.attrs({
   className: 'modal-heading2',
-})``;
+})`
+  margin: 20px 0 5px;
+`;
 
 export const ModalHeading3 = styled.h3.attrs({
   className: 'modal-heading3',

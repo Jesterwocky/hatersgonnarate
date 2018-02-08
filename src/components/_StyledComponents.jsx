@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { DARK, FIELD_SIZE_NORMAL } from '../util/themes';
 
-const defaultFieldSize = FIELD_SIZE_NORMAL;
+const defaultTheme = { ...DARK, ...FIELD_SIZE_NORMAL };
 
 export const Link = styled.a`
   color: orange;
@@ -11,15 +11,15 @@ export const Link = styled.a`
 
 export const Button = styled.button`
   // padding results in square button when title is 1 character long
-  margin-right: ${props => props.theme.buttonMargin || defaultFieldSize.buttonMargin}px;
-  padding: 0 ${props => props.theme.buttonPadding || defaultFieldSize.buttonPadding}px;
-  height: ${props => props.theme.fieldHeight || defaultFieldSize.fieldHeight}px;
-  font-size: ${props => props.theme.fieldFontSize || defaultFieldSize.fieldFontSize}px;
+  margin-right: ${props => props.theme.buttonMargin || defaultTheme.buttonMargin}px;
+  padding: 0 ${props => props.theme.buttonPadding || defaultTheme.buttonPadding}px;
+  height: ${props => props.theme.fieldHeight || defaultTheme.fieldHeight}px;
+  font-size: ${props => props.theme.fieldFontSize || defaultTheme.fieldFontSize}px;
   font-weight: 400;
-  border: none;
+  border: ${props => (props.theme.button || {}).border || 'none'};
   border-radius: 2px;
-  background-color: ${DARK.button.background};
-  color: white;
+  background-color: ${props => (props.theme.button || {}).background || defaultTheme.button.background};
+  color: ${props => ((props.theme || {}).button || {}).color || defaultTheme.button.color};
 
   &:hover {
     cursor: pointer;

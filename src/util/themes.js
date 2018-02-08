@@ -27,6 +27,9 @@ export const DARK = {
   movieTitleColor,
   button: {
     background: buttonBackground,
+    borderColor: buttonBackground,
+    border: 'none',
+    color: 'white',
   },
   header: {
     background: headerBackground,
@@ -58,12 +61,22 @@ export const LIGHT = { // modals and stuff
   },
   button: {
     disabledBackground: '#dadaf7',
+    background: 'white',
+    color: '#8585dd',
+    borderColor: '#e4e4ff',
+    border: '1px solid #e4e4ff',
   },
 };
 
 export const GREEN = {
   background: '#24e29d',
   color: '#0d9866',
+  button: {
+    border: 'none',
+    color: 'white',
+    borderColor: 'transparent',
+    background: 'transparent',
+  },
   star: {
     ...starBaseStyling,
   },
@@ -77,7 +90,7 @@ export const BANNER = {
   },
   WIDE_CENTERED: {
     bannerThickness: 130,
-    distanceFromTop: 190,
+    distanceFromTop: 180,
   },
 };
 

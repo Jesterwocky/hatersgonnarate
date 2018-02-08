@@ -101,7 +101,7 @@ const TagFriendsContainer = styled.div`
 const ModalControls = styled.div.attrs({
   className: 'modal-addmovie-controls',
 })`
-  margin-top: ${modalPadding};
+  margin-top: ${modalPadding - 10}px;
 `;
 
 // component
@@ -269,24 +269,26 @@ class AddMovieModal extends Component {
               />
             </RemarksContainer>
 
-            <TagFriendsContainer>
-              <PromptText>
-                Select friends - let them know you rated {movie.title}
-              </PromptText>
+            {!!rating &&
+              <TagFriendsContainer>
+                <PromptText>
+                  Select friends - let them know you rated {movie.title}
+                </PromptText>
 
-              <ThemeProvider theme={FIELD_SIZE_SMALL}>
-                <SelectFriends
-                  friends={
-                    contextualFriends.map(friend => ({
-                      ...friend,
-                      isSelected: hasItem(taggedFriends, friend.id),
-                    }))
-                  }
-                  onToggle={this.onToggleFriend}
-                  onFriendFound={addAndTagFriend}
-                />
-              </ThemeProvider>
-            </TagFriendsContainer>
+                <ThemeProvider theme={FIELD_SIZE_SMALL}>
+                  <SelectFriends
+                    friends={
+                      contextualFriends.map(friend => ({
+                        ...friend,
+                        isSelected: hasItem(taggedFriends, friend.id),
+                      }))
+                    }
+                    onToggle={this.onToggleFriend}
+                    onFriendFound={addAndTagFriend}
+                  />
+                </ThemeProvider>
+              </TagFriendsContainer>
+            }
 
             <ModalControls>
               <ModalButton

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { GREEN, DARK } from '../util/themes';
+import { GREEN, DARK, LIGHT } from '../util/themes';
 
 import { Button } from './_StyledComponents';
 import FriendSearch from './friends/FriendSearch';
@@ -12,13 +12,14 @@ const SelectFriendsContainer = styled.div.attrs({
   className: 'selectfriends',
 })`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Friends = styled.div.attrs({
   className: 'selectfriends-friends',
 })`
-  margin-bottom: 5px;
+  margin-bottom: 7px;
 `;
 
 const Friend = Button.extend.attrs({
@@ -30,11 +31,10 @@ const Friend = Button.extend.attrs({
     'white' : DARK.button.background
   )};
   border: 1px solid ${props => (props.isSelected ?
-    GREEN.background : '#e4e4ff'
+    GREEN.background : LIGHT.button.borderColor
   )};
   border-radius: 2px;
   margin-right: 7px;
-  margin-bottom: 7px;
   padding: 0 10px;
   font-size: 12px;
   height: 32px;
@@ -42,6 +42,13 @@ const Friend = Button.extend.attrs({
   &:hover {
     cursor: pointer;
   }
+`;
+
+const FriendSearchContainer = styled.div.attrs({
+  className: 'selectfriends-searchconainer',
+})`
+  width: 250px;
+  padding-left: 10px;
 `;
 
 // COMPONENT
@@ -75,9 +82,11 @@ const SelectFriends = ({
         ))}
       </Friends>
       {allowSearch &&
-        <FriendSearch
-          onFriendFound={onFind}
-        />
+        <FriendSearchContainer>
+          <FriendSearch
+            onFriendFound={onFind}
+          />
+        </FriendSearchContainer>
       }
     </SelectFriendsContainer>
   );

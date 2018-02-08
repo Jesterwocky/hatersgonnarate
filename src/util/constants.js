@@ -5,7 +5,7 @@ export const ADD_MOVIE_MODAL = 'ADD_MOVIE_MODAL';
 export const footerHeight = '75px';
 export const pagePadding = '30px';
 export const buttonMinHeight = '37px';
-export const modalPadding = '30px';
+export const modalPadding = 30;
 
 // z-indexes
 export const modalBannerZIndex = 11;
