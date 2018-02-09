@@ -6,12 +6,14 @@ import { hasItem } from '../../util/helpers';
 
 // action types
 export const CLEAR_NEW_MOVIE = 'CLEAR_NEW_MOVIE';
-export const CHANGE_NEW_MOVIE = 'CHANGE_NEW_MOVIE';
+export const ADD_NEW_MOVIE_TO_RATE = 'ADD_NEW_MOVIE_TO_RATE';
 export const UPDATE_NEW_MOVIE_RATING = 'UPDATE_NEW_MOVIE_RATING';
 export const UPDATE_NEW_MOVIE_REMARKS = 'UPDATE_NEW_MOVIE_REMARKS';
 export const ADD_TAG_FRIEND = 'ADD_TAG_FRIEND';
 export const REMOVE_TAG_FRIEND = 'REMOVE_TAG_FRIEND';
 export const ADD_AND_TAG_CONTEXTUAL_FRIEND = 'ADD_AND_TAG_CONTEXTUAL_FRIEND';
+export const USE_PREVIOUS_RATING = 'USE_PREVIOUS_RATING';
+export const CLEAR_PREVIOUS_RATING = 'CLEAR_PREVIOUS_RATING';
 
 // action creators
 function updateNewMovieRatingAction(rating) {
@@ -89,10 +91,10 @@ function removeFriendToTagActions(friendKey) {
 
 export function addNewMovieAction(movieId, friends) {
   return {
-    type: CHANGE_NEW_MOVIE,
+    type: ADD_NEW_MOVIE_TO_RATE,
     payload: {
       movieId,
-      friends,
+      contextualFriends,
     },
   };
 }
@@ -103,6 +105,30 @@ export function clearNewRatingAction() {
 
     dispatch({
       type: CLEAR_NEW_MOVIE,
+      payload: {
+        movieId: selectedMovieId,
+      },
+    });
+  };
+}
+
+function usePreviousRatingAction(movieId) {
+  return (dispatch, getState) => {
+    const { selectedMovieId } = getState().new.rating;
+    dispatch({
+      type: USE_PREVIOUS_RATING,
+      payload: {
+        movieId: selectedMovieId,
+      },
+    });
+  };
+}
+
+function clearPreviousRatingAction(movieId) {
+  return (dispatch, getState) => {
+    const { selectedMovieId } = getState().new.rating;
+    dispatch({
+      type: CLEAR_PREVIOUS_RATING,
       payload: {
         movieId: selectedMovieId,
       },
@@ -136,8 +162,18 @@ export function clearNewRating(dispatch) {
 }
 
 export function addNewMovie(dispatch, movieId, friends) {
+  if (!movieId) return;
+
   dispatch(addNewMovieAction(
     movieId,
     contextualFriends,
   ));
+}
+
+export function usePreviousRating(dispatch, movieId) {
+  dispatch(usePreviousRatingAction());
+}
+
+export function clearPreviousRating(dispatch, movieId) {
+  dispatch(clearPreviousRatingAction());
 }

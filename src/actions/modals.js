@@ -24,7 +24,9 @@ const closeModalAction = { type: CLOSE_MODAL };
 // action dispatchers
 export function openModal(dispatch, modalName, data) {
   // TODO: better way to do this?
-  if (modalName === ADD_MOVIE_MODAL) {
+  if (modalName === ADD_MOVIE_MODAL &&
+    data && data.movieId
+  ) {
     // TODO: get full movie data, including contextual friends
     dispatch(addNewMovieAction(
       data.movieId,

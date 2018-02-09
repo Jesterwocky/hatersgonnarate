@@ -59,6 +59,8 @@ class Search extends Component {
     if (!showButton || !requireButtonClickForAction) {
       this.confirmFoundAndClearSearch(selection);
     } else {
+      if (this.state.selection === selection) return;
+
       this.setState({
         selection,
         // TODO: have one common property name for all searchable things, like 'searchName'

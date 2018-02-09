@@ -18,12 +18,16 @@ const Suggestions = styled.div.attrs({
   position: absolute;
   top: ${buttonMinHeight};
   z-index: ${modalBannerZIndex};
-  height: ${props => (getSuggestionHeight(props) * suggestionLimit) + lastItemPadding}px;
+  height: ${props => (getSuggestionHeight(props) *
+    Math.min(
+      props.numberOfSuggestions || suggestionLimit,
+      suggestionLimit,
+    )) + lastItemPadding}px;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
+  overflow: hidden;
 
   color: white;
   font-size: ${props => props.theme.fieldFontSize || defaultFieldSize.fieldFontSize}px;
@@ -58,7 +62,7 @@ const SearchSuggestions = ({ suggestions, onSelectSuggestion }) => {
   }
 
   return (
-    <Suggestions>
+    <Suggestions numberOfSuggestions={suggestions.length}>
       {suggestions.slice(0, suggestionLimit).map(suggestion => (
         <Suggestion
           key={`suggestion-${suggestion.id}`}

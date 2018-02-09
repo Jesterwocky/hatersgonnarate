@@ -3,7 +3,7 @@ import {
   extraMovies,
   allMovies,
   matchingMoviesList,
-} from './_testData.js';
+} from './_testData';
 
 // action types
 export const GET_MOVIES = 'GET_MOVIES';
@@ -74,6 +74,7 @@ export function getMovie(dispatch, id) {
 }
 
 export function findMatchingMovies(dispatch, movieString) {
+  // TODO: fetch movies
   dispatch(getMatchingMoviesAction(matchingMoviesList));
 }
 

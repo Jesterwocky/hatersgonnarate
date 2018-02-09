@@ -47,7 +47,7 @@ const SeeItButton = ModalButton.extend`
 
 // COMPONENT
 const NotSeenItBanner = ({ friends, onClose }) => (
-  <ThemeProvider theme={{ ...GREEN, ...BANNER.WIDE_CENTERED }}>
+  <ThemeProvider theme={{ ...GREEN, ...BANNER.WIDE }}>
     <ModalBanner
       className="banner-notseenit"
       onClose={onClose}

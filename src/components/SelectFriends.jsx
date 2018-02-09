@@ -7,14 +7,6 @@ import { GREEN, DARK, LIGHT } from '../util/themes';
 import { Button } from './_StyledComponents';
 
 // STYLED COMPONENTS
-const SelectFriendsContainer = styled.div.attrs({
-  className: 'selectfriends',
-})`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
 const Friends = styled.div.attrs({
   className: 'selectfriends-friends',
 })`
@@ -24,13 +16,16 @@ const Friends = styled.div.attrs({
 const Friend = Button.extend.attrs({
   className: 'selectfriends-friend',
 })`
-  background-color: ${props => (props.isSelected ?
-    GREEN.background : 'white')};
-  color: ${props => (props.isSelected ?
-    'white' : DARK.button.background
+  background-color: ${props => (
+    props.isSelected ?
+      GREEN.background : 'white')};
+  color: ${props => (
+    props.isSelected ?
+      'white' : DARK.button.background
   )};
-  border: 1px solid ${props => (props.isSelected ?
-    GREEN.background : LIGHT.button.borderColor
+  border: 1px solid ${props => (
+    props.isSelected ?
+      GREEN.background : LIGHT.button.borderColor
   )};
   border-radius: 2px;
   margin-right: 7px;

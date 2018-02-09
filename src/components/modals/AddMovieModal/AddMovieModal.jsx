@@ -6,7 +6,7 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import { modalPadding } from '../../../util/constants';
 import { hasItem } from '../../../util/helpers';
-import { FIELD_SIZE_SMALL, FIELD_SIZE_NORMAL } from '../../../util/themes';
+import { FIELD_SIZE_SMALL, FIELD_SIZE_NORMAL, DARK, BANNER } from '../../../util/themes';
 
 // import actions
 import { closeModal } from '../../../actions/modals';
@@ -18,6 +18,8 @@ import {
   addFriendToTag,
   removeFriendToTag,
   addAndTagContextualFriend,
+  usePreviousRating,
+  clearPreviousRating,
 } from '../../../actions/unsavedData/newRating';
 import { addMovieRating } from '../../../actions/movies';
 
@@ -37,6 +39,7 @@ import MovieSearch from '../../movies/MovieSearch';
 import NotSeenItBanner from './NotSeenItBanner';
 import SelectFriends from '../../SelectFriends';
 import FriendSearch from '../../friends/FriendSearch';
+import PreviousRatingDialog from './PreviousRatingDialog';
 
 // styled components
 const ForSelectedMovie = styled.div.attrs({
@@ -98,16 +101,22 @@ const Remarks = TextArea.extend.attrs({
 const TagFriendsContainer = styled.div.attrs({
   className: 'modal-addmovie-tagfriends-container',
 })`
-  margin-top: 5px;,
+  margin-top: 5px;
+  visibility: ${props => (props.show ? 'visible' : 'hidden')};
 `;
 
-const Friends = styled.div.attrs({
+const TagFriends = styled.div.attrs({
   className: 'modal-addmovie-tagfriends-friends',
-})``;
+})`
+  display: flex;
+`;
 
-const FriendSearchContainer = styled.div.attrs({
-  className: 'modal-addmovie-tagfriends-friendsearch',
-})``;
+const FriendsSearchContainer = styled.div.attrs({
+  className: 'modal-addmovie-tagfriends-friendssearch',
+})`
+  width: 230px;
+  margin-right: 10px;
+`;
 
 const ModalControls = styled.div.attrs({
   className: 'modal-addmovie-controls',
@@ -185,6 +194,7 @@ class AddMovieModal extends Component {
   }
 
   rateDifferentMovie = (movie) => {
+    if (!movie || !movie.id) return;
     this.props.changeMovie(movie.id);
   }
 
@@ -207,6 +217,8 @@ class AddMovieModal extends Component {
       movies,
       updateRemarks,
       addAndTagFriend,
+      usePrevRating,
+      clearPrevRating,
     } = this.props;
 
     const {
@@ -214,11 +226,11 @@ class AddMovieModal extends Component {
       remarks,
       contextualFriends = [],
       taggedFriends = [],
+      previousNewRating = {},
     } = ratingData[selectedMovieId] || {};
 
     function onFind(friend) {
       if (Object.keys(friend).length === 0) return;
-
       addAndTagFriend(friend);
     }
 
@@ -234,10 +246,12 @@ class AddMovieModal extends Component {
     return (
       <Modal className="modal-add-movie">
         {!!selectedMovieId && this.state.showNotSeenItBanner &&
-          <NotSeenItBanner
-            friends={friendsInterested}
-            onClose={this.closeNotSeenIt}
-          />
+          <ThemeProvider theme={BANNER.CENTERED}>
+            <NotSeenItBanner
+              friends={friendsInterested}
+              onClose={this.closeNotSeenIt}
+            />
+          </ThemeProvider>
         }
 
         <ModalTitle>
@@ -284,45 +298,51 @@ class AddMovieModal extends Component {
               />
             </RemarksContainer>
 
-            {!!rating &&
-              <TagFriendsContainer>
-                <PromptText>
-                  Select friends - let them know you rated {movie.title}
-                </PromptText>
+            <TagFriendsContainer show={!!rating}>
+              <PromptText>
+                Select friends - let them know you rated {movie.title}
+              </PromptText>
 
-                <Friends>
-                  <SelectFriends
-                    friends={
-                      contextualFriends.map(friend => ({
-                        ...friend,
-                        isSelected: hasItem(taggedFriends, friend.id),
-                      }))
-                    }
-                    onToggle={this.onToggleFriend}
-                  />
+              <TagFriends>
 
-                  <ThemeProvider theme={FIELD_SIZE_SMALL}>
-                    <FriendSearchContainer>
-                      <FriendSearch
-                        onFriendFound={onFind}
-                      />
-                    </FriendSearchContainer>
-                  </ThemeProvider>
+                <ThemeProvider theme={FIELD_SIZE_SMALL}>
+                  <FriendsSearchContainer>
+                    <FriendSearch
+                      onFriendFound={onFind}
+                    />
+                  </FriendsSearchContainer>
+                </ThemeProvider>
 
-                </Friends>
+                <SelectFriends
+                  friends={
+                    contextualFriends.map(friend => ({
+                      ...friend,
+                      isSelected: hasItem(taggedFriends, friend.id),
+                    }))
+                  }
+                  onToggle={this.onToggleFriend}
+                />
 
-              </TagFriendsContainer>
-            }
+              </TagFriends>
+
+            </TagFriendsContainer>
 
             <ModalControls>
               <ModalButton
                 onClick={this.onSave}
                 disabled={!savable}
+                theme={DARK.button}
               >
                 Done
               </ModalButton>
             </ModalControls>
           </ForSelectedMovie>
+        }
+        {(previousNewRating.rating || previousNewRating.remarks) &&
+          <PreviousRatingDialog
+            onClose={clearPrevRating}
+            continueFromPreviousRating={usePrevRating}
+          />
         }
       </Modal>
     );
@@ -344,6 +364,8 @@ AddMovieModal.propTypes = {
   addAndTagFriend: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   saveRating: PropTypes.func.isRequired,
+  usePrevRating: PropTypes.func.isRequired,
+  clearPrevRating: PropTypes.func.isRequired,
 };
 
 AddMovieModal.defaultProps = {
@@ -364,6 +386,8 @@ function mapStateToProps(state) {
 // TODO: add tagged friends to movie rating update
 function mapDispatchToProps(dispatch) {
   return {
+    clearPrevRating: movieId => clearPreviousRating(dispatch, movieId),
+    usePrevRating: movieId => usePreviousRating(dispatch, movieId),
     updateRating: rating => updateNewMovieRating(dispatch, rating),
     updateRemarks: remarks => updateNewMovieRemarks(dispatch, remarks),
     tagFriend: friendKey => addFriendToTag(dispatch, friendKey),

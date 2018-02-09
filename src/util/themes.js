@@ -84,13 +84,17 @@ export const GREEN = {
 
 // Banner position
 export const BANNER = {
-  THIN_TOP: {
-    bannerThickness: 95,
+  TOP: {
     distanceFromTop: 15,
   },
-  WIDE_CENTERED: {
-    bannerThickness: 130,
+  CENTERED: {
     distanceFromTop: 180,
+  },
+  THIN: {
+    bannerThickness: 95,
+  },
+  WIDE: {
+    bannerThickness: 130,
   },
 };
 
