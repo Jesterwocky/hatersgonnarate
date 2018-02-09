@@ -36,6 +36,7 @@ import MovieRating from '../../movies/MovieRating/MovieRating';
 import MovieSearch from '../../movies/MovieSearch';
 import NotSeenItBanner from './NotSeenItBanner';
 import SelectFriends from '../../SelectFriends';
+import FriendSearch from '../../friends/FriendSearch';
 
 // styled components
 const ForSelectedMovie = styled.div.attrs({
@@ -94,9 +95,19 @@ const Remarks = TextArea.extend.attrs({
   height: 75px;
 `;
 
-const TagFriendsContainer = styled.div`
+const TagFriendsContainer = styled.div.attrs({
+  className: 'modal-addmovie-tagfriends-container',
+})`
   margin-top: 5px;,
 `;
+
+const Friends = styled.div.attrs({
+  className: 'modal-addmovie-tagfriends-friends',
+})``;
+
+const FriendSearchContainer = styled.div.attrs({
+  className: 'modal-addmovie-tagfriends-friendsearch',
+})``;
 
 const ModalControls = styled.div.attrs({
   className: 'modal-addmovie-controls',
@@ -205,11 +216,15 @@ class AddMovieModal extends Component {
       taggedFriends = [],
     } = ratingData[selectedMovieId] || {};
 
-    const movie = movies[selectedMovieId];
+    function onFind(friend) {
+      if (Object.keys(friend).length === 0) return;
 
+      addAndTagFriend(friend);
+    }
+
+    const movie = movies[selectedMovieId];
     const friendsInterested = contextualFriends
       .filter(friend => friend.wantToSee);
-
     const savable = !!selectedMovieId && !!rating;
 
     // TODO: if select movie they already saw, indicate re-rating
@@ -275,7 +290,7 @@ class AddMovieModal extends Component {
                   Select friends - let them know you rated {movie.title}
                 </PromptText>
 
-                <ThemeProvider theme={FIELD_SIZE_SMALL}>
+                <Friends>
                   <SelectFriends
                     friends={
                       contextualFriends.map(friend => ({
@@ -284,9 +299,18 @@ class AddMovieModal extends Component {
                       }))
                     }
                     onToggle={this.onToggleFriend}
-                    onFriendFound={addAndTagFriend}
                   />
-                </ThemeProvider>
+
+                  <ThemeProvider theme={FIELD_SIZE_SMALL}>
+                    <FriendSearchContainer>
+                      <FriendSearch
+                        onFriendFound={onFind}
+                      />
+                    </FriendSearchContainer>
+                  </ThemeProvider>
+
+                </Friends>
+
               </TagFriendsContainer>
             }
 

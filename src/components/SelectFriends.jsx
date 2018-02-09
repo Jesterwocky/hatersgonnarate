@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { GREEN, DARK, LIGHT } from '../util/themes';
 
 import { Button } from './_StyledComponents';
-import FriendSearch from './friends/FriendSearch';
 
 // STYLED COMPONENTS
 const SelectFriendsContainer = styled.div.attrs({
@@ -44,51 +43,27 @@ const Friend = Button.extend.attrs({
   }
 `;
 
-const FriendSearchContainer = styled.div.attrs({
-  className: 'selectfriends-searchconainer',
-})`
-  width: 250px;
-  padding-left: 10px;
-`;
-
 // COMPONENT
 const SelectFriends = ({
   friends,
   onToggle,
-  onFriendFound,
-  allowSearch = true,
 }) => {
   function getOnToggleFriend(id) {
     return () => onToggle(id);
   }
 
-  function onFind(friend) {
-    if (Object.keys(friend).length === 0) return;
-
-    onFriendFound(friend);
-  }
-
   return (
-    <SelectFriendsContainer>
-      <Friends>
-        {friends.map(friend => (
-          <Friend
-            isSelected={friend.isSelected}
-            key={`friend-${friend.id}`}
-            onClick={getOnToggleFriend(friend.id)}
-          >
-            {friend.username}
-          </Friend>
-        ))}
-      </Friends>
-      {allowSearch &&
-        <FriendSearchContainer>
-          <FriendSearch
-            onFriendFound={onFind}
-          />
-        </FriendSearchContainer>
-      }
-    </SelectFriendsContainer>
+    <Friends>
+      {friends.map(friend => (
+        <Friend
+          isSelected={friend.isSelected}
+          key={`friend-${friend.id}`}
+          onClick={getOnToggleFriend(friend.id)}
+        >
+          {friend.username}
+        </Friend>
+      ))}
+    </Friends>
   );
 };
 
@@ -96,12 +71,6 @@ const SelectFriends = ({
 SelectFriends.propTypes = {
   friends: PropTypes.array.isRequired,
   onToggle: PropTypes.func.isRequired,
-  onFriendFound: PropTypes.func.isRequired,
-  allowSearch: PropTypes.bool,
-};
-
-SelectFriends.defaultProps = {
-  allowSearch: true,
 };
 
 export default SelectFriends;
