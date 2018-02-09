@@ -8,7 +8,8 @@ import { GREEN, BANNER } from '../../util/themes';
 
 const defaultTheme = {
   ...GREEN,
-  ...BANNER.THIN_TOP,
+  ...BANNER.THIN,
+  ...BANNER.TOP,
 };
 
 const Banner = styled.div`
@@ -22,7 +23,7 @@ const Banner = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: ${props => (props.theme || defaultTheme).distanceFromTop}px;
+  top: ${props => (props.theme || defaultTheme).bannerDistanceFromTop}px;
   left: 0;
 
   background-color: ${props => (props.theme || defaultTheme).background};

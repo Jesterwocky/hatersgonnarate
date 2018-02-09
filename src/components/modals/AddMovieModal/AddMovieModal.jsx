@@ -246,7 +246,7 @@ class AddMovieModal extends Component {
     return (
       <Modal className="modal-add-movie">
         {!!selectedMovieId && this.state.showNotSeenItBanner &&
-          <ThemeProvider theme={BANNER.CENTERED}>
+          <ThemeProvider theme={BANNER.BOTTOM}>
             <NotSeenItBanner
               friends={friendsInterested}
               onClose={this.closeNotSeenIt}
