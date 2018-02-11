@@ -48,13 +48,14 @@ MovieRating.propTypes = {
     PropTypes.number,
     PropTypes.string,
   ]),
-  onUpdateRating: PropTypes.func.isRequired,
+  onUpdateRating: PropTypes.func,
   width: PropTypes.number.isRequired,
   className: PropTypes.string,
 };
 
 MovieRating.defaultProps = {
   canEdit: false,
+  onUpdateRating: null,
   rating: 0.5,
   className: '',
 };

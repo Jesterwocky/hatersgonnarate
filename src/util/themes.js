@@ -101,6 +101,22 @@ export const BANNER = {
   },
 };
 
+export const SHAME_COLOR = '#ff604e';
+export const SHAME_BACKGROUND = '#fdeae8';
+
+export const MESSAGE_THEMES = {
+  SEED: {
+    messagesLeft: {
+      background: SHAME_COLOR,
+      color: 'white',
+    },
+    messagesRight: {
+      background: SHAME_BACKGROUND,
+      color: SHAME_COLOR,
+    },
+  },
+};
+
 // Search sizes
 export const FIELD_SIZE_SMALL = {
   fieldHeight: 32,

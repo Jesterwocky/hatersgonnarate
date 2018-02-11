@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { ADD_MOVIE_MODAL } from '../../util/constants';
+import { modalNames } from '../../util/constants';
 
 import { findMatchingMovies } from '../../actions/movies';
 import { openModal } from '../../actions/modals';
@@ -60,7 +60,7 @@ function mapDispatchToProps(dispatch) {
     findMovies: text => findMatchingMovies(dispatch, text),
     openAddMovieModal: movie => openModal(
       dispatch,
-      ADD_MOVIE_MODAL,
+      modalNames.ADD_MOVIE_MODAL,
       {
         movieId: movie.id,
       },

@@ -140,11 +140,12 @@ MovieRatingStar.propTypes = {
   starNumber: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
   canEdit: PropTypes.bool,
-  onUpdateRating: PropTypes.func.isRequired,
+  onUpdateRating: PropTypes.func,
 };
 
 MovieRatingStar.defaultProps = {
   canEdit: false,
+  onUpdateRating: null,
 };
 
 export default MovieRatingStar;

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { ADD_MOVIE_MODAL } from '../util/constants';
+import { modalNames } from '../util/constants';
 import { DARK } from '../util/themes';
 
 import Footer from './Footer';
 import NavBar from './NavBar';
 import HomePage from './pages/HomePage';
 import AddMovieModal from './modals/AddMovieModal/AddMovieModal';
+import CalloutModal from './modals/CalloutModal/CalloutModal';
 
 export const PageBase = styled.div`
   font-family: sans-serif;
@@ -26,8 +27,11 @@ const App = ({ openModal }) => (
     <NavBar />
     <HomePage />
     <Footer />
-    {openModal === ADD_MOVIE_MODAL &&
+    {openModal === modalNames.ADD_MOVIE_MODAL &&
       <AddMovieModal />
+    }
+    {openModal === modalNames.CALLOUT_MODAL &&
+      <CalloutModal />
     }
   </PageBase>
 );

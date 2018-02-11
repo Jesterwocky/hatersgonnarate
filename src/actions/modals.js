@@ -1,8 +1,12 @@
-import { ADD_MOVIE_MODAL } from '../util/constants';
-import { contextualFriends } from './_testData';
+import { modalNames } from '../util/constants';
+import {
+  contextualFriends,
+  calloutContext,
+  calloutConversation,
+} from './_testData';
 
 import { addNewMovieAction } from './unsavedData/newRating';
-import { addContextualFriends } from './friends';
+import { getConversationAction } from './conversations';
 
 // action types
 export const OPEN_MODAL = 'OPEN_MODAL';
@@ -24,13 +28,18 @@ const closeModalAction = { type: CLOSE_MODAL };
 // action dispatchers
 export function openModal(dispatch, modalName, data) {
   // TODO: better way to do this?
-  if (modalName === ADD_MOVIE_MODAL &&
-    data && data.movieId
-  ) {
+  if (modalName === modalNames.ADD_MOVIE_MODAL && data && data.movieId) {
     // TODO: get full movie data, including contextual friends
     dispatch(addNewMovieAction(
       data.movieId,
       contextualFriends,
+    ));
+  }
+
+  if (modalName === modalNames.CALLOUT_MODAL && data && data.calloutId) {
+    dispatch(getConversationAction(
+      calloutContext,
+      calloutConversation,
     ));
   }
 

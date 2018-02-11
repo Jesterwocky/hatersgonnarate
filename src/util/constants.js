@@ -1,5 +1,8 @@
 // modal names
-export const ADD_MOVIE_MODAL = 'ADD_MOVIE_MODAL';
+export const modalNames = {
+  ADD_MOVIE_MODAL: 'ADD_MOVIE_MODAL',
+  CALLOUT_MODAL: 'CALLOUT_MODAL',
+};
 
 // styles
 export const footerHeight = '75px';

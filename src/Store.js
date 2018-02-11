@@ -2,6 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 // data from DB
+import { default as conversations } from './reducers/conversations';
 import { default as friends } from './reducers/friends';
 import { default as movies } from './reducers/movies';
 import { default as parties } from './reducers/parties';
@@ -18,6 +19,7 @@ const store = createStore(
     user,
     movies,
     friends,
+    conversations,
     parties,
     new: combineReducers({
       rating,

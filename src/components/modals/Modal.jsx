@@ -48,6 +48,7 @@ const ModalContent = styled.div`
   border-radius: 15px;
   z-index: ${modalContentZIndex};
   position: relative; // to position banner
+  overflow: hidden;
 `;
 
 const Modal = ({ children, close, className }) => (

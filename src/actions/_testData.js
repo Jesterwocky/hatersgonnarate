@@ -73,11 +73,19 @@ const movieData = {
       id: '0002',
       fromFriend: {
         id: '1234567890',
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had thoughts once',
+        },
         username: friends['1234567890'].username,
         profilePicUrl: userData.profilePicUrl,
       },
       toFriend: {
         id: '1234567891',
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had thoughts once',
+        },
         username: friends[1234567891].username,
         profilePicUrl: userData.profilePicUrl,
       },
@@ -88,11 +96,19 @@ const movieData = {
       id: '0003',
       fromFriend: {
         id: '1234567891',
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had thoughts once',
+        },
         username: friends[1234567891].username,
         profilePicUrl: userData.profilePicUrl,
       },
       toFriend: {
         id: '1234567892',
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had thoughts once',
+        },
         username: friends['1234567892'].username,
         profilePicUrl: userData.profilePicUrl,
       },
@@ -180,11 +196,19 @@ export const ratedMovies = {
         id: '0001',
         fromFriend: {
           id: '1234567891',
+          ratingSnapshot: {
+            rating: '3',
+            snippet: 'I had thoughts once',
+          },
           username: friends[1234567891].username,
           profilePicUrl: userData.profilePicUrl,
         },
         toFriend: {
           id: '1234567890',
+          ratingSnapshot: {
+            rating: '3',
+            snippet: 'I had thoughts once',
+          },
           username: friends['1234567890'].username,
           profilePicUrl: userData.profilePicUrl,
         },
@@ -267,11 +291,19 @@ export const ratedMovies = {
         id: '0002',
         fromFriend: {
           id: '1234567890',
+          ratingSnapshot: {
+            rating: '3',
+            snippet: 'I had thoughts once',
+          },
           username: friends['1234567890'].username,
           profilePicUrl: userData.profilePicUrl,
         },
         toFriend: {
           id: '1234567891',
+          ratingSnapshot: {
+            rating: '3',
+            snippet: 'I had thoughts once',
+          },
           username: friends[1234567891].username,
           profilePicUrl: userData.profilePicUrl,
         },
@@ -527,5 +559,144 @@ export const parties = {
     },
     location: 'some location indicator',
     about: "Let's decide once and for all!!!",
+  },
+};
+
+export const messagesBetweenOthers = {
+  id: '00001',
+  type: 'seed',
+  // store by convo sequence number, maybe in case
+  // a message gets deleted ?
+  // TODO: decide on data structure
+  messages: {
+    0: {
+      messageSequenceNumber: 0,
+      time: 1518215734255,
+      id: '00001',
+      sender: {
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had something to say. So many thinks! What a thing.',
+        },
+        ...friends['1234567891'],
+      },
+      responseTo: {
+        time: 1518215734254,
+        id: '00004',
+        sender: {
+          ratingSnapshot: {
+            rating: '3',
+            snippet: 'I had something to say. So many thinks! What a thing.',
+          },
+          ...friends['1234567890'],
+        },
+        text: 'I did not love it',
+      },
+      text: 'This movie was so goood! How can you deny?!',
+    },
+    1: {
+      messageSequenceNumber: 1,
+      time: 1518215734256,
+      id: '00002',
+      sender: {
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had something to say. So many thinks! What a thing.',
+        },
+        ...friends['1234567890'],
+      },
+      text: 'It was suck.',
+    },
+    2: {
+      messageSequenceNumber: 2,
+      time: 1518215734257,
+      id: '00003',
+      sender: {
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had something to say. So many thinks! What a thing.',
+        },
+        ...friends['1234567890'],
+      },
+      text: 'Accept it!',
+    },
+    3: {
+      messageSequenceNumber: 3,
+      time: 1518215734258,
+      id: '00004',
+      sender: {
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had something to say. So many thinks! What a thing.',
+        },
+        ...friends['1234567891'],
+      },
+      text: 'Accept it!',
+    },
+  },
+};
+
+export const messagesBetweenFriends = {
+  id: '00002',
+  type: 'private',
+  messages: {
+    0: {
+      messageSequenceNumber: 0,
+      time: 1518215734259,
+      id: '00005',
+      responseTo: {
+        time: 1518215734258,
+        id: '00004',
+        sender: {
+          ratingSnapshot: {
+            rating: '3',
+            snippet: 'I had something to say. So many thinks! What a thing.',
+          },
+          ...friends['1234567892'],
+        },
+        text: 'Dont listen!!!',
+      },
+      sender: {
+        ...friends['1234567892'],
+      },
+      text: 'Accept it!',
+    },
+  },
+};
+
+export const messagesBetweenAll = {
+  id: '00003',
+  type: 'public',
+  messages: {},
+};
+
+export const calloutContext = {
+  type: 'callout',
+  subType: 'seed',
+  contextId: '00001',
+  conversationId: '00001',
+  movieId: '00001',
+  initiator: {
+    ...friends['1234567891'],
+    ratingSnapshot: {
+      rating: '5',
+      snippet: 'I had something to say. So many thinks! What a thing.',
+    },
+  },
+  target: {
+    ...friends['1234567890'],
+    ratingSnapshot: {
+      rating: '1',
+      snippet: 'I had something to say. So many thinks! What a thing.',
+    },
+  },
+};
+
+export const calloutConversation = {
+  id: '00001',
+  threads: {
+    [messagesBetweenOthers.type]: messagesBetweenOthers,
+    [messagesBetweenFriends.type]: messagesBetweenFriends,
+    [messagesBetweenAll.type]: messagesBetweenAll,
   },
 };

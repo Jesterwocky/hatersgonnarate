@@ -3,10 +3,12 @@ import {
   UPDATE_USER,
 } from '../actions/user';
 
+// TODO: get actual user data. Not sure at what point it'll get got.
+// Depends on how routing ends up, n stuff
 const initialState = {
-  username: '',
-  id: '',
-  profilePicUrl: '',
+  username: 'jester',
+  id: '99999',
+  profilePicUrl: 'http://www.dogedoor.net/wp-content/uploads/shibe-teeth.jpg',
 };
 
 function reducer(state = initialState, action) {

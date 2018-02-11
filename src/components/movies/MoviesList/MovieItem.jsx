@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { DARK } from '../../../util/themes';
 
 import MovieRatings from './MovieRatings';
-import MovieCallout from './MovieCallout';
+import CalloutSummary from './CalloutSummary';
 import MovieComment from './MovieComment';
 
 import {
@@ -66,7 +66,7 @@ const MovieItem = ({
       {hasCallouts &&
         <Callouts>
           {callouts.map(callout => (
-            <MovieCallout
+            <CalloutSummary
               key={`callout-${callout.id}`}
               {...callout}
             />
