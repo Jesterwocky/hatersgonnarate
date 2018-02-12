@@ -48,10 +48,7 @@ const ThreadHeading = styled.div.attrs({
 
 const ThreadContainer = styled.div.attrs({
   className: 'calloutmodal-thread-container',
-})`
-  border-left: 15px solid ${SHAME_COLOR};
-  border-right: 15px solid ${SHAME_BACKGROUND};
-`;
+})``;
 
 const VsText = styled.p.attrs({
   className: 'calloutmodal-conversation-vstext',
@@ -139,7 +136,6 @@ class CalloutModal extends Component {
 
             <ThemeProvider theme={{}}>
               <SeedConvo>
-
                 <ThreadHeading>
                   <InitiatorSummary>
                     <PersonSummary

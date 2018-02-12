@@ -9,26 +9,28 @@ const defaultTheme = MESSAGE_THEMES.SEED;
 const MessageContainer = styled.div.attrs({
   className: 'message',
 })`
-  padding: 5px 10px;
+  font-size: 14px;
+  padding: 10px;
+
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
     const messagesLeft = props.theme.messagesLeft || defaultTheme.messagesLeft;
-    if (props.isRightSideResponder) {
-      return css`
+
+    return props.isRightSideResponder ?
+      css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
         margin: 5px 0 5px 5px;
         border-top-left-radius: 3px;
         border-bottom-left-radius: 3px;
+      ` :
+      css`
+        background-color: ${messagesLeft.background};
+        color: ${messagesLeft.color};
+        margin: 5px 5px 5px 0;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
       `;
-    }
-    return css`
-      background-color: ${messagesLeft.background};
-      color: ${messagesLeft.color};
-      margin: 5px 5px 5px 0;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
-    `;
   }}
 `;
 
@@ -42,7 +44,27 @@ const MessageText = styled.div.attrs({
 
 const Quotation = styled.div.attrs({
   className: 'message-text-quotation',
-})``;
+})`
+  border-radius: 3px;
+  padding: 7px 11px;
+
+  ${(props) => {
+    const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
+    const messagesLeft = props.theme.messagesLeft || defaultTheme.messagesLeft;
+
+    return props.isRightSideResponder ?
+      css`
+        background-color: ${messagesLeft.background};
+        color: ${messagesLeft.color};
+        margin: 5px 0 10px 10px;
+      ` :
+      css`
+        background-color: ${messagesRight.background};
+        color: ${messagesRight.color};
+        margin: 5px 10px 10px 0;
+      `;
+  }}
+`;
 
 const MessageDrawerHandle = styled.div.attrs({
   className: 'message-drawerhandle',
@@ -62,25 +84,29 @@ const Message = ({
   responseTo,
   isRightSideResponder,
   time,
-}) => (
-  <MessageContainer isRightSideResponder={isRightSideResponder}>
-    <MessageTextContainer>
-      {responseTo && responseTo.text &&
-        <Quotation>
-          {responseTo.text}, from {responseTo.sender.username}
-        </Quotation>
-      }
-      <MessageText>
-        {text}
-      </MessageText>
-    </MessageTextContainer>
-    <MessageDrawerHandle />
-    <MessageDetails>
-      {isRightSideResponder ? 'me' : sender.username}
-      <time>{(new Date(time).toDateString())}</time>
-    </MessageDetails>
-  </MessageContainer>
-);
+}) => {
+  const dateTime = new Date(time);
+
+  return (
+    <MessageContainer isRightSideResponder={isRightSideResponder}>
+      <MessageTextContainer>
+        {responseTo && responseTo.text &&
+          <Quotation>
+            {responseTo.text}, from {responseTo.sender.username}
+          </Quotation>
+        }
+        <MessageText>
+          {text}
+        </MessageText>
+      </MessageTextContainer>
+      <MessageDrawerHandle />
+      <MessageDetails>
+        {isRightSideResponder ? 'me' : sender.username}
+        <time dateTime={dateTime}>{dateTime.toDateString()}</time>
+      </MessageDetails>
+    </MessageContainer>
+  );
+}
 
 Message.propTypes = {
   text: PropTypes.string.isRequired,
