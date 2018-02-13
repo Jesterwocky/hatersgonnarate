@@ -36,7 +36,7 @@ const Snippet = styled.div.attrs({
 // stats or whatever on hover or on click expand icon
 // (whichever works better)
 const PersonSummary = ({
-  userId,
+  // userId,
   username,
   movieId,
   rating,
@@ -60,7 +60,7 @@ const PersonSummary = ({
 );
 
 PersonSummary.propTypes = {
-  userId: PropTypes.string.isRequired,
+  // userId: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   movieId: PropTypes.string.isRequired,
   rating: PropTypes.string.isRequired,

@@ -8,6 +8,7 @@ import { SHAME_COLOR, SHAME_BACKGROUND } from '../../../util/themes';
 import Modal from '../Modal';
 import PersonSummary from '../../conversations/PersonSummary';
 import ConversationThread from '../../conversations/ConversationThread';
+import ThreadContainerWithOverleaves from '../../conversations/ThreadContainerWithOverleaves';
 
 const convoTypes = {
   seed: 'seed',
@@ -94,6 +95,11 @@ const Pane = styled.div.attrs({
   border-radius: 4px;
   overflow: hidden;
 
+  // allows 100% height on conversation to fill available space
+  // instead of being 100% height including header
+  display: flex;
+  flex-direction: column;
+
   &:first-child,
   &:last-child {
     margin: 0;
@@ -110,6 +116,10 @@ const PrivateConvo = Pane.extend.attrs({
 
 const PublicConvo = Pane.extend.attrs({
   className: 'callout-panes-seedconvo',
+})``;
+
+const Overleaf = styled.div.attrs({
+  className: 'callout-conversation-overleaf',
 })``;
 
 class CalloutModal extends Component {
@@ -158,13 +168,24 @@ class CalloutModal extends Component {
                   </ResponderSummary>
                 </ThreadHeading>
 
-                <ThreadContainer>
+                <ThreadContainerWithOverleaves
+                  leftOverleaf={
+                    <Overleaf>
+                      This right here is some info
+                    </Overleaf>
+                  }
+                  rightOverleaf={
+                    <Overleaf>
+                      This right here is some info
+                    </Overleaf>
+                  }
+                >
                   <ConversationThread
                     messages={seedConvo.messages}
                     movieId={context.movieId}
                     target={context.target}
                   />
-                </ThreadContainer>
+                </ThreadContainerWithOverleaves>
               </SeedConvo>
             </ThemeProvider>
 

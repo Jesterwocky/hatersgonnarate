@@ -5,6 +5,8 @@ import styled, { css } from 'styled-components';
 import { MESSAGE_THEMES } from '../../util/themes';
 
 const defaultTheme = MESSAGE_THEMES.SEED;
+const messageSideMargin = 10;
+const messageBottomPadding = 10;
 
 const MessageContainer = styled.div.attrs({
   className: 'message',
@@ -20,19 +22,18 @@ const MessageContainer = styled.div.attrs({
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        margin: 5px 0 5px 5px;
+        margin: 0 0 ${messageBottomPadding}px ${messageSideMargin}px;
         border-top-left-radius: 3px;
         border-bottom-left-radius: 3px;
       ` :
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        margin: 5px 5px 5px 0;
+        margin: 0 ${messageSideMargin}px ${messageBottomPadding}px 0;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
       `;
-  }}
-`;
+  } }`;
 
 const MessageTextContainer = styled.div.attrs({
   className: 'message-textcontainer',
@@ -46,7 +47,9 @@ const Quotation = styled.div.attrs({
   className: 'message-text-quotation',
 })`
   border-radius: 3px;
-  padding: 7px 11px;
+  padding: 6px 11px;
+  font-size: 11px;
+  font-style: italic;
 
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
@@ -56,15 +59,14 @@ const Quotation = styled.div.attrs({
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        margin: 5px 0 10px 10px;
+        margin: 5px 0 ${messageBottomPadding}px 10px;
       ` :
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        margin: 5px 10px 10px 0;
+        margin: 5px 10px ${messageBottomPadding}px 0;
       `;
-  }}
-`;
+  } }`;
 
 const MessageDrawerHandle = styled.div.attrs({
   className: 'message-drawerhandle',
@@ -74,8 +76,8 @@ const MessageDrawerHandle = styled.div.attrs({
 const MessageDetails = styled.div.attrs({
   className: 'message-drawer',
 })`
-  display: none;
-`;
+    display: none;
+  `;
 
 // right-side-responder = target in a callout, or current user in a group convo.
 const Message = ({
@@ -106,7 +108,7 @@ const Message = ({
       </MessageDetails>
     </MessageContainer>
   );
-}
+};
 
 Message.propTypes = {
   text: PropTypes.string.isRequired,
