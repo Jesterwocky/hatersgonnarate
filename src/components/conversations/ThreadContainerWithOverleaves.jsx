@@ -30,7 +30,7 @@ const ThreadContainerWithOverleavesWrapper = styled.div.attrs({
 })`
   height: 100%;
   position: relative;
-  padding: 0 ${closedOverleafWidth}px;
+  padding: 0 ${closedOverleafWidth}%;
   margin-top: 5px;
   border-radius: 4px;
   border-top-left-radius: 0;

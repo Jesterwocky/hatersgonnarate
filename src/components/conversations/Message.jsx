@@ -5,14 +5,13 @@ import styled, { css } from 'styled-components';
 import { MESSAGE_THEMES } from '../../util/themes';
 
 const defaultTheme = MESSAGE_THEMES.SEED;
-const messageSideMargin = 10;
-const messageBottomPadding = 10;
+const messagesMargin = 5;
 
 const MessageContainer = styled.div.attrs({
   className: 'message',
 })`
   font-size: 14px;
-  padding: 10px;
+  padding: 7px;
 
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
@@ -22,14 +21,14 @@ const MessageContainer = styled.div.attrs({
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        margin: 0 0 ${messageBottomPadding}px ${messageSideMargin}px;
+        margin: 0 0 ${messagesMargin}px ${messagesMargin}px;
         border-top-left-radius: 3px;
         border-bottom-left-radius: 3px;
       ` :
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        margin: 0 ${messageSideMargin}px ${messageBottomPadding}px 0;
+        margin: 0 ${messagesMargin}px ${messagesMargin}px 0;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
       `;
@@ -47,6 +46,7 @@ const Quotation = styled.div.attrs({
   className: 'message-text-quotation',
 })`
   border-radius: 3px;
+  border: ${messagesMargin}px solid white;
   padding: 6px 11px;
   font-size: 11px;
   font-style: italic;
@@ -59,12 +59,12 @@ const Quotation = styled.div.attrs({
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        margin: 5px 0 ${messageBottomPadding}px 10px;
+        margin: 5px 0 ${messagesMargin}px 10px;
       ` :
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        margin: 5px 10px ${messageBottomPadding}px 0;
+        margin: 5px 10px ${messagesMargin}px 0;
       `;
   } }`;
 

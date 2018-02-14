@@ -37,13 +37,14 @@ const ThreadHeading = styled.div.attrs({
   className: 'calloutmodal-thread-heading',
 })`
   display: flex;
+  flex: none;
   align-items: center;
   justify-content: center;
-  height: 38px;
+  height: 33px;
   font-size: 16px;
   padding: 0 5px;
 
-  background-color: #bb3d2d;
+  background-color: ${SHAME_COLOR};
   color: white;
 `;
 
