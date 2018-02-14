@@ -47,10 +47,6 @@ const ThreadHeading = styled.div.attrs({
   color: white;
 `;
 
-const ThreadContainer = styled.div.attrs({
-  className: 'calloutmodal-thread-container',
-})``;
-
 const VsText = styled.p.attrs({
   className: 'calloutmodal-conversation-vstext',
 })`

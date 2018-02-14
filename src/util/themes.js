@@ -104,11 +104,14 @@ export const BANNER = {
 export const SHAME_COLOR = '#ff604e';
 export const SHAME_BACKGROUND = '#fdeae8';
 
+export const LIKE_BACKGROUND = '#daf1df';
+export const LIKE_COLOR = '#508e5f';
+
 export const MESSAGE_THEMES = {
   SEED: {
     messagesLeft: {
-      background: SHAME_COLOR,
-      color: 'white',
+      background: LIKE_BACKGROUND,
+      color: LIKE_COLOR,
     },
     messagesRight: {
       background: SHAME_BACKGROUND,

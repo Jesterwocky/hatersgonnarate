@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { SHAME_COLOR, SHAME_BACKGROUND } from '../../util/themes';
+import { modalContentZIndex, modalBannerZIndex } from '../../util/constants';
+import { MESSAGE_THEMES } from '../../util/themes';
 
-const closedOverfleafWidth = 18;
-const bufferBorderWidth = 4;
-const openOverfleafWidth = `calc(100% - ${closedOverfleafWidth + bufferBorderWidth}px)`;
+// Purpose of ThreadContainerWithOverleaves: a container div for a conversation
+// that adds a clickable bar on the left and right side of the conversation,
+// corresponding with the left and right side participants. Clicking the
+// bar opens the overleaf, which is intended to display info about the
+// participant on that side.
+
+const defaultTheme = MESSAGE_THEMES.SEED;
+
+const overleaves = {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+};
+
+const closedOverleafWidth = 8; // percent
+const bufferBorderWidth = 4; // px
+const distanceFromSideToContent = 6; // percent
+const openOverleafWidth = 100 - distanceFromSideToContent; // percent
 
 // Container for the conversation contents. Used to position overleaves to
 // left and right
@@ -15,7 +30,7 @@ const ThreadContainerWithOverleavesWrapper = styled.div.attrs({
 })`
   height: 100%;
   position: relative;
-  padding: 0 ${closedOverfleafWidth}px;
+  padding: 0 ${closedOverleafWidth}px;
   margin-top: 5px;
   border-radius: 4px;
   border-top-left-radius: 0;
@@ -23,29 +38,52 @@ const ThreadContainerWithOverleavesWrapper = styled.div.attrs({
   overflow: hidden;
 `;
 
-const Overfleaf = styled.div`
+const Overleaf = styled.div`
+  font-size: 13px;
+
+  height: 100%;
+  width: ${openOverleafWidth}%;
+
+  z-index: ${modalContentZIndex};
   position: absolute;
   top: 0;
-  height: 100%;
-  width: ${props => (props.open ? openOverfleafWidth : `${closedOverfleafWidth}px`)};
-`;
 
-const LeftOverleaf = Overfleaf.extend.attrs({
+  transition: transform 0.2s;
+
+  ${props => props.open &&
+    css`
+      z-index: ${modalBannerZIndex};
+    `}
+  `;
+
+const LeftOverleaf = Overleaf.extend.attrs({
   className: 'overleaves-wrapper-overleaf-left',
 })`
-  background-color: ${props => (props.open ? 'white' : SHAME_COLOR)};
-  color: white;
-  left: 0;
-  border-right: ${props => (props.open ? `${bufferBorderWidth}px solid white` : 'none')};
+  background-color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).background};
+  color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
+  left: -${openOverleafWidth - closedOverleafWidth}%;
+
+  ${props => props.open &&
+    css`
+      transform: translateX(${(openOverleafWidth - closedOverleafWidth) + 1}%);
+      border-right: ${bufferBorderWidth}px solid white;
+      background-color: white;
+    `}
 `;
 
-const RightOverleaf = Overfleaf.extend.attrs({
+const RightOverleaf = Overleaf.extend.attrs({
   className: 'overleaves-wrapper-overleafright',
 })`
-  background-color: ${props => (props.open ? 'white' : SHAME_BACKGROUND)};
-  color: ${SHAME_COLOR};
-  right: 0;
-  border-left: ${props => (props.open ? `${bufferBorderWidth}px solid white` : 'none')};
+  background-color: ${props => (props.theme.messagesRight || defaultTheme.messagesRight).background};
+  color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
+  right: -${openOverleafWidth - closedOverleafWidth}%;
+
+  ${props => props.open &&
+    css`
+      transform: translateX(-${(openOverleafWidth - closedOverleafWidth) + 1}%);
+      border-left: ${bufferBorderWidth}px solid white;
+      background-color: white;
+    `}
 `;
 
 // when an overleaf is open, the overleaf changes to white (or whatever
@@ -58,13 +96,14 @@ const OverleafContent = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
 `;
 
 const LeftContent = OverleafContent.extend.attrs({
   className: 'overleaves-wrapper-overleafcontent-left',
 })`
-  background-color: ${SHAME_COLOR};
-  color: white;
+  background-color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).background};
+  color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 `;
@@ -72,26 +111,18 @@ const LeftContent = OverleafContent.extend.attrs({
 const RightContent = OverleafContent.extend.attrs({
   className: 'overleaves-wrapper-overleafcontent-left',
 })`
-  background-color: ${SHAME_BACKGROUND};
-  color: ${SHAME_COLOR};
+  background-color: ${props => (props.theme.messagesRight || defaultTheme.messagesRight).background};
+  color: ${props => (props.theme.messagesRight || defaultTheme.messagesRight).color};
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 `;
-
-const overleaves = {
-  LEFT: 'LEFT',
-  RIGHT: 'RIGHT',
-};
-
-// TODO: if message is responding to the message immediately preceding it,
-// don't quote that message in the response even if the data is there
 
 class ThreadContainerWithOverleaves extends Component {
   state = {
     overleafOpen: null,
   }
 
-  toggleLeftOverfleaf = () => {
+  toggleLeftOverleaf = () => {
     const overleafState = this.state.overleafOpen === overleaves.LEFT ?
       null : overleaves.LEFT;
 
@@ -100,7 +131,7 @@ class ThreadContainerWithOverleaves extends Component {
     });
   }
 
-  toggleRightOverfleaf = () => {
+  toggleRightOverleaf = () => {
     const overleafState = this.state.overleafOpen === overleaves.RIGHT ?
       null : overleaves.RIGHT;
 
@@ -121,7 +152,7 @@ class ThreadContainerWithOverleaves extends Component {
     return (
       <ThreadContainerWithOverleavesWrapper>
         <LeftOverleaf
-          onClick={this.toggleLeftOverfleaf}
+          onClick={this.toggleLeftOverleaf}
           open={this.state.overleafOpen === overleaves.LEFT}
         >
           {this.state.overleafOpen === overleaves.LEFT &&
@@ -132,7 +163,7 @@ class ThreadContainerWithOverleaves extends Component {
         </LeftOverleaf>
 
         <RightOverleaf
-          onClick={this.toggleRightOverfleaf}
+          onClick={this.toggleRightOverleaf}
           open={this.state.overleafOpen === overleaves.RIGHT}
         >
           {this.state.overleafOpen === overleaves.RIGHT &&
