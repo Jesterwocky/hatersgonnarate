@@ -102,20 +102,24 @@ export const BANNER = {
 };
 
 export const SHAME_COLOR = '#ff604e';
-export const SHAME_BACKGROUND = '#fdeae8';
+export const SHAME_BACKGROUND = '#ffefed';
+export const SHAME_BORDER_HIGHLIGHT = '#ffdcd8';
 
-export const LIKE_BACKGROUND = '#daf1df';
-export const LIKE_COLOR = '#508e5f';
+export const LIKE_BACKGROUND = '#defbe4';
+export const LIKE_COLOR = '#409e57';
+export const LIKE_BORDER_HIGHLIGHT = '#b8f5c6';
 
 export const MESSAGE_THEMES = {
   SEED: {
     messagesLeft: {
       background: LIKE_BACKGROUND,
       color: LIKE_COLOR,
+      borderHighlight: LIKE_BORDER_HIGHLIGHT,
     },
     messagesRight: {
       background: SHAME_BACKGROUND,
       color: SHAME_COLOR,
+      borderHighlight: SHAME_BORDER_HIGHLIGHT,
     },
   },
 };

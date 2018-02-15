@@ -32,9 +32,6 @@ const ThreadContainerWithOverleavesWrapper = styled.div.attrs({
   position: relative;
   padding: 0 ${closedOverleafWidth}%;
   margin-top: 5px;
-  border-radius: 4px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
   overflow: hidden;
 `;
 
@@ -47,8 +44,6 @@ const Overleaf = styled.div`
   z-index: ${modalContentZIndex};
   position: absolute;
   top: 0;
-
-  transition: transform 0.2s;
 
   ${props => props.open &&
     css`
@@ -63,9 +58,11 @@ const LeftOverleaf = Overleaf.extend.attrs({
   color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
   left: -${openOverleafWidth - closedOverleafWidth}%;
 
+  transition: left 0.2s;
+
   ${props => props.open &&
     css`
-      transform: translateX(${(openOverleafWidth - closedOverleafWidth) + 1}%);
+      left: 0;
       border-right: ${bufferBorderWidth}px solid white;
       background-color: white;
     `}
@@ -78,9 +75,11 @@ const RightOverleaf = Overleaf.extend.attrs({
   color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
   right: -${openOverleafWidth - closedOverleafWidth}%;
 
+  transition: right 0.2s;
+
   ${props => props.open &&
     css`
-      transform: translateX(-${(openOverleafWidth - closedOverleafWidth) + 1}%);
+      right: 0;
       border-left: ${bufferBorderWidth}px solid white;
       background-color: white;
     `}

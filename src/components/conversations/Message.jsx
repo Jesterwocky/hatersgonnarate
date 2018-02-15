@@ -13,6 +13,17 @@ const MessageContainer = styled.div.attrs({
   font-size: 14px;
   padding: 7px;
 
+  transition: box-shadow 0.15s ease-out;
+
+  &:hover {
+    // using box-shadow achieves outlining on hover
+    // WITHOUT changing box size and
+    // WITH border radius
+    box-shadow: 0 0 0 2px ${props => (props.isRightSideResponder ?
+    (props.theme.messagesRight || defaultTheme.messagesRight).borderHighlight :
+    (props.theme.messagesLeft || defaultTheme.messagesLeft).borderHighlight)}
+  }
+
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
     const messagesLeft = props.theme.messagesLeft || defaultTheme.messagesLeft;

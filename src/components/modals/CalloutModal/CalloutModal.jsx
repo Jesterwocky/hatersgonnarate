@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
 
-import { SHAME_COLOR, SHAME_BACKGROUND } from '../../../util/themes';
+import { SHAME_COLOR } from '../../../util/themes';
 
 import Modal from '../Modal';
 import PersonSummary from '../../conversations/PersonSummary';
 import ConversationThread from '../../conversations/ConversationThread';
 import ThreadContainerWithOverleaves from '../../conversations/ThreadContainerWithOverleaves';
+import RespondBox from '../../conversations/RespondBox';
 
 const convoTypes = {
   seed: 'seed',
@@ -183,6 +184,11 @@ class CalloutModal extends Component {
                     target={context.target}
                   />
                 </ThreadContainerWithOverleaves>
+                <RespondBox
+                  mustRespondElsewhere
+                  activateOtherMessageBox={() => console.log('Opening other respond box')}
+                  submitMessage={message => console.log(message)}
+                />
               </SeedConvo>
             </ThemeProvider>
 
