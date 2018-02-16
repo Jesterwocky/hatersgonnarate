@@ -101,6 +101,8 @@ export const BANNER = {
   },
 };
 
+export const THREAD_BACKGROUND = 'white';
+
 export const SHAME_COLOR = '#ff604e';
 export const SHAME_BACKGROUND = '#ffefed';
 export const SHAME_BORDER_HIGHLIGHT = '#ffdcd8';

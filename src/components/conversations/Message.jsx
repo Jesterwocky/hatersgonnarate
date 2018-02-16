@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { MESSAGE_THEMES } from '../../util/themes';
+import { MESSAGE_THEMES, THREAD_BACKGROUND } from '../../util/themes';
 
 const defaultTheme = MESSAGE_THEMES.SEED;
-const messagesMargin = 5;
+const messagesMargin = 10;
+const messageBorderRadius = 3;
 
 const MessageContainer = styled.div.attrs({
   className: 'message',
 })`
   font-size: 14px;
   padding: 7px;
+  margin: 5px 15px;
 
   transition: box-shadow 0.15s ease-out;
 
@@ -33,15 +35,15 @@ const MessageContainer = styled.div.attrs({
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
         margin: 0 0 ${messagesMargin}px ${messagesMargin}px;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
+        border-top-left-radius: ${messageBorderRadius}px;
+        border-bottom-left-radius: ${messageBorderRadius}px;
       ` :
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
         margin: 0 ${messagesMargin}px ${messagesMargin}px 0;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
+        border-top-right-radius: ${messageBorderRadius}px;
+        border-bottom-right-radius: ${messageBorderRadius}px;
       `;
   } }`;
 
@@ -56,8 +58,8 @@ const MessageText = styled.div.attrs({
 const Quotation = styled.div.attrs({
   className: 'message-text-quotation',
 })`
-  border-radius: 3px;
-  border: ${messagesMargin}px solid white;
+  border-radius: ${messageBorderRadius}px;
+  border: 5px solid ${THREAD_BACKGROUND};
   padding: 6px 11px;
   font-size: 11px;
   font-style: italic;
@@ -70,12 +72,12 @@ const Quotation = styled.div.attrs({
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        margin: 5px 0 ${messagesMargin}px 10px;
+        margin: 5px 10px ${messagesMargin}px;
       ` :
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        margin: 5px 10px ${messagesMargin}px 0;
+        margin: 5px 10px ${messagesMargin}px;
       `;
   } }`;
 

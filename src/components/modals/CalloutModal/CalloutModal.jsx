@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { isEmpty } from '../../../util/helpers';
 import { SHAME_COLOR } from '../../../util/themes';
 
+import { addMessageToConversation } from '../../../actions/conversations';
+
 import Modal from '../Modal';
-import PersonSummary from '../../conversations/PersonSummary';
-import ConversationThread from '../../conversations/ConversationThread';
+import SeedConvoOverleaf from './SeedConvo/SeedConvoOverleaf';
+import SeedConvoThreadHeader from './SeedConvo/SeedConvoThreadHeader';
+import InteractiveThread from '../../conversations/InteractiveThread';
 import ThreadContainerWithOverleaves from '../../conversations/ThreadContainerWithOverleaves';
-import RespondBox from '../../conversations/RespondBox';
 
 const convoTypes = {
   seed: 'seed',
@@ -34,7 +37,17 @@ const CalloutModalHeading = styled.h1.attrs({
   color: ${SHAME_COLOR};
 `;
 
-const ThreadHeading = styled.div.attrs({
+const Panes = styled.div.attrs({
+  className: 'callout-panes',
+})`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: ${SHAME_COLOR};
+`;
+
+export const ThreadHeading = styled.div.attrs({
   className: 'calloutmodal-thread-heading',
 })`
   display: flex;
@@ -49,47 +62,11 @@ const ThreadHeading = styled.div.attrs({
   color: white;
 `;
 
-const VsText = styled.p.attrs({
-  className: 'calloutmodal-conversation-vstext',
-})`
-  font-weight: 300;
-  font-size: 12px;
-  margin: 0 7px;
-  padding-top: 5px;
-`;
-
-const PersonSummaryContainer = styled.div`
-  width: 100%;
-  display: flex;
-`;
-
-const InitiatorSummary = PersonSummaryContainer.extend.attrs({
-  className: 'calloutmodal-personsummarycontainer',
-})`
-  justify-content: flex-end;
-`;
-
-const ResponderSummary = PersonSummaryContainer.extend.attrs({
-  className: 'calloutmodal-personsummarycontainer',
-})`
-  justify-content: flex-start;
-`;
-
-const Panes = styled.div.attrs({
-  className: 'callout-panes',
-})`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  color: ${SHAME_COLOR};
-`;
-
-const Pane = styled.div.attrs({
+export const Pane = styled.div.attrs({
   className: 'callout-panes-pane',
 })`
   width: 100%;
-  margin: 0 5px 0;
+  margin: 0 10px 0;
   border-radius: 4px;
   overflow: hidden;
 
@@ -104,20 +81,16 @@ const Pane = styled.div.attrs({
   }
 `;
 
-const SeedConvo = Pane.extend.attrs({
-  className: 'callout-panes-seedconvo',
+const SeedConvoPane = Pane.extend.attrs({
+  className: 'calloutmodal-panes-seedpane',
 })``;
 
-const PrivateConvo = Pane.extend.attrs({
-  className: 'callout-panes-seedconvo',
+const PrivateConvoPane = Pane.extend.attrs({
+  className: 'calloutmodal-panes-seedpane',
 })``;
 
-const PublicConvo = Pane.extend.attrs({
-  className: 'callout-panes-seedconvo',
-})``;
-
-const Overleaf = styled.div.attrs({
-  className: 'callout-conversation-overleaf',
+const PublicConvoPane = Pane.extend.attrs({
+  className: 'calloutmodal-panes-seedpane',
 })``;
 
 class CalloutModal extends Component {
@@ -127,8 +100,16 @@ class CalloutModal extends Component {
     publicConversationOpen: false,
   }
 
+  createOnSubmitMessage = ({ convoId, threadType }) => message => (
+    this.props.submitNewMessage({
+      convoId,
+      threadType,
+      message,
+    })
+  )
+
   render() {
-    const { context, conversations, user } = this.props;
+    const { context, conversations } = this.props;
     const seedConvo = conversations.threads[convoTypes.seed];
     const privateConvo = conversations.threads[convoTypes.private];
     const publicConvo = conversations.threads[convoTypes.public];
@@ -142,67 +123,73 @@ class CalloutModal extends Component {
           </CalloutModalHeading>
           <Panes>
 
-            <ThemeProvider theme={{}}>
-              <SeedConvo>
-                <ThreadHeading>
-                  <InitiatorSummary>
-                    <PersonSummary
-                      userId={context.initiator.id}
-                      username={context.initiator.username}
-                      rating={context.initiator.ratingSnapshot.rating}
-                      movieId={context.movieId}
-                    />
-                  </InitiatorSummary>
-
-                  <VsText>@</VsText>
-
-                  <ResponderSummary>
-                    <PersonSummary
-                      userId={context.target.id}
-                      username={context.target.username}
-                      rating={context.target.ratingSnapshot.rating}
-                      movieId={context.movieId}
-                    />
-                  </ResponderSummary>
-                </ThreadHeading>
-
-                <ThreadContainerWithOverleaves
-                  leftOverleaf={
-                    <Overleaf>
-                      This right here is some info
-                    </Overleaf>
-                  }
-                  rightOverleaf={
-                    <Overleaf>
-                      This right here is some info
-                    </Overleaf>
-                  }
-                >
-                  <ConversationThread
-                    messages={seedConvo.messages}
-                    movieId={context.movieId}
-                    target={context.target}
-                  />
-                </ThreadContainerWithOverleaves>
-                <RespondBox
-                  mustRespondElsewhere
-                  activateOtherMessageBox={() => console.log('Opening other respond box')}
-                  submitMessage={message => console.log(message)}
+            <SeedConvoPane>
+              <ThreadHeading>
+                <SeedConvoThreadHeader
+                  initiator={context.initiator}
+                  target={context.target}
+                  movieId={context.movieId}
                 />
-              </SeedConvo>
-            </ThemeProvider>
-
-            <PrivateConvo>
-              <ThreadHeading>
-                Just us raters
               </ThreadHeading>
-            </PrivateConvo>
 
-            <PublicConvo>
+              <InteractiveThread
+                messages={seedConvo.messages}
+                target={context.target}
+                onSubmitMessage={this.createOnSubmitMessage({
+                  convoId: privateConvo.id || publicConvo.id,
+                  threadType: privateConvo.type || publicConvo.type,
+                })}
+                threadContainer={ThreadContainerWithOverleaves}
+                leftOverLeaf={
+                  <SeedConvoOverleaf
+                    {...context.initiator}
+                    movie={{
+                      id: context.movieId,
+                      movieName: 'Movie Name',
+                    }}
+                  />
+                }
+                rightOverLeaf={
+                  <SeedConvoOverleaf
+                    {...context.target}
+                    movie={{
+                      id: context.movieId,
+                      movieName: 'Movie Name',
+                    }}
+                  />
+                }
+              />
+            </SeedConvoPane>
+
+            {!isEmpty(privateConvo) &&
+              <PrivateConvoPane>
+                <ThreadHeading>
+                  Guests
+                </ThreadHeading>
+                <InteractiveThread
+                  messages={privateConvo.messages}
+                  target={privateConvo.target}
+                  onSubmitMessage={this.createOnSubmitMessage({
+                    convoId: privateConvo.id,
+                    threadType: privateConvo.type,
+                  })}
+                />
+              </PrivateConvoPane>
+            }
+
+            <PublicConvoPane>
               <ThreadHeading>
-                Town Square
+                Everyone
               </ThreadHeading>
-            </PublicConvo>
+              <InteractiveThread
+                messages={publicConvo.messages}
+                target={publicConvo.target}
+                onSubmitMessage={this.createOnSubmitMessage({
+                  convoId: publicConvo.id,
+                  threadType: publicConvo.type,
+                })}
+              />
+            </PublicConvoPane>
           </Panes>
         </CalloutModalContent>
       </Modal>
@@ -213,7 +200,7 @@ class CalloutModal extends Component {
 CalloutModal.propTypes = {
   context: PropTypes.object.isRequired,
   conversations: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  submitNewMessage: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -222,8 +209,23 @@ function mapStateToProps(state) {
     conversations: state.conversations.conversations[
       state.conversations.context.conversationId
     ],
-    user: state.user,
   };
 }
 
-export default connect(mapStateToProps)(CalloutModal);
+function mapDispatchToProps(dispatch) {
+  return {
+    submitNewMessage: ({ convoId, threadType, message }) => {
+      addMessageToConversation(
+        dispatch,
+        convoId,
+        threadType,
+        message,
+      );
+    },
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CalloutModal);

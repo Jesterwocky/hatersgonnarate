@@ -1,60 +1,65 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { LIGHT } from '../../util/themes';
+import { LIGHT, SHAME_COLOR } from '../../util/themes';
 
 import { Button } from '../_StyledComponents';
 
-import TextArea from '../TextArea';
+import TextBox from '../TextBox';
 
 const RespondContainer = styled.div.attrs({
-  className: 'messagebox',
+  className: 'respond',
 })`
   width: 100%;
   height: 40px;
   display: flex;
+  border: none;
   margin-top: 5px;
 `;
 
-const ResponseContainer = styled.div.attrs({
-  className: 'messagebox-response',
+const MessageBoxContainer = styled.div.attrs({
+  className: 'respond-messageboxcontainer',
 })`
   width: 100%;
+  margin: 0;
 `;
 
-const MessageBox = TextArea.extend.attrs({
-  className: 'messagebox-box',
-})``;
-
-const RespondButtonContainer = styled.div.attrs({
-  className: 'messagebox-respondbuttoncontainer',
-})``;
-
-const RespondButton = Button.extend.attrs({
-  className: 'messagebox-respondbuttoncontainer',
+const PostMessageButton = Button.extend.attrs({
+  className: 'respond-respondbuttoncontainer',
 })`
   height: 100%;
-  padding: 0 3px;
   font-size: 11px;
-  margin: 0 0 0 5px;
+  color: white;
+  background-color: ${SHAME_COLOR};
+
+  padding: 0 3px;
+  margin: 0;
+
+  border: none;
   border-radius: 0;
   border-bottom-right-radius: 4px;
 `;
 
-const GoToRespondButton = Button.extend.attrs({
-  className: 'messagebox-respond',
+const MessageBox = TextBox.extend.attrs({
+  className: 'respond-box',
 })`
+  min-height: auto;
   height: 100%;
   width: 100%;
   text-align: left;
-  font-weight: 300;
-  padding: 0 10px;
+  font-weight: 400;
+
   background-color: #f9f9f9;
-  color: #d3d3ff;
-  border: 2px solid #efeff7;
+  color: #504dad;
+
+  margin: 0;
+  padding: 0 10px;
+
+  border: 2px solid ${SHAME_COLOR};
   border-radius: 0;
   border-bottom-left-radius: 4px;
+  border-right: none;
 `;
 
 class RespondBox extends Component {
@@ -70,53 +75,38 @@ class RespondBox extends Component {
 
   render() {
     const {
-      mustRespondElsewhere,
-      activateOtherMessageBox,
-      submitMessage,
+      onSubmitMessage,
     } = this.props;
 
+    // TODO: enable submit on hitting return?
     return (
       <RespondContainer>
-        <ResponseContainer>
-          {mustRespondElsewhere &&
-            <GoToRespondButton
-              onClick={activateOtherMessageBox}
-            >
-              Respond
-            </GoToRespondButton>
-          }
-          {!mustRespondElsewhere &&
-            <MessageBox
-              onChange={this.updateMessageText}
-              value={this.state.messageText}
-              placeholder="Respond"
-            />
-          }
-        </ResponseContainer>
+        <MessageBoxContainer>
+          <MessageBox
+            onUpdateText={this.updateMessageText}
+            value={this.state.messageText}
+            placeholder="Respond"
+          />
+        </MessageBoxContainer>
 
-        <RespondButtonContainer>
-          <RespondButton
-            onClick={submitMessage}
-            disabled={!this.state.messageText || mustRespondElsewhere}
-          >
-            Post
-          </RespondButton>
-        </RespondButtonContainer>
+        <PostMessageButton
+          onClick={onSubmitMessage}
+          disabled={!this.state.messageText}
+        >
+          Post
+        </PostMessageButton>
+
       </RespondContainer>
     );
   }
 }
 
 RespondBox.propTypes = {
-  activateOtherMessageBox: PropTypes.func,
-  mustRespondElsewhere: PropTypes.bool,
-  submitMessage: PropTypes.func,
+  onSubmitMessage: PropTypes.func,
 };
 
 RespondBox.defaultProps = {
-  activateOtherMessageBox: null,
-  mustRespondElsewhere: null,
-  submitMessage: null,
+  onSubmitMessage: null,
 };
 
 export default RespondBox;

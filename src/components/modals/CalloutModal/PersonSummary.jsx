@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import MovieRating from '../movies/MovieRating/MovieRating';
+import MovieRating from '../../movies/MovieRating/MovieRating';
 
 const starsWidth = 60;
 const starsOffset = starsWidth / 6;
@@ -41,23 +41,25 @@ const PersonSummary = ({
   movieId,
   rating,
   snippet,
-}) => (
-  <PersonSummaryContainer>
-    <MovieRatingContainer>
-      <MovieRating
-        movieId={movieId}
-        rating={rating}
-        width={starsWidth}
-      />
-    </MovieRatingContainer>
-    <Username>
-      {username}
-    </Username>
-    {snippet &&
-      <Snippet>{snippet}</Snippet>
-    }
-  </PersonSummaryContainer>
-);
+}) => {
+  return (
+    <PersonSummaryContainer>
+      <MovieRatingContainer>
+        <MovieRating
+          movieId={movieId}
+          rating={rating}
+          width={starsWidth}
+        />
+      </MovieRatingContainer>
+      <Username>
+        {username}
+      </Username>
+      {snippet &&
+        <Snippet>{snippet}</Snippet>
+      }
+    </PersonSummaryContainer>
+  );
+};
 
 PersonSummary.propTypes = {
   // userId: PropTypes.string.isRequired,

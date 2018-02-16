@@ -659,7 +659,7 @@ export const messagesBetweenFriends = {
       sender: {
         ...friends['1234567892'],
       },
-      text: 'Accept it!',
+      text: 'Mooovie! La la la!',
     },
   },
 };

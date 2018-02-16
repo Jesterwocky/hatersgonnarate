@@ -4,22 +4,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { isEmpty } from '../../util/helpers';
+import { THREAD_BACKGROUND } from '../../util/themes';
 
 import Message from './Message';
 
-const ConversationThreadWrapper = styled.div.attrs({
-  className: 'thread',
+const ThreadMessagesWrapper = styled.div.attrs({
+  className: 'threadmessages',
 })`
   height: 100%;
   width: 100%;
+  background-color: ${THREAD_BACKGROUND};
 `;
 
 // TODO: if message is responding to the message immediately preceding it,
 // don't quote that message in the response even if the data is there
 
-const ConversationThread = ({
+const ThreadMessages = ({
   messages,
-  // movieId,
   user,
   target,
 }) => {
@@ -28,7 +29,7 @@ const ConversationThread = ({
     .sort().map(key => messages[key]);
 
   return (
-    <ConversationThreadWrapper>
+    <ThreadMessagesWrapper>
       {messageList.map(message => (
         <Message
           key={`message-${message.id}`}
@@ -42,18 +43,17 @@ const ConversationThread = ({
           {message.text}
         </Message>
       ))}
-    </ConversationThreadWrapper>
+    </ThreadMessagesWrapper>
   );
 };
 
-ConversationThread.propTypes = {
+ThreadMessages.propTypes = {
   messages: PropTypes.object.isRequired,
-  // movieId: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   target: PropTypes.object,
 };
 
-ConversationThread.defaultProps = {
+ThreadMessages.defaultProps = {
   target: {},
 };
 
@@ -63,4 +63,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ConversationThread);
+export default connect(mapStateToProps)(ThreadMessages);
