@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import MovieRating from '../../movies/MovieRating/MovieRating';
+import MovieRating from '../../../movies/MovieRating/MovieRating';
 
 const starsWidth = 60;
 const starsOffset = starsWidth / 6;
 
-const PersonSummaryContainer = styled.div.attrs({
+const SeedParticipantSummaryContainer = styled.div.attrs({
   className: 'personsummary-ratingcontainer',
 })`
   display: flex;
@@ -35,7 +35,7 @@ const Snippet = styled.div.attrs({
 // TODO: have state. Show pop-up with snippet and
 // stats or whatever on hover or on click expand icon
 // (whichever works better)
-const PersonSummary = ({
+const SeedParticipantSummary = ({
   // userId,
   username,
   movieId,
@@ -43,7 +43,7 @@ const PersonSummary = ({
   snippet,
 }) => {
   return (
-    <PersonSummaryContainer>
+    <SeedParticipantSummaryContainer>
       <MovieRatingContainer>
         <MovieRating
           movieId={movieId}
@@ -57,11 +57,11 @@ const PersonSummary = ({
       {snippet &&
         <Snippet>{snippet}</Snippet>
       }
-    </PersonSummaryContainer>
+    </SeedParticipantSummaryContainer>
   );
 };
 
-PersonSummary.propTypes = {
+SeedParticipantSummary.propTypes = {
   // userId: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   movieId: PropTypes.string.isRequired,
@@ -69,8 +69,8 @@ PersonSummary.propTypes = {
   snippet: PropTypes.string,
 };
 
-PersonSummary.defaultProps = {
+SeedParticipantSummary.defaultProps = {
   snippet: '',
 };
 
-export default PersonSummary;
+export default SeedParticipantSummary;

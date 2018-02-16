@@ -1,5 +1,5 @@
 const userData = {
-  profilePicUrl: 'http://s266.photobucket.com/user/Fenrisfil/media/shepard-funny-face.jpg',
+  profilePicUrl: 'http://images6.fanpop.com/image/photos/40700000/461366-dogs-happy-dog-corgi-dogs-40712807-500-500.jpg',
 };
 
 export const friends = {
@@ -657,9 +657,27 @@ export const messagesBetweenFriends = {
         text: 'Dont listen!!!',
       },
       sender: {
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had something to say. So many thinks! What a thing.',
+        },
         ...friends['1234567892'],
       },
       text: 'Mooovie! La la la!',
+    },
+    1: {
+      messageSequenceNumber: 1,
+      time: 1518215734260,
+      id: '00006',
+      sender: {
+        ratingSnapshot: {
+          rating: '3',
+          snippet: 'I had something to say. So many thinks! What a thing.',
+        },
+        ...friends['1234567891'],
+      },
+      text: `This is a message about a movie. A pretty good movie.
+      A movie that deserves our love and acclaim. But not THAT much.`,
     },
   },
 };

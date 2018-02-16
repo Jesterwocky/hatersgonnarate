@@ -25,6 +25,7 @@ const InteractiveThread = (props) => {
     target,
     onSubmitMessage,
     threadContainer,
+    includeSenderSummary,
   } = props;
   const MessagesContainer = threadContainer || DefaultMessagesContainer;
 
@@ -34,6 +35,7 @@ const InteractiveThread = (props) => {
         <ThreadMessages
           messages={messages}
           target={target}
+          includeSenderSummary={includeSenderSummary}
         />
       </MessagesContainer>
       <RespondBox onSubmitMessage={onSubmitMessage} />
@@ -46,12 +48,14 @@ InteractiveThread.propTypes = {
   onSubmitMessage: PropTypes.func.isRequired,
   target: PropTypes.object,
   threadContainer: PropTypes.func,
+  includeSenderSummary: PropTypes.bool,
 };
 
 InteractiveThread.defaultProps = {
   messages: {},
   target: {},
   threadContainer: null,
+  includeSenderSummary: false,
 };
 
 export default InteractiveThread;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 
 import { isEmpty } from '../../../util/helpers';
 import { SHAME_COLOR } from '../../../util/themes';
@@ -79,6 +79,10 @@ export const Pane = styled.div.attrs({
   &:last-child {
     margin: 0;
   }
+
+  ${props => !props.open && css`
+      width: 25px;
+  `}
 `;
 
 const SeedConvoPane = Pane.extend.attrs({
@@ -86,17 +90,17 @@ const SeedConvoPane = Pane.extend.attrs({
 })``;
 
 const PrivateConvoPane = Pane.extend.attrs({
-  className: 'calloutmodal-panes-seedpane',
+  className: 'calloutmodal-panes-private',
 })``;
 
 const PublicConvoPane = Pane.extend.attrs({
-  className: 'calloutmodal-panes-seedpane',
+  className: 'calloutmodal-panes-public',
 })``;
 
 class CalloutModal extends Component {
   state = {
     seedConversationOpen: true,
-    privateConversationOpen: false,
+    privateConversationOpen: true,
     publicConversationOpen: false,
   }
 
@@ -108,8 +112,33 @@ class CalloutModal extends Component {
     })
   )
 
+  toggleSeedConvoPane = () => {
+    this.setState({
+      seedConversationOpen: !this.state.seedConversationOpen,
+    });
+  }
+
+  toggleSeedConvoPane = () => {
+    this.setState({
+      seedConversationOpen: !this.state.seedConversationOpen,
+    });
+  }
+
+  togglePrivateConvoPane = () => {
+    this.setState({
+      privateConversationOpen: !this.state.privateConversationOpen,
+    });
+  }
+
+  togglePublicConvoPane = () => {
+    this.setState({
+      publicConversationOpen: !this.state.publicConversationOpen,
+    });
+  }
+
   render() {
     const { context, conversations } = this.props;
+    const { seedConversationOpen, privateConversationOpen, publicConversationOpen } = this.state;
     const seedConvo = conversations.threads[convoTypes.seed];
     const privateConvo = conversations.threads[convoTypes.private];
     const publicConvo = conversations.threads[convoTypes.public];
@@ -123,8 +152,10 @@ class CalloutModal extends Component {
           </CalloutModalHeading>
           <Panes>
 
-            <SeedConvoPane>
-              <ThreadHeading>
+            <SeedConvoPane
+              open={seedConversationOpen}
+            >
+              <ThreadHeading onClick={this.toggleSeedConvoPane}>
                 <SeedConvoThreadHeader
                   initiator={context.initiator}
                   target={context.target}
@@ -162,12 +193,17 @@ class CalloutModal extends Component {
             </SeedConvoPane>
 
             {!isEmpty(privateConvo) &&
-              <PrivateConvoPane>
-                <ThreadHeading>
+              <PrivateConvoPane
+                open={privateConversationOpen}
+              >
+                <ThreadHeading
+                  onClick={this.togglePrivateConvoPane}
+                >
                   Guests
                 </ThreadHeading>
                 <InteractiveThread
                   messages={privateConvo.messages}
+                  includeSenderSummary
                   target={privateConvo.target}
                   onSubmitMessage={this.createOnSubmitMessage({
                     convoId: privateConvo.id,
@@ -177,12 +213,17 @@ class CalloutModal extends Component {
               </PrivateConvoPane>
             }
 
-            <PublicConvoPane>
-              <ThreadHeading>
+            <PublicConvoPane
+              open={publicConversationOpen}
+            >
+              <ThreadHeading
+                onClick={this.togglePublicConvoPane}
+              >
                 Everyone
               </ThreadHeading>
               <InteractiveThread
                 messages={publicConvo.messages}
+                includeSenderSummary
                 target={publicConvo.target}
                 onSubmitMessage={this.createOnSubmitMessage({
                   convoId: publicConvo.id,

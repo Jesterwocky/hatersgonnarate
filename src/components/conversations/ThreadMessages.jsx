@@ -23,6 +23,7 @@ const ThreadMessages = ({
   messages,
   user,
   target,
+  includeSenderSummary,
 }) => {
   // make sure conversation is in order
   const messageList = Object.keys(messages)
@@ -33,6 +34,7 @@ const ThreadMessages = ({
       {messageList.map(message => (
         <Message
           key={`message-${message.id}`}
+          includeSenderSummary={includeSenderSummary}
           isRightSideResponder={
             isEmpty(target) ?
             message.sender.id === user.id :
@@ -51,10 +53,12 @@ ThreadMessages.propTypes = {
   messages: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   target: PropTypes.object,
+  includeSenderSummary: PropTypes.bool,
 };
 
 ThreadMessages.defaultProps = {
   target: {},
+  includeSenderSummary: false,
 };
 
 function mapStateToProps(state) {

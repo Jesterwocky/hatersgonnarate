@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import PersonSummary from '../PersonSummary';
+import SeedParticipantSummary from './SeedParticipantSummary';
 
 const SeedConvoThreadHeaderContainer = styled.div.attrs({
   className: 'seedconvothreadheader',
@@ -10,17 +10,17 @@ const SeedConvoThreadHeaderContainer = styled.div.attrs({
   display: flex;
 `;
 
-const PersonSummaryContainer = styled.div`
+const SeedParticipantSummaryContainer = styled.div`
   width: 100%;
 `;
 
-const InitiatorSummary = PersonSummaryContainer.extend.attrs({
+const InitiatorSummary = SeedParticipantSummaryContainer.extend.attrs({
   className: 'calloutmodal-personsummarycontainer',
 })`
   justify-content: flex-end;
 `;
 
-const ResponderSummary = PersonSummaryContainer.extend.attrs({
+const ResponderSummary = SeedParticipantSummaryContainer.extend.attrs({
   className: 'calloutmodal-personsummarycontainer',
 })`
   justify-content: flex-start;
@@ -43,7 +43,7 @@ const SeedConvoThreadHeader = ({
   return (
     <SeedConvoThreadHeaderContainer>
       <InitiatorSummary>
-        <PersonSummary
+        <SeedParticipantSummary
           {...initiator}
           rating={initiator.ratingSnapshot.rating}
           movieId={movieId}
@@ -53,7 +53,7 @@ const SeedConvoThreadHeader = ({
       <VsText>@</VsText>
 
       <ResponderSummary>
-        <PersonSummary
+        <SeedParticipantSummary
           {...target}
           rating={target.ratingSnapshot.rating}
           movieId={movieId}

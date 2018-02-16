@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
+import MessageSenderInfo from './MessageSenderInfo';
+
 import { MESSAGE_THEMES, THREAD_BACKGROUND } from '../../util/themes';
 
 const defaultTheme = MESSAGE_THEMES.SEED;
 const messagesMargin = 10;
-const messageBorderRadius = 3;
+const leftOrRightMargin = 6; // percent
+const messageBorderRadius = 14;
 
 const MessageContainer = styled.div.attrs({
   className: 'message',
@@ -14,6 +17,29 @@ const MessageContainer = styled.div.attrs({
   font-size: 14px;
   padding: 7px;
   margin: 5px 15px;
+  display: flex;
+  flex-direction: ${props => (props.isRightSideResponder ? 'row-reverse' : 'row')};
+
+  ${(props) => {
+    const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
+    const messagesLeft = props.theme.messagesLeft || defaultTheme.messagesLeft;
+
+    return props.isRightSideResponder ?
+      css`
+        color: ${messagesRight.color};
+        margin: 0 0 ${messagesMargin}px ${leftOrRightMargin}%;
+      ` :
+      css`
+        color: ${messagesLeft.color};
+        margin: 0 ${leftOrRightMargin}% ${messagesMargin}px 0;
+      `;
+  }};
+  `;
+
+const MessageTextContainer = styled.div.attrs({
+  className: 'message-textcontainer',
+})`
+  width: 100%;
 
   transition: box-shadow 0.15s ease-out;
 
@@ -34,22 +60,19 @@ const MessageContainer = styled.div.attrs({
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        margin: 0 0 ${messagesMargin}px ${messagesMargin}px;
-        border-top-left-radius: ${messageBorderRadius}px;
-        border-bottom-left-radius: ${messageBorderRadius}px;
+        padding: 10px 14px 10px 10px;
+        border-radius: ${messageBorderRadius}px;
+        border-top-right-radius: 0;
       ` :
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        margin: 0 ${messagesMargin}px ${messagesMargin}px 0;
-        border-top-right-radius: ${messageBorderRadius}px;
-        border-bottom-right-radius: ${messageBorderRadius}px;
+        padding: 10px 10px 10px 14px;
+        border-radius: ${messageBorderRadius}px;
+        border-top-left-radius: 0;
       `;
-  } }`;
-
-const MessageTextContainer = styled.div.attrs({
-  className: 'message-textcontainer',
-})``;
+  }};
+  `;
 
 const MessageText = styled.div.attrs({
   className: 'message-text',
@@ -63,6 +86,7 @@ const Quotation = styled.div.attrs({
   padding: 6px 11px;
   font-size: 11px;
   font-style: italic;
+  margin: 0 10px 10px;
 
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
@@ -72,12 +96,12 @@ const Quotation = styled.div.attrs({
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        margin: 5px 10px ${messagesMargin}px;
+        // margin: 0 0 10px 10px;
       ` :
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        margin: 5px 10px ${messagesMargin}px;
+        // margin: 0 10px 10px 0;
       `;
   } }`;
 
@@ -92,19 +116,28 @@ const MessageDetails = styled.div.attrs({
     display: none;
   `;
 
-// right-side-responder = target in a callout, or current user in a group convo.
+// right-side-responder: target in a callout, or current user in a group convo.
 const Message = ({
   text,
   sender,
   responseTo,
   isRightSideResponder,
+  includeSenderSummary,
   time,
 }) => {
   const dateTime = new Date(time);
 
   return (
     <MessageContainer isRightSideResponder={isRightSideResponder}>
-      <MessageTextContainer>
+      {includeSenderSummary &&
+        <MessageSenderInfo
+          username={sender.username}
+          userId={sender.id}
+          rating={sender.ratingSnapshot.rating}
+          picUrl={sender.profilePicUrl}
+        />
+      }
+      <MessageTextContainer isRightSideResponder={isRightSideResponder}>
         {responseTo && responseTo.text &&
           <Quotation>
             {responseTo.text}, from {responseTo.sender.username}
@@ -114,6 +147,7 @@ const Message = ({
           {text}
         </MessageText>
       </MessageTextContainer>
+
       <MessageDrawerHandle />
       <MessageDetails>
         {isRightSideResponder ? 'me' : sender.username}
@@ -129,11 +163,13 @@ Message.propTypes = {
   time: PropTypes.number.isRequired,
   responseTo: PropTypes.object,
   isRightSideResponder: PropTypes.bool,
+  includeSenderSummary: PropTypes.bool,
 };
 
 Message.defaultProps = {
   responseTo: {},
   isRightSideResponder: false,
+  includeSenderSummary: false,
 };
 
 export default Message;
