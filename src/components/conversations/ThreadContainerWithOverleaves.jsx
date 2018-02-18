@@ -12,7 +12,7 @@ import { MESSAGE_THEMES } from '../../util/themes';
 // participant on that side.
 
 const defaultTheme = MESSAGE_THEMES.SEED;
-const contentBorderRadius = '33'; // px
+const contentBorderRadius = '50'; // px
 
 const overleaves = {
   LEFT: 'LEFT',
@@ -20,7 +20,7 @@ const overleaves = {
 };
 
 // percent
-const messagesPadding = 4; // percent
+const messagesPadding = 0; // percent
 const closedOverleafWidth = 8; // percent
 const distanceFromSideToContent = 6; // percent
 const openOverleafWidth = 100 - distanceFromSideToContent; // percent

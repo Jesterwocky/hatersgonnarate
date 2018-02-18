@@ -54,7 +54,7 @@ const MessageBox = TextBox.extend.attrs({
   color: #504dad;
 
   margin: 0;
-  padding: 0 10px;
+  padding: 3px 10px 0 20px;
 
   // border: 2px solid ${CURTAIN_COLOR};
   // border-radius: 0;

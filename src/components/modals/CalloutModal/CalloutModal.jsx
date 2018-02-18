@@ -66,7 +66,7 @@ export const Pane = styled.div.attrs({
 })`
   width: 100%;
   margin: 0 10px 0;
-  border-radius: 33px;
+  border-radius: 17px;
   border-bottom-right-radius: 0; // for response box in bottom right corner
   overflow: hidden;
 
@@ -86,15 +86,15 @@ export const Pane = styled.div.attrs({
 `;
 
 const SeedConvoPane = Pane.extend.attrs({
-  className: 'calloutmodal-panes-seedpane',
+  className: 'calloutmodal-panes-pane-seedpane',
 })``;
 
 const PrivateConvoPane = Pane.extend.attrs({
-  className: 'calloutmodal-panes-private',
+  className: 'calloutmodal-panes-pane-private',
 })``;
 
 const PublicConvoPane = Pane.extend.attrs({
-  className: 'calloutmodal-panes-public',
+  className: 'calloutmodal-panes-pane-public',
 })``;
 
 class CalloutModal extends Component {

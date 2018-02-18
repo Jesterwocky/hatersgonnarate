@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css, withTheme } from 'styled-components';
+import styled, { css, withTheme, ThemeProvider } from 'styled-components';
 
 import MessageSenderInfo from './MessageSenderInfo';
 
 import { MESSAGE_THEMES } from '../../util/themes';
 
 const defaultTheme = MESSAGE_THEMES.seed;
-const messagesMargin = 0;
 const leftOrRightMargin = 6; // percent
 const messageBorderRadius = 14;
 
@@ -16,8 +15,8 @@ const MessageContainer = styled.div.attrs({
 })`
   font-size: 14px;
   display: flex;
-  margin: 4% 0;
   flex-direction: ${props => (props.isRightSideResponder ? 'row-reverse' : 'row')};
+  margin-bottom: 4%;
 
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
@@ -73,6 +72,16 @@ const MessageTextContainer = styled.div.attrs({
   }};
   `;
 
+const SingleSend = styled.div.attrs({
+  className: 'message-singlesendcontainer',
+})`
+  padding-bottom: 8px;
+
+  :last-child {
+    padding-bottom: 0;
+  }
+  `;
+
 const MessageText = styled.div.attrs({
   className: 'message-text',
 })``;
@@ -104,6 +113,10 @@ const Quotation = styled.div.attrs({
       `;
   } }`;
 
+const Author = styled.div.attrs({
+  className: 'message-text-quotation-author',
+})``;
+
 const MessageDrawerHandle = styled.div.attrs({
   className: 'message-drawerhandle',
 })``;
@@ -117,58 +130,60 @@ const MessageDetails = styled.div.attrs({
 
 // right-side-responder: target in a callout, or current user in a group convo.
 const Message = ({
-  text,
+  messageGroup,
   sender,
-  responseTo,
   isRightSideResponder,
   includeSenderSummary,
-  time,
+  theme,
 }) => {
-  const dateTime = new Date(time);
-
   return (
-    <MessageContainer isRightSideResponder={isRightSideResponder}>
-      {includeSenderSummary &&
-        <MessageSenderInfo
-          username={sender.username}
-          userId={sender.id}
-          rating={sender.ratingSnapshot.rating}
-          picUrl={sender.profilePicUrl}
-        />
-      }
-      <MessageTextContainer isRightSideResponder={isRightSideResponder}>
-        {responseTo && responseTo.text &&
-          <Quotation>
-            {responseTo.text}, from {responseTo.sender.username}
-          </Quotation>
+    <ThemeProvider theme={theme}>
+      <MessageContainer isRightSideResponder={isRightSideResponder}>
+        {includeSenderSummary &&
+          <MessageSenderInfo
+            username={sender.username}
+            userId={sender.id}
+            rating={sender.ratingSnapshot.rating}
+            picUrl={sender.profilePicUrl}
+          />
         }
-        <MessageText>
-          {text}
-        </MessageText>
-      </MessageTextContainer>
+        <MessageTextContainer isRightSideResponder={isRightSideResponder}>
+          {messageGroup.map(message => (
+            <SingleSend key={`message-${message.id}`}>
+              {message.responseTo && message.responseTo.text &&
+                <Quotation>
+                  {message.responseTo.text}
+                  <Author>{message.responseTo.sender.username}</Author>
+                </Quotation>
+              }
+              <MessageText>
+                {message.text}
+              </MessageText>
+            </SingleSend>
+          ))}
+        </MessageTextContainer>
 
-      <MessageDrawerHandle />
-      <MessageDetails>
-        {isRightSideResponder ? 'me' : sender.username}
-        <time dateTime={dateTime}>{dateTime.toDateString()}</time>
-      </MessageDetails>
-    </MessageContainer>
+        <MessageDrawerHandle />
+        <MessageDetails>
+          {isRightSideResponder ? 'me' : sender.username}
+        </MessageDetails>
+      </MessageContainer>
+    </ThemeProvider>
   );
 };
 
 Message.propTypes = {
-  text: PropTypes.string.isRequired,
+  messageGroup: PropTypes.array.isRequired,
   sender: PropTypes.object.isRequired,
-  time: PropTypes.number.isRequired,
-  responseTo: PropTypes.object,
   isRightSideResponder: PropTypes.bool,
   includeSenderSummary: PropTypes.bool,
+  theme: PropTypes.object,
 };
 
 Message.defaultProps = {
-  responseTo: {},
   isRightSideResponder: false,
   includeSenderSummary: false,
+  theme: {},
 };
 
 export default withTheme(Message);

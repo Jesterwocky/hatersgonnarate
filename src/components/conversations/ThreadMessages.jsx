@@ -3,9 +3,27 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled, { withTheme, ThemeProvider } from 'styled-components';
 
+import { DARK } from '../../util/themes';
 import { isEmpty } from '../../util/helpers';
 
 import Message from './Message';
+
+function groupMessages(messages) {
+  return messages.reduce((groupedMessages, currentMessage) => {
+    const lastGroup = groupedMessages[groupedMessages.length - 1] || [];
+    const lastMessageOfLastGroup = lastGroup[lastGroup.length - 1] || {};
+
+    if (
+      lastMessageOfLastGroup.sender &&
+      lastMessageOfLastGroup.sender.id === currentMessage.sender.id
+    ) {
+      return groupedMessages.slice(0, groupedMessages.length - 1)
+        .concat([lastGroup.concat([currentMessage])]);
+    }
+
+    return groupedMessages.concat([[currentMessage]]);
+  }, []);
+}
 
 const ThreadMessagesWrapper = styled.div.attrs({
   className: 'threadmessages',
@@ -32,22 +50,21 @@ const ThreadMessages = ({
     .sort().map(key => messages[key]);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={{ ...theme, star: DARK.star }}>
 
       <ThreadMessagesWrapper>
-        {messageList.map(message => (
+        {groupMessages(messageList).map(messageGroup => (
           <Message
-            key={`message-${message.id}`}
+            key={`messagegroup-${messageGroup[0].id}`}
+            messageGroup={messageGroup}
+            sender={messageGroup[0].sender}
             includeSenderSummary={includeSenderSummary}
             isRightSideResponder={
               isEmpty(target) ?
-              message.sender.id === user.id :
-              message.sender.id === target.id
+              messageGroup[0].sender.id === user.id :
+              messageGroup[0].sender.id === target.id
             }
-            {...message}
-          >
-            {message.text}
-          </Message>
+          />
         ))}
       </ThreadMessagesWrapper>
 
