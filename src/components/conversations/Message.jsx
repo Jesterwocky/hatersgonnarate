@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled, { css, withTheme } from 'styled-components';
 
 import MessageSenderInfo from './MessageSenderInfo';
 
-import { MESSAGE_THEMES, THREAD_BACKGROUND } from '../../util/themes';
+import { MESSAGE_THEMES } from '../../util/themes';
 
-const defaultTheme = MESSAGE_THEMES.SEED;
-const messagesMargin = 10;
+const defaultTheme = MESSAGE_THEMES.seed;
+const messagesMargin = 0;
 const leftOrRightMargin = 6; // percent
 const messageBorderRadius = 14;
 
@@ -15,9 +15,8 @@ const MessageContainer = styled.div.attrs({
   className: 'message',
 })`
   font-size: 14px;
-  padding: 7px;
-  margin: 5px 15px;
   display: flex;
+  margin: 4% 0;
   flex-direction: ${props => (props.isRightSideResponder ? 'row-reverse' : 'row')};
 
   ${(props) => {
@@ -27,11 +26,11 @@ const MessageContainer = styled.div.attrs({
     return props.isRightSideResponder ?
       css`
         color: ${messagesRight.color};
-        margin: 0 0 ${messagesMargin}px ${leftOrRightMargin}%;
+        margin-left: ${leftOrRightMargin}%;
       ` :
       css`
         color: ${messagesLeft.color};
-        margin: 0 ${leftOrRightMargin}% ${messagesMargin}px 0;
+        margin-right: ${leftOrRightMargin}%;
       `;
   }};
   `;
@@ -82,11 +81,11 @@ const Quotation = styled.div.attrs({
   className: 'message-text-quotation',
 })`
   border-radius: ${messageBorderRadius}px;
-  border: 5px solid ${THREAD_BACKGROUND};
   padding: 6px 11px;
   font-size: 11px;
   font-style: italic;
   margin: 0 10px 10px;
+  border: 5px solid ${props => props.theme.messagesContainer.background || 'white'};
 
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
@@ -172,4 +171,4 @@ Message.defaultProps = {
   includeSenderSummary: false,
 };
 
-export default Message;
+export default withTheme(Message);

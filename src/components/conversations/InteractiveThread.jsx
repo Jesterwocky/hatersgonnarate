@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { withTheme, ThemeProvider } from 'styled-components';
 
 import ThreadMessages from './ThreadMessages';
 import RespondBox from './RespondBox';
@@ -17,6 +17,7 @@ const DefaultMessagesContainer = styled.div.attrs({
   className: 'interactivethread-messages-container',
 })`
   height: 100%;
+  background-color: ${props => (props.messagesContainer || {}).background || 'white'};
 `;
 
 const InteractiveThread = (props) => {
@@ -26,20 +27,23 @@ const InteractiveThread = (props) => {
     onSubmitMessage,
     threadContainer,
     includeSenderSummary,
+    theme,
   } = props;
   const MessagesContainer = threadContainer || DefaultMessagesContainer;
 
   return (
-    <InteractiveThreadContainer>
-      <MessagesContainer {...props}>
-        <ThreadMessages
-          messages={messages}
-          target={target}
-          includeSenderSummary={includeSenderSummary}
-        />
-      </MessagesContainer>
-      <RespondBox onSubmitMessage={onSubmitMessage} />
-    </InteractiveThreadContainer>
+    <ThemeProvider theme={theme}>
+      <InteractiveThreadContainer {...props}>
+        <MessagesContainer {...props} theme={theme}>
+          <ThreadMessages
+            messages={messages}
+            target={target}
+            includeSenderSummary={includeSenderSummary}
+          />
+        </MessagesContainer>
+        <RespondBox onSubmitMessage={onSubmitMessage} />
+      </InteractiveThreadContainer>
+    </ThemeProvider>
   );
 };
 
@@ -49,6 +53,8 @@ InteractiveThread.propTypes = {
   target: PropTypes.object,
   threadContainer: PropTypes.func,
   includeSenderSummary: PropTypes.bool,
+
+  theme: PropTypes.object,
 };
 
 InteractiveThread.defaultProps = {
@@ -56,6 +62,8 @@ InteractiveThread.defaultProps = {
   target: {},
   threadContainer: null,
   includeSenderSummary: false,
+
+  theme: {},
 };
 
-export default InteractiveThread;
+export default withTheme(InteractiveThread);

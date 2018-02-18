@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled, { css, ThemeProvider } from 'styled-components';
 
 import { isEmpty } from '../../../util/helpers';
-import { SHAME_COLOR } from '../../../util/themes';
+import { MESSAGE_THEMES, CURTAIN_COLOR } from '../../../util/themes';
 
 import { addMessageToConversation } from '../../../actions/conversations';
 
@@ -34,7 +34,7 @@ const CalloutModalHeading = styled.h1.attrs({
   width: 100%;
   font-size: 26px;
   margin: 0 0 5px;
-  color: ${SHAME_COLOR};
+  color: ${CURTAIN_COLOR};
 `;
 
 const Panes = styled.div.attrs({
@@ -44,7 +44,6 @@ const Panes = styled.div.attrs({
   height: 100%;
   display: flex;
   justify-content: space-between;
-  color: ${SHAME_COLOR};
 `;
 
 export const ThreadHeading = styled.div.attrs({
@@ -54,11 +53,11 @@ export const ThreadHeading = styled.div.attrs({
   flex: none;
   align-items: center;
   justify-content: center;
-  height: 33px;
+  height: 39px;
   font-size: 16px;
   padding: 0 5px;
 
-  background-color: ${SHAME_COLOR};
+  background-color: ${CURTAIN_COLOR};
   color: white;
 `;
 
@@ -67,7 +66,8 @@ export const Pane = styled.div.attrs({
 })`
   width: 100%;
   margin: 0 10px 0;
-  border-radius: 4px;
+  border-radius: 33px;
+  border-bottom-right-radius: 0; // for response box in bottom right corner
   overflow: hidden;
 
   // allows 100% height on conversation to fill available space
@@ -152,85 +152,91 @@ class CalloutModal extends Component {
           </CalloutModalHeading>
           <Panes>
 
-            <SeedConvoPane
-              open={seedConversationOpen}
-            >
-              <ThreadHeading onClick={this.toggleSeedConvoPane}>
-                <SeedConvoThreadHeader
-                  initiator={context.initiator}
-                  target={context.target}
-                  movieId={context.movieId}
-                />
-              </ThreadHeading>
+            <ThemeProvider theme={MESSAGE_THEMES.seed}>
+              <SeedConvoPane
+                open={seedConversationOpen}
+              >
+                <ThreadHeading onClick={this.toggleSeedConvoPane}>
+                  <SeedConvoThreadHeader
+                    initiator={context.initiator}
+                    target={context.target}
+                    movieId={context.movieId}
+                  />
+                </ThreadHeading>
 
-              <InteractiveThread
-                messages={seedConvo.messages}
-                target={context.target}
-                onSubmitMessage={this.createOnSubmitMessage({
-                  convoId: privateConvo.id || publicConvo.id,
-                  threadType: privateConvo.type || publicConvo.type,
-                })}
-                threadContainer={ThreadContainerWithOverleaves}
-                leftOverLeaf={
-                  <SeedConvoOverleaf
-                    {...context.initiator}
-                    movie={{
-                      id: context.movieId,
-                      movieName: 'Movie Name',
-                    }}
-                  />
-                }
-                rightOverLeaf={
-                  <SeedConvoOverleaf
-                    {...context.target}
-                    movie={{
-                      id: context.movieId,
-                      movieName: 'Movie Name',
-                    }}
-                  />
-                }
-              />
-            </SeedConvoPane>
+                <InteractiveThread
+                  messages={seedConvo.messages}
+                  target={context.target}
+                  onSubmitMessage={this.createOnSubmitMessage({
+                    convoId: privateConvo.id || publicConvo.id,
+                    threadType: privateConvo.type || publicConvo.type,
+                  })}
+                  threadContainer={ThreadContainerWithOverleaves}
+                  leftOverleaf={
+                    <SeedConvoOverleaf
+                      {...context.initiator}
+                      movie={{
+                        id: context.movieId,
+                        movieName: 'Movie Name',
+                      }}
+                    />
+                  }
+                  rightOverleaf={
+                    <SeedConvoOverleaf
+                      {...context.target}
+                      movie={{
+                        id: context.movieId,
+                        movieName: 'Movie Name',
+                      }}
+                    />
+                  }
+                />
+              </SeedConvoPane>
+            </ThemeProvider>
 
             {!isEmpty(privateConvo) &&
-              <PrivateConvoPane
-                open={privateConversationOpen}
-              >
-                <ThreadHeading
-                  onClick={this.togglePrivateConvoPane}
+              <ThemeProvider theme={MESSAGE_THEMES.privateOrPublic}>
+                <PrivateConvoPane
+                  open={privateConversationOpen}
                 >
-                  Guests
-                </ThreadHeading>
-                <InteractiveThread
-                  messages={privateConvo.messages}
-                  includeSenderSummary
-                  target={privateConvo.target}
-                  onSubmitMessage={this.createOnSubmitMessage({
-                    convoId: privateConvo.id,
-                    threadType: privateConvo.type,
-                  })}
-                />
-              </PrivateConvoPane>
+                  <ThreadHeading
+                    onClick={this.togglePrivateConvoPane}
+                  >
+                    Guests
+                  </ThreadHeading>
+                  <InteractiveThread
+                    messages={privateConvo.messages}
+                    includeSenderSummary
+                    target={privateConvo.target}
+                    onSubmitMessage={this.createOnSubmitMessage({
+                      convoId: privateConvo.id,
+                      threadType: privateConvo.type,
+                    })}
+                  />
+                </PrivateConvoPane>
+              </ThemeProvider>
             }
 
-            <PublicConvoPane
-              open={publicConversationOpen}
-            >
-              <ThreadHeading
-                onClick={this.togglePublicConvoPane}
+            <ThemeProvider theme={MESSAGE_THEMES.privateOrPublic}>
+              <PublicConvoPane
+                open={publicConversationOpen}
               >
-                Everyone
-              </ThreadHeading>
-              <InteractiveThread
-                messages={publicConvo.messages}
-                includeSenderSummary
-                target={publicConvo.target}
-                onSubmitMessage={this.createOnSubmitMessage({
-                  convoId: publicConvo.id,
-                  threadType: publicConvo.type,
-                })}
-              />
-            </PublicConvoPane>
+                <ThreadHeading
+                  onClick={this.togglePublicConvoPane}
+                >
+                  Everyone
+                </ThreadHeading>
+                <InteractiveThread
+                  messages={publicConvo.messages}
+                  includeSenderSummary
+                  target={publicConvo.target}
+                  onSubmitMessage={this.createOnSubmitMessage({
+                    convoId: publicConvo.id,
+                    threadType: publicConvo.type,
+                  })}
+                />
+              </PublicConvoPane>
+            </ThemeProvider>
           </Panes>
         </CalloutModalContent>
       </Modal>

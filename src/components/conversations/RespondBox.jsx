@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { LIGHT, SHAME_COLOR } from '../../util/themes';
+import { CURTAIN_COLOR, MESSAGE_THEMES } from '../../util/themes';
 
 import { Button } from '../_StyledComponents';
 
@@ -12,10 +12,9 @@ const RespondContainer = styled.div.attrs({
   className: 'respond',
 })`
   width: 100%;
-  height: 40px;
+  height: 50px;
   display: flex;
   border: none;
-  margin-top: 5px;
 `;
 
 const MessageBoxContainer = styled.div.attrs({
@@ -23,6 +22,7 @@ const MessageBoxContainer = styled.div.attrs({
 })`
   width: 100%;
   margin: 0;
+  background-color: ${MESSAGE_THEMES.privateOrPublic.messagesContainer.background}
 `;
 
 const PostMessageButton = Button.extend.attrs({
@@ -31,9 +31,9 @@ const PostMessageButton = Button.extend.attrs({
   height: 100%;
   font-size: 11px;
   color: white;
-  background-color: ${SHAME_COLOR};
+  background-color: ${CURTAIN_COLOR};
 
-  padding: 0 3px;
+  padding: 0 20px;
   margin: 0;
 
   border: none;
@@ -56,10 +56,15 @@ const MessageBox = TextBox.extend.attrs({
   margin: 0;
   padding: 0 10px;
 
-  border: 2px solid ${SHAME_COLOR};
+  // border: 2px solid ${CURTAIN_COLOR};
+  // border-radius: 0;
+  // border-bottom-left-radius: 4px;
+  // border-right: none;
+  // border-top: none;
+
   border-radius: 0;
-  border-bottom-left-radius: 4px;
-  border-right: none;
+  border-top-left-radius: 20px;
+  margin-left: 43px;
 `;
 
 class RespondBox extends Component {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled, { css, withTheme, ThemeProvider } from 'styled-components';
 
-import { modalContentZIndex, modalBannerZIndex } from '../../util/constants';
+import { modalZIndex, modalBannerZIndex } from '../../util/constants';
 import { MESSAGE_THEMES } from '../../util/themes';
 
 // Purpose of ThreadContainerWithOverleaves: a container div for a conversation
@@ -12,27 +12,32 @@ import { MESSAGE_THEMES } from '../../util/themes';
 // participant on that side.
 
 const defaultTheme = MESSAGE_THEMES.SEED;
+const contentBorderRadius = '33'; // px
 
 const overleaves = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT',
 };
 
+// percent
+const messagesPadding = 4; // percent
 const closedOverleafWidth = 8; // percent
-const bufferBorderWidth = 4; // px
 const distanceFromSideToContent = 6; // percent
 const openOverleafWidth = 100 - distanceFromSideToContent; // percent
+
+// px
+const bufferBorderWidth = 4; // px
 
 // Container for the conversation contents. Used to position overleaves to
 // left and right
 const ThreadContainerWithOverleavesWrapper = styled.div.attrs({
-  className: 'overleaves-wrapper',
+  className: 'overleaves',
 })`
   height: 100%;
   position: relative;
-  padding: 0 ${closedOverleafWidth}%;
-  margin-top: 5px;
+  padding: 0 ${closedOverleafWidth + messagesPadding}%;
   overflow: hidden;
+  background: ${props => (props.theme.messagesContainer || {}).background || 'black'};
 `;
 
 const Overleaf = styled.div`
@@ -41,47 +46,50 @@ const Overleaf = styled.div`
   height: 100%;
   width: ${openOverleafWidth}%;
 
-  z-index: ${modalContentZIndex};
+  z-index: ${modalZIndex};
   position: absolute;
   top: 0;
 
   ${props => props.open &&
     css`
+      background-color: ${(props.theme.messagesContainer || defaultTheme.messagesContainer).background};
       z-index: ${modalBannerZIndex};
     `}
   `;
 
 const LeftOverleaf = Overleaf.extend.attrs({
-  className: 'overleaves-wrapper-overleaf-left',
+  className: 'overleaves-overleaf-left',
 })`
   background-color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).background};
   color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
+  border-top-right-radius: ${contentBorderRadius}px;
+  border-bottom-right-radius: ${contentBorderRadius}px;
   left: -${openOverleafWidth - closedOverleafWidth}%;
 
-  transition: left 0.2s;
+  transition: left 0.1s;
 
   ${props => props.open &&
     css`
       left: 0;
-      border-right: ${bufferBorderWidth}px solid white;
-      background-color: white;
+      border-right: ${bufferBorderWidth}px solid ${(props.theme.messagesContainer || defaultTheme.messagesContainer).background};
     `}
 `;
 
 const RightOverleaf = Overleaf.extend.attrs({
-  className: 'overleaves-wrapper-overleafright',
+  className: 'overleaves-overleafright',
 })`
   background-color: ${props => (props.theme.messagesRight || defaultTheme.messagesRight).background};
   color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
+  border-top-left-radius: ${contentBorderRadius}px;
+  border-bottom-left-radius: ${contentBorderRadius}px;
   right: -${openOverleafWidth - closedOverleafWidth}%;
 
-  transition: right 0.2s;
+  transition: right 0.1s;
 
   ${props => props.open &&
     css`
       right: 0;
-      border-left: ${bufferBorderWidth}px solid white;
-      background-color: white;
+      border-left: ${bufferBorderWidth}px solid ${(props.theme.messagesContainer || defaultTheme.messagesContainer).background};
     `}
 `;
 
@@ -99,21 +107,21 @@ const OverleafContent = styled.div`
 `;
 
 const LeftContent = OverleafContent.extend.attrs({
-  className: 'overleaves-wrapper-overleafcontent-left',
+  className: 'overleaves-overleafcontent-left',
 })`
   background-color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).background};
   color: ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).color};
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: ${contentBorderRadius}px;
+  border-bottom-right-radius: ${contentBorderRadius}px;
 `;
 
 const RightContent = OverleafContent.extend.attrs({
-  className: 'overleaves-wrapper-overleafcontent-left',
+  className: 'overleaves-overleafcontent-left',
 })`
   background-color: ${props => (props.theme.messagesRight || defaultTheme.messagesRight).background};
   color: ${props => (props.theme.messagesRight || defaultTheme.messagesRight).color};
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-left-radius: ${contentBorderRadius}px;
+  border-bottom-left-radius: ${contentBorderRadius}px;
 `;
 
 class ThreadContainerWithOverleaves extends Component {
@@ -144,36 +152,37 @@ class ThreadContainerWithOverleaves extends Component {
       children,
       leftOverleaf,
       rightOverleaf,
-      // closedLeftOverleaf,
-      // closedRightOverleaf,
+      theme,
     } = this.props;
 
     return (
-      <ThreadContainerWithOverleavesWrapper>
-        <LeftOverleaf
-          onClick={this.toggleLeftOverleaf}
-          open={this.state.overleafOpen === overleaves.LEFT}
-        >
-          {this.state.overleafOpen === overleaves.LEFT &&
-            <LeftContent>
-              {leftOverleaf}
-            </LeftContent>
-          }
-        </LeftOverleaf>
+      <ThemeProvider theme={theme}>
+        <ThreadContainerWithOverleavesWrapper>
+          <LeftOverleaf
+            onClick={this.toggleLeftOverleaf}
+            open={this.state.overleafOpen === overleaves.LEFT}
+          >
+            {this.state.overleafOpen === overleaves.LEFT &&
+              <LeftContent>
+                {leftOverleaf}
+              </LeftContent>
+            }
+          </LeftOverleaf>
 
-        <RightOverleaf
-          onClick={this.toggleRightOverleaf}
-          open={this.state.overleafOpen === overleaves.RIGHT}
-        >
-          {this.state.overleafOpen === overleaves.RIGHT &&
-            <RightContent>
-              {rightOverleaf}
-            </RightContent>
-          }
-        </RightOverleaf>
+          <RightOverleaf
+            onClick={this.toggleRightOverleaf}
+            open={this.state.overleafOpen === overleaves.RIGHT}
+          >
+            {this.state.overleafOpen === overleaves.RIGHT &&
+              <RightContent>
+                {rightOverleaf}
+              </RightContent>
+            }
+          </RightOverleaf>
 
-        {children}
-      </ThreadContainerWithOverleavesWrapper>
+          {children}
+        </ThreadContainerWithOverleavesWrapper>
+      </ThemeProvider>
     );
   }
 }
@@ -182,12 +191,16 @@ ThreadContainerWithOverleaves.propTypes = {
   children: PropTypes.node,
   leftOverleaf: PropTypes.node,
   rightOverleaf: PropTypes.node,
+
+  theme: PropTypes.object,
 };
 
 ThreadContainerWithOverleaves.defaultProps = {
   children: null,
   leftOverleaf: null,
   rightOverleaf: null,
+
+  theme: {},
 };
 
-export default ThreadContainerWithOverleaves;
+export default withTheme(ThreadContainerWithOverleaves);

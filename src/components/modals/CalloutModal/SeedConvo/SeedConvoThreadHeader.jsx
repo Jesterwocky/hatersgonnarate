@@ -32,36 +32,34 @@ const VsText = styled.p.attrs({
   font-weight: 300;
   font-size: 12px;
   margin: 0 7px;
-  padding-top: 5px;
+  padding-top: 9px;
 `;
 
 const SeedConvoThreadHeader = ({
   initiator,
   target,
   movieId,
-}) => {
-  return (
-    <SeedConvoThreadHeaderContainer>
-      <InitiatorSummary>
-        <SeedParticipantSummary
-          {...initiator}
-          rating={initiator.ratingSnapshot.rating}
-          movieId={movieId}
-        />
-      </InitiatorSummary>
+}) => (
+  <SeedConvoThreadHeaderContainer>
+    <InitiatorSummary>
+      <SeedParticipantSummary
+        {...initiator}
+        rating={initiator.ratingSnapshot.rating}
+        movieId={movieId}
+      />
+    </InitiatorSummary>
 
-      <VsText>@</VsText>
+    <VsText>@</VsText>
 
-      <ResponderSummary>
-        <SeedParticipantSummary
-          {...target}
-          rating={target.ratingSnapshot.rating}
-          movieId={movieId}
-        />
-      </ResponderSummary>
-    </SeedConvoThreadHeaderContainer>
-  );
-};
+    <ResponderSummary>
+      <SeedParticipantSummary
+        {...target}
+        rating={target.ratingSnapshot.rating}
+        movieId={movieId}
+      />
+    </ResponderSummary>
+  </SeedConvoThreadHeaderContainer>
+);
 
 SeedConvoThreadHeader.propTypes = {
   initiator: PropTypes.object.isRequired,

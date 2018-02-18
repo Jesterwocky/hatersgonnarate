@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css, withTheme } from 'styled-components';
+
+import { MESSAGE_THEMES } from '../../util/themes';
 
 import MovieRating from '../movies/MovieRating/MovieRating';
 
 const starsWidth = 60;
+const defaultTheme = MESSAGE_THEMES.privateOrPublic;
 
 const MessageSenderInfoContainer = styled.div.attrs({
   className: 'messagesenderinfo',
@@ -13,8 +16,22 @@ const MessageSenderInfoContainer = styled.div.attrs({
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-right: 5px;
-`;
+  font-weight: 600;
+  ${(props) => {
+    const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
+    const messagesLeft = props.theme.messagesLeft || defaultTheme.messagesLeft;
+
+    return props.isRightSideResponder ?
+      css`
+        color: ${messagesRight.color};
+        margin-left: 4%;
+      ` :
+      css`
+        color: ${messagesLeft.color};
+        margin-right: 4%;
+      `;
+  }}
+  `;
 
 const PicContainer = styled.div.attrs({
   className: 'messagesenderinfo-pic',
@@ -24,7 +41,7 @@ const PicContainer = styled.div.attrs({
   height: 25px;
   background-image: url(${props => props.url});
   background-size: contain;
-`;
+  `;
 
 const Username = styled.div.attrs({
   className: 'messagesenderinfo-username',
@@ -60,14 +77,15 @@ const MessageSenderInfo = ({
 
 MessageSenderInfo.propTypes = {
   username: PropTypes.string.isRequired,
-  movieId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   rating: PropTypes.string.isRequired,
+  movieId: PropTypes.string,
   picUrl: PropTypes.string,
 };
 
 MessageSenderInfo.defaultProps = {
+  movieId: '',
   picUrl: '',
 };
 
-export default MessageSenderInfo;
+export default withTheme(MessageSenderInfo);

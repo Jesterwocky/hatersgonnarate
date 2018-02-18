@@ -42,7 +42,7 @@ const MovieRating = ({
 );
 
 MovieRating.propTypes = {
-  movieId: PropTypes.string.isRequired,
+  movieId: PropTypes.string,
   canEdit: PropTypes.bool,
   rating: PropTypes.oneOfType([
     PropTypes.number,
@@ -54,6 +54,7 @@ MovieRating.propTypes = {
 };
 
 MovieRating.defaultProps = {
+  movieId: '',
   canEdit: false,
   onUpdateRating: null,
   rating: 0.5,
