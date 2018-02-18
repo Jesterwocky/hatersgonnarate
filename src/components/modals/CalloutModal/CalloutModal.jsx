@@ -43,7 +43,7 @@ const Panes = styled.div.attrs({
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export const ThreadHeading = styled.div.attrs({
@@ -65,6 +65,7 @@ export const Pane = styled.div.attrs({
   className: 'callout-panes-pane',
 })`
   width: 100%;
+  max-width: 420px;
   margin: 0 10px 0;
   border-radius: 17px;
   border-bottom-right-radius: 0; // for response box in bottom right corner

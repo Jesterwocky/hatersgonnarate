@@ -41,7 +41,7 @@ const ThreadMessagesWrapper = styled.div.attrs({
 const ThreadMessages = ({
   messages,
   user,
-  target,
+  targetUser,
   includeSenderSummary,
   theme,
 }) => {
@@ -60,9 +60,9 @@ const ThreadMessages = ({
             sender={messageGroup[0].sender}
             includeSenderSummary={includeSenderSummary}
             isRightSideResponder={
-              isEmpty(target) ?
+              isEmpty(targetUser) ?
               messageGroup[0].sender.id === user.id :
-              messageGroup[0].sender.id === target.id
+              messageGroup[0].sender.id === targetUser.id
             }
           />
         ))}
@@ -75,13 +75,13 @@ const ThreadMessages = ({
 ThreadMessages.propTypes = {
   messages: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  target: PropTypes.object,
+  targetUser: PropTypes.object,
   includeSenderSummary: PropTypes.bool,
   theme: PropTypes.object,
 };
 
 ThreadMessages.defaultProps = {
-  target: {},
+  targetUser: {},
   includeSenderSummary: false,
   theme: {},
 };

@@ -5,6 +5,7 @@ import styled, { css, withTheme, ThemeProvider } from 'styled-components';
 import MessageSenderInfo from './MessageSenderInfo';
 
 import { MESSAGE_THEMES } from '../../util/themes';
+import { modalBannerZIndex } from '../../util/constants';
 
 const defaultTheme = MESSAGE_THEMES.seed;
 const leftOrRightMargin = 6; // percent
@@ -38,14 +39,20 @@ const MessageTextContainer = styled.div.attrs({
   className: 'message-textcontainer',
 })`
   width: 100%;
+  `;
 
-  transition: box-shadow 0.15s ease-out;
+const SingleSend = styled.div.attrs({
+  className: 'message-singlesendcontainer',
+})`
+  padding: 5px 10px;
+  border-radius: 0;
 
-  &:hover {
-    // using box-shadow achieves outlining on hover
-    // WITHOUT changing box size and
-    // WITH border radius
-    box-shadow: 0 0 0 2px ${props => (props.isRightSideResponder ?
+  transition: border-color 0.15s ease-out;
+
+  :hover {
+    z-index: ${modalBannerZIndex};
+
+    border-color: ${props => (props.isRightSideResponder ?
     (props.theme.messagesRight || defaultTheme.messagesRight).borderHighlight :
     (props.theme.messagesLeft || defaultTheme.messagesLeft).borderHighlight)}
   }
@@ -57,28 +64,32 @@ const MessageTextContainer = styled.div.attrs({
     return props.isRightSideResponder ?
       css`
         background-color: ${messagesRight.background};
+        border: 2px solid ${messagesRight.background};
         color: ${messagesRight.color};
-        padding: 10px 14px 10px 10px;
-        border-radius: ${messageBorderRadius}px;
-        border-top-right-radius: 0;
+
+        &:first-child {
+          border-top-left-radius: ${messageBorderRadius}px;
+        }
       ` :
       css`
         background-color: ${messagesLeft.background};
+        border: 2px solid ${messagesLeft.background};
         color: ${messagesLeft.color};
-        padding: 10px 10px 10px 14px;
-        border-radius: ${messageBorderRadius}px;
-        border-top-left-radius: 0;
+
+        &:first-child {
+          border-top-right-radius: ${messageBorderRadius}px;
+        }
       `;
   }};
-  `;
 
-const SingleSend = styled.div.attrs({
-  className: 'message-singlesendcontainer',
-})`
-  padding-bottom: 8px;
+  :first-child {
+    padding-top: 10px;
+  }
 
   :last-child {
-    padding-bottom: 0;
+    padding-bottom: 10px;
+    border-bottom-left-radius: ${messageBorderRadius}px;
+    border-bottom-right-radius: ${messageBorderRadius}px;
   }
   `;
 
@@ -149,7 +160,10 @@ const Message = ({
         }
         <MessageTextContainer isRightSideResponder={isRightSideResponder}>
           {messageGroup.map(message => (
-            <SingleSend key={`message-${message.id}`}>
+            <SingleSend
+              key={`message-${message.id}`}
+              isRightSideResponder={isRightSideResponder}
+            >
               {message.responseTo && message.responseTo.text &&
                 <Quotation>
                   {message.responseTo.text}

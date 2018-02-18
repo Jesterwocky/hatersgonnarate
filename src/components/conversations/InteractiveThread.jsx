@@ -30,14 +30,13 @@ const InteractiveThread = (props) => {
     theme,
   } = props;
   const MessagesContainer = threadContainer || DefaultMessagesContainer;
-
   return (
     <ThemeProvider theme={theme}>
       <InteractiveThreadContainer {...props}>
         <MessagesContainer {...props} theme={theme}>
           <ThreadMessages
             messages={messages}
-            target={target}
+            targetUser={target}
             includeSenderSummary={includeSenderSummary}
           />
         </MessagesContainer>
