@@ -52,7 +52,6 @@ InteractiveThread.propTypes = {
   target: PropTypes.object,
   threadContainer: PropTypes.func,
   includeSenderSummary: PropTypes.bool,
-
   theme: PropTypes.object,
 };
 
@@ -61,7 +60,6 @@ InteractiveThread.defaultProps = {
   target: {},
   threadContainer: null,
   includeSenderSummary: false,
-
   theme: {},
 };
 

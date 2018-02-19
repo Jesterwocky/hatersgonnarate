@@ -20,7 +20,7 @@ const overleaves = {
 };
 
 // percent
-const messagesPadding = 0; // percent
+const messagesPadding = 4; // percent
 const closedOverleafWidth = 8; // percent
 const distanceFromSideToContent = 6; // percent
 const openOverleafWidth = 100 - distanceFromSideToContent; // percent
@@ -191,7 +191,6 @@ ThreadContainerWithOverleaves.propTypes = {
   children: PropTypes.node,
   leftOverleaf: PropTypes.node,
   rightOverleaf: PropTypes.node,
-
   theme: PropTypes.object,
 };
 
@@ -199,7 +198,6 @@ ThreadContainerWithOverleaves.defaultProps = {
   children: null,
   leftOverleaf: null,
   rightOverleaf: null,
-
   theme: {},
 };
 

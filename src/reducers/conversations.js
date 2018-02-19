@@ -53,7 +53,7 @@ function threadReducer(state = threadInitialState, action) {
         ...state,
         messages: {
           ...state.messages,
-          [action.payload.threadType]: [action.payload.messages],
+          [action.payload.messageSequenceNumber]: action.payload.message,
         },
       };
 

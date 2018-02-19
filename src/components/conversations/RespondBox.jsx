@@ -6,7 +6,7 @@ import { CURTAIN_COLOR, MESSAGE_THEMES } from '../../util/themes';
 
 import { Button } from '../_StyledComponents';
 
-import TextBox from '../TextBox';
+import TextArea from '../TextArea';
 
 const RespondContainer = styled.div.attrs({
   className: 'respond',
@@ -22,7 +22,8 @@ const MessageBoxContainer = styled.div.attrs({
 })`
   width: 100%;
   margin: 0;
-  background-color: ${MESSAGE_THEMES.privateOrPublic.messagesContainer.background}
+  background-color: ${MESSAGE_THEMES.privateOrPublic.messagesContainer.background};
+  display: flex;
 `;
 
 const PostMessageButton = Button.extend.attrs({
@@ -36,31 +37,28 @@ const PostMessageButton = Button.extend.attrs({
   padding: 0 20px;
   margin: 0;
 
-  border: none;
+  border: 2px solid red;
   border-radius: 0;
   border-bottom-right-radius: 4px;
 `;
 
-const MessageBox = TextBox.extend.attrs({
+// TODO: expand textbox on click
+const MessageBox = TextArea.extend.attrs({
   className: 'respond-box',
 })`
   min-height: auto;
   height: 100%;
-  width: 100%;
+  width: auto;
   text-align: left;
   font-weight: 400;
 
   background-color: #f9f9f9;
   color: #504dad;
+  border: 2px solid red;
+  border-right: none;
 
   margin: 0;
-  padding: 3px 10px 0 20px;
-
-  // border: 2px solid ${CURTAIN_COLOR};
-  // border-radius: 0;
-  // border-bottom-left-radius: 4px;
-  // border-right: none;
-  // border-top: none;
+  padding: 13px 10px 0 20px;
 
   border-radius: 0;
   border-top-left-radius: 20px;
@@ -78,11 +76,11 @@ class RespondBox extends Component {
     });
   }
 
-  render() {
-    const {
-      onSubmitMessage,
-    } = this.props;
+  submitMessage = () => {
+    this.props.onSubmitMessage(this.state.messageText);
+  }
 
+  render() {
     // TODO: enable submit on hitting return?
     return (
       <RespondContainer>
@@ -95,7 +93,7 @@ class RespondBox extends Component {
         </MessageBoxContainer>
 
         <PostMessageButton
-          onClick={onSubmitMessage}
+          onClick={this.submitMessage}
           disabled={!this.state.messageText}
         >
           Post

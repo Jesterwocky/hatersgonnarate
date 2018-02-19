@@ -26,11 +26,15 @@ const MessageContainer = styled.div.attrs({
     return props.isRightSideResponder ?
       css`
         color: ${messagesRight.color};
-        margin-left: ${leftOrRightMargin}%;
+        // only use margin to indicate left vs right for seed convos,
+        // since everyone but yourself is on the left side in a group convo
+        ${!props.includeSenderSummary && `margin-left: ${leftOrRightMargin}%`};
       ` :
       css`
         color: ${messagesLeft.color};
-        margin-right: ${leftOrRightMargin}%;
+        // only use margin to indicate left vs right for seed convos,
+        // since everyone but yourself is on the left side in a group convo
+        ${!props.includeSenderSummary && `margin-right: ${leftOrRightMargin}%`};
       `;
   }};
   `;
@@ -51,6 +55,7 @@ const SingleSend = styled.div.attrs({
 
   :hover {
     z-index: ${modalBannerZIndex};
+    cursor: pointer;
 
     border-color: ${props => (props.isRightSideResponder ?
     (props.theme.messagesRight || defaultTheme.messagesRight).borderHighlight :
@@ -115,12 +120,10 @@ const Quotation = styled.div.attrs({
       css`
         background-color: ${messagesLeft.background};
         color: ${messagesLeft.color};
-        // margin: 0 0 10px 10px;
       ` :
       css`
         background-color: ${messagesRight.background};
         color: ${messagesRight.color};
-        // margin: 0 10px 10px 0;
       `;
   } }`;
 
@@ -149,7 +152,10 @@ const Message = ({
 }) => {
   return (
     <ThemeProvider theme={theme}>
-      <MessageContainer isRightSideResponder={isRightSideResponder}>
+      <MessageContainer
+        isRightSideResponder={isRightSideResponder}
+        includeSenderSummary={includeSenderSummary}
+      >
         {includeSenderSummary &&
           <MessageSenderInfo
             username={sender.username}

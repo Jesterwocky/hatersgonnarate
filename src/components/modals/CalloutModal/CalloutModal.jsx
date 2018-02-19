@@ -67,7 +67,8 @@ export const Pane = styled.div.attrs({
   width: 100%;
   max-width: 420px;
   margin: 0 10px 0;
-  border-radius: 17px;
+  border-radius: 5px;
+  border-bottom-left-radius: 40px;
   border-bottom-right-radius: 0; // for response box in bottom right corner
   overflow: hidden;
 
@@ -105,13 +106,13 @@ class CalloutModal extends Component {
     publicConversationOpen: false,
   }
 
-  createOnSubmitMessage = ({ convoId, threadType }) => message => (
+  createOnSubmitMessage = ({ convoId, threadType }) => (message) => {
     this.props.submitNewMessage({
       convoId,
       threadType,
       message,
-    })
-  )
+    });
+  }
 
   toggleSeedConvoPane = () => {
     this.setState({
@@ -169,7 +170,7 @@ class CalloutModal extends Component {
                   messages={seedConvo.messages}
                   target={context.target}
                   onSubmitMessage={this.createOnSubmitMessage({
-                    convoId: privateConvo.id || publicConvo.id,
+                    convoId: context.conversationId || context.conversationId,
                     threadType: privateConvo.type || publicConvo.type,
                   })}
                   threadContainer={ThreadContainerWithOverleaves}
@@ -210,7 +211,7 @@ class CalloutModal extends Component {
                     includeSenderSummary
                     target={privateConvo.target}
                     onSubmitMessage={this.createOnSubmitMessage({
-                      convoId: privateConvo.id,
+                      convoId: context.conversationId,
                       threadType: privateConvo.type,
                     })}
                   />
@@ -232,7 +233,7 @@ class CalloutModal extends Component {
                   includeSenderSummary
                   target={publicConvo.target}
                   onSubmitMessage={this.createOnSubmitMessage({
-                    convoId: publicConvo.id,
+                    convoId: context.conversationId,
                     threadType: publicConvo.type,
                   })}
                 />

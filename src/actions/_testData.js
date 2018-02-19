@@ -2,6 +2,12 @@ const userData = {
   profilePicUrl: 'http://images6.fanpop.com/image/photos/40700000/461366-dogs-happy-dog-corgi-dogs-40712807-500-500.jpg',
 };
 
+export const testUser = {
+  id: '9876543210',
+  username: 'Jessie',
+  ...userData,
+};
+
 export const friends = {
   1234567890: {
     id: '1234567890',

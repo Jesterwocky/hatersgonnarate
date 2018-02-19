@@ -1,4 +1,4 @@
-import { user } from './_testData.js';
+import { user } from './_testData';
 
 export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER';

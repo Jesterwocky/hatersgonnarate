@@ -11,6 +11,7 @@ const TextArea = styled.textarea.attrs({
   onChange: props => e => props.onUpdateText(e.currentTarget.value),
   value: props => props.text,
 })`
+  resize: none;
   flex: 1;
   font-size: 16px;
   padding: 15px;
@@ -18,7 +19,6 @@ const TextArea = styled.textarea.attrs({
   border-radius: 2px;
   box-sizing: border-box;
   width: 100%;
-  min-width: 100%; // prevent weird resizing (e.g., in chrome)
   min-height: 45px;
   height: ${props => (props.height ? `${props.height}px` : 'auto')};
   color: ${props => (props.theme.field || defaultTheme.field).color};

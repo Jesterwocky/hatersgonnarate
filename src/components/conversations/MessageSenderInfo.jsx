@@ -6,7 +6,8 @@ import { MESSAGE_THEMES } from '../../util/themes';
 
 import MovieRating from '../movies/MovieRating/MovieRating';
 
-const starsWidth = 60;
+const starsWidth = 75;
+const marginBetweenInfoAndBubble = 8;
 const defaultTheme = MESSAGE_THEMES.privateOrPublic;
 
 const MessageSenderInfoContainer = styled.div.attrs({
@@ -17,6 +18,8 @@ const MessageSenderInfoContainer = styled.div.attrs({
   justify-content: flex-start;
   align-items: center;
   font-weight: 600;
+  margin-top: -${marginBetweenInfoAndBubble}px;
+
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
     const messagesLeft = props.theme.messagesLeft || defaultTheme.messagesLeft;
@@ -24,11 +27,11 @@ const MessageSenderInfoContainer = styled.div.attrs({
     return props.isRightSideResponder ?
       css`
         color: ${messagesRight.color};
-        margin-left: 4%;
+        margin-left: ${marginBetweenInfoAndBubble}px;
       ` :
       css`
         color: ${messagesLeft.color};
-        margin-right: 4%;
+        margin-right: ${marginBetweenInfoAndBubble}px;
       `;
   }}
   `;
@@ -49,11 +52,13 @@ const Username = styled.div.attrs({
 
 const MovieRatingContainer = styled.div.attrs({
   className: 'messagesenderinfo-rating',
-})``;
+})`
+  margin-top: 3px;
+`;
 
 const MessageSenderInfo = ({
   username,
-  userId,
+  // userId,
   movieId,
   rating,
   picUrl,
