@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { CURTAIN_COLOR, MESSAGE_THEMES } from '../../util/themes';
+import { CURTAIN_COLOR } from '../../util/themes';
 
 import { Button } from '../_StyledComponents';
 
@@ -12,7 +12,7 @@ const RespondContainer = styled.div.attrs({
   className: 'respond',
 })`
   width: 100%;
-  height: 50px;
+  height: ${props => props.height};
   display: flex;
   border: none;
 `;
@@ -22,7 +22,6 @@ const MessageBoxContainer = styled.div.attrs({
 })`
   width: 100%;
   margin: 0;
-  background-color: ${MESSAGE_THEMES.privateOrPublic.messagesContainer.background};
   display: flex;
 `;
 
@@ -88,7 +87,7 @@ class RespondBox extends Component {
   render() {
     // TODO: enable submit on hitting return?
     return (
-      <RespondContainer>
+      <RespondContainer height={this.props.height}>
         <MessageBoxContainer>
           <MessageBox
             onUpdateText={this.updateMessageText}
@@ -111,10 +110,12 @@ class RespondBox extends Component {
 
 RespondBox.propTypes = {
   onSubmitMessage: PropTypes.func,
+  height: PropTypes.string,
 };
 
 RespondBox.defaultProps = {
   onSubmitMessage: null,
+  height: '50px',
 };
 
 export default RespondBox;

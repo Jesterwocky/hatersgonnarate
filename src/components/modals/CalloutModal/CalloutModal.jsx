@@ -68,9 +68,8 @@ export const Pane = styled.div.attrs({
   width: 100%;
   max-width: 420px;
   margin: 0 10px 0;
-  border-radius: 5px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 0; // for response box in bottom right corner
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
   overflow: hidden;
 
   // allows 100% height on conversation to fill available space

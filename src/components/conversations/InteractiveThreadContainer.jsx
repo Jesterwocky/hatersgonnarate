@@ -4,20 +4,24 @@ import styled, { withTheme, ThemeProvider } from 'styled-components';
 
 import RespondBox from './RespondBox';
 
+const respondBoxHeight = '50px';
+
 const ThreadContainer = styled.div.attrs({
   className: 'interactivethread',
 })`
   display: flex;
   flex-direction: column;
   height: 100%;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
   position: relative;
+  background-color: ${props => (props.theme.messagesContainer || {}).background || 'black'};
 `;
 
 const MessagesContainer = styled.div.attrs({
   className: 'interactivethread-messages-container',
 })`
-  height: 100%;
-  background-color: ${props => (props.messagesContainer || {}).background || 'white'};
+  height: calc(100% - ${respondBoxHeight});
 `;
 
 const ResponseContainer = styled.div.attrs({
@@ -43,7 +47,7 @@ const InteractiveThreadContainer = (props) => {
           {children}
         </MessagesContainer>
 
-        <ResponseContainer>
+        <ResponseContainer height={respondBoxHeight}>
           <RespondBox onSubmitMessage={onSubmitMessage} />
         </ResponseContainer>
 

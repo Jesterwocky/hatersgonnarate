@@ -37,7 +37,6 @@ const MessagesContainerWithOverleavesWrapper = styled.div.attrs({
   position: relative;
   padding: 0 ${closedOverleafWidth + messagesPadding}%;
   overflow: hidden;
-  background: ${props => (props.theme.messagesContainer || {}).background || 'black'};
 `;
 
 const Overleaf = styled.div`
