@@ -101,8 +101,6 @@ export const BANNER = {
   },
 };
 
-export const THREAD_BACKGROUND = 'white';
-
 export const CURTAIN_COLOR = '#b71503';
 
 export const SHAME_COLOR = '#ff604e';
@@ -116,7 +114,7 @@ export const LIKE_BORDER_HIGHLIGHT = '#b8f5c6';
 export const MESSAGE_THEMES = {
   seed: {
     messagesContainer: {
-      background: '#4a1212',
+      background: '#2e0a0a',
     },
     messagesLeft: {
       background: '#0583e6',
@@ -133,7 +131,7 @@ export const MESSAGE_THEMES = {
   },
   privateOrPublic: {
     messagesContainer: {
-      background: '#4a1212',
+      background: '#2e0a0a',
     },
     messagesLeft: {
       background: '#0583e6',

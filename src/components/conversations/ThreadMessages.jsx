@@ -30,9 +30,10 @@ const ThreadMessagesWrapper = styled.div.attrs({
 })`
   height: 100%;
   width: 100%;
-  padding: 4% 5% 8%;
+  padding: 4% 5% 8%; // TODO: make padding bottom = height of respondbox
   box-sizing: border-box;
   background-color: ${props => (props.theme.messagesContainer || {}).background || 'black'};
+  overflow: scroll;
 `;
 
 // TODO: if message is responding to the message immediately preceding it,

@@ -5,7 +5,7 @@ import styled, { css, withTheme, ThemeProvider } from 'styled-components';
 import { modalZIndex, modalBannerZIndex } from '../../util/constants';
 import { MESSAGE_THEMES } from '../../util/themes';
 
-// Purpose of ThreadContainerWithOverleaves: a container div for a conversation
+// Purpose of MessagesContainerWithOverleaves: a container div for a conversation
 // that adds a clickable bar on the left and right side of the conversation,
 // corresponding with the left and right side participants. Clicking the
 // bar opens the overleaf, which is intended to display info about the
@@ -30,7 +30,7 @@ const bufferBorderWidth = 4; // px
 
 // Container for the conversation contents. Used to position overleaves to
 // left and right
-const ThreadContainerWithOverleavesWrapper = styled.div.attrs({
+const MessagesContainerWithOverleavesWrapper = styled.div.attrs({
   className: 'overleaves',
 })`
   height: 100%;
@@ -50,6 +50,10 @@ const Overleaf = styled.div`
   position: absolute;
   top: 0;
 
+  :hover {
+    cursor: pointer;
+  }
+
   ${props => props.open &&
     css`
       background-color: ${(props.theme.messagesContainer || defaultTheme.messagesContainer).background};
@@ -67,11 +71,16 @@ const LeftOverleaf = Overleaf.extend.attrs({
   left: -${openOverleafWidth - closedOverleafWidth}%;
 
   transition: left 0.1s;
+  transition: border 0.1s;
+
+  :hover {
+    border-right: ${bufferBorderWidth}px solid ${props => (props.theme.messagesLeft || defaultTheme.messagesLeft).borderHighlight}
+  }
 
   ${props => props.open &&
     css`
       left: 0;
-      border-right: ${bufferBorderWidth}px solid ${(props.theme.messagesContainer || defaultTheme.messagesContainer).background};
+      border-right: ${bufferBorderWidth}px solid ${(props.theme.messagesLeft || defaultTheme.messagesLeft).borderHighlight};
     `}
 `;
 
@@ -85,11 +94,16 @@ const RightOverleaf = Overleaf.extend.attrs({
   right: -${openOverleafWidth - closedOverleafWidth}%;
 
   transition: right 0.1s;
+  transition: border 0.1s;
+
+  :hover {
+    border-left: ${bufferBorderWidth}px solid ${props => (props.theme.messagesRight || defaultTheme.messagesRight).borderHighlight}
+  }
 
   ${props => props.open &&
     css`
       right: 0;
-      border-left: ${bufferBorderWidth}px solid ${(props.theme.messagesContainer || defaultTheme.messagesContainer).background};
+      border-left: ${bufferBorderWidth}px solid ${(props.theme.messagesRight || defaultTheme.messagesRight).borderHighlight};
     `}
 `;
 
@@ -124,7 +138,7 @@ const RightContent = OverleafContent.extend.attrs({
   border-bottom-left-radius: ${contentBorderRadius}px;
 `;
 
-class ThreadContainerWithOverleaves extends Component {
+class MessagesContainerWithOverleaves extends Component {
   state = {
     overleafOpen: null,
   }
@@ -157,7 +171,7 @@ class ThreadContainerWithOverleaves extends Component {
 
     return (
       <ThemeProvider theme={theme}>
-        <ThreadContainerWithOverleavesWrapper>
+        <MessagesContainerWithOverleavesWrapper>
           <LeftOverleaf
             onClick={this.toggleLeftOverleaf}
             open={this.state.overleafOpen === overleaves.LEFT}
@@ -181,24 +195,24 @@ class ThreadContainerWithOverleaves extends Component {
           </RightOverleaf>
 
           {children}
-        </ThreadContainerWithOverleavesWrapper>
+        </MessagesContainerWithOverleavesWrapper>
       </ThemeProvider>
     );
   }
 }
 
-ThreadContainerWithOverleaves.propTypes = {
+MessagesContainerWithOverleaves.propTypes = {
   children: PropTypes.node,
   leftOverleaf: PropTypes.node,
   rightOverleaf: PropTypes.node,
   theme: PropTypes.object,
 };
 
-ThreadContainerWithOverleaves.defaultProps = {
+MessagesContainerWithOverleaves.defaultProps = {
   children: null,
   leftOverleaf: null,
   rightOverleaf: null,
   theme: {},
 };
 
-export default withTheme(ThreadContainerWithOverleaves);
+export default withTheme(MessagesContainerWithOverleaves);

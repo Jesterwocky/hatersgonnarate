@@ -41,25 +41,23 @@ const SeedParticipantSummary = ({
   movieId,
   rating,
   snippet,
-}) => {
-  return (
-    <SeedParticipantSummaryContainer>
-      <MovieRatingContainer>
-        <MovieRating
-          movieId={movieId}
-          rating={rating}
-          width={starsWidth}
-        />
-      </MovieRatingContainer>
-      <Username>
-        {username}
-      </Username>
-      {snippet &&
-        <Snippet>{snippet}</Snippet>
-      }
-    </SeedParticipantSummaryContainer>
-  );
-};
+}) => (
+  <SeedParticipantSummaryContainer>
+    <MovieRatingContainer>
+      <MovieRating
+        movieId={movieId}
+        rating={rating}
+        width={starsWidth}
+      />
+    </MovieRatingContainer>
+    <Username>
+      {username}
+    </Username>
+    {snippet &&
+      <Snippet>{snippet}</Snippet>
+    }
+  </SeedParticipantSummaryContainer>
+);
 
 SeedParticipantSummary.propTypes = {
   // userId: PropTypes.string.isRequired,

@@ -149,48 +149,46 @@ const Message = ({
   isRightSideResponder,
   includeSenderSummary,
   theme,
-}) => {
-  return (
-    <ThemeProvider theme={theme}>
-      <MessageContainer
-        isRightSideResponder={isRightSideResponder}
-        includeSenderSummary={includeSenderSummary}
-      >
-        {includeSenderSummary &&
-          <MessageSenderInfo
-            username={sender.username}
-            userId={sender.id}
-            rating={sender.ratingSnapshot.rating}
-            picUrl={sender.profilePicUrl}
-          />
-        }
-        <MessageTextContainer isRightSideResponder={isRightSideResponder}>
-          {messageGroup.map(message => (
-            <SingleSend
-              key={`message-${message.id}`}
-              isRightSideResponder={isRightSideResponder}
-            >
-              {message.responseTo && message.responseTo.text &&
-                <Quotation>
-                  {message.responseTo.text}
-                  <Author>{message.responseTo.sender.username}</Author>
-                </Quotation>
-              }
-              <MessageText>
-                {message.text}
-              </MessageText>
-            </SingleSend>
-          ))}
-        </MessageTextContainer>
+}) => (
+  <ThemeProvider theme={theme}>
+    <MessageContainer
+      isRightSideResponder={isRightSideResponder}
+      includeSenderSummary={includeSenderSummary}
+    >
+      {includeSenderSummary &&
+        <MessageSenderInfo
+          username={sender.username}
+          userId={sender.id}
+          rating={sender.ratingSnapshot.rating}
+          picUrl={sender.profilePicUrl}
+        />
+      }
+      <MessageTextContainer isRightSideResponder={isRightSideResponder}>
+        {messageGroup.map(message => (
+          <SingleSend
+            key={`message-${message.id}`}
+            isRightSideResponder={isRightSideResponder}
+          >
+            {message.responseTo && message.responseTo.text &&
+              <Quotation>
+                {message.responseTo.text}
+                <Author>{message.responseTo.sender.username}</Author>
+              </Quotation>
+            }
+            <MessageText>
+              {message.text}
+            </MessageText>
+          </SingleSend>
+        ))}
+      </MessageTextContainer>
 
-        <MessageDrawerHandle />
-        <MessageDetails>
-          {isRightSideResponder ? 'me' : sender.username}
-        </MessageDetails>
-      </MessageContainer>
-    </ThemeProvider>
-  );
-};
+      <MessageDrawerHandle />
+      <MessageDetails>
+        {isRightSideResponder ? 'me' : sender.username}
+      </MessageDetails>
+    </MessageContainer>
+  </ThemeProvider>
+);
 
 Message.propTypes = {
   messageGroup: PropTypes.array.isRequired,

@@ -54,35 +54,33 @@ const MovieRatingContainer = styled.div.attrs({
   className: 'messagesenderinfo-rating',
 })`
   margin-top: 3px;
-`;
+  `;
 
+// TODO: this is very similar to SeedParticipantSummary.
+// Combine somehow or at least put files in same folder
 const MessageSenderInfo = ({
   username,
   // userId,
   movieId,
   rating,
   picUrl,
-}) => {
-  // TODO: this is very similar to SeedParticipantSummary.
-  // Combine somehow or at least put files in same folder
-  return (
-    <MessageSenderInfoContainer>
-      <PicContainer url={picUrl} />
-      <Username>{username}</Username>
-      <MovieRatingContainer>
-        <MovieRating
-          movieId={movieId}
-          rating={rating}
-          width={starsWidth}
-        />
-      </MovieRatingContainer>
-    </MessageSenderInfoContainer>
-  );
-};
+}) => (
+  <MessageSenderInfoContainer>
+    <PicContainer url={picUrl} />
+    <Username>{username}</Username>
+    <MovieRatingContainer>
+      <MovieRating
+        movieId={movieId}
+        rating={rating}
+        width={starsWidth}
+      />
+    </MovieRatingContainer>
+  </MessageSenderInfoContainer>
+);
 
 MessageSenderInfo.propTypes = {
   username: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
+  // userId: PropTypes.string.isRequired,
   rating: PropTypes.string.isRequired,
   movieId: PropTypes.string,
   picUrl: PropTypes.string,

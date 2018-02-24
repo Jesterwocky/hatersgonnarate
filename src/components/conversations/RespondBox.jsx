@@ -78,6 +78,11 @@ class RespondBox extends Component {
 
   submitMessage = () => {
     this.props.onSubmitMessage(this.state.messageText);
+
+    // TODO: only clear text if it's saved sucessfully
+    this.setState({
+      messageText: '',
+    });
   }
 
   render() {

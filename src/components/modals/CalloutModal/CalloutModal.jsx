@@ -9,10 +9,11 @@ import { MESSAGE_THEMES, CURTAIN_COLOR } from '../../../util/themes';
 import { addMessageToConversation } from '../../../actions/conversations';
 
 import Modal from '../Modal';
-import SeedConvoOverleaf from './SeedConvo/SeedConvoOverleaf';
+import SeedConvoContainer from './SeedConvo/SeedConvoContainer';
 import SeedConvoThreadHeader from './SeedConvo/SeedConvoThreadHeader';
-import InteractiveThread from '../../conversations/InteractiveThread';
-import ThreadContainerWithOverleaves from '../../conversations/ThreadContainerWithOverleaves';
+
+import InteractiveThreadContainer from '../../conversations/InteractiveThreadContainer';
+import ThreadMessages from '../../conversations/ThreadMessages';
 
 const convoTypes = {
   seed: 'seed',
@@ -99,6 +100,7 @@ const PublicConvoPane = Pane.extend.attrs({
   className: 'calloutmodal-panes-pane-public',
 })``;
 
+
 class CalloutModal extends Component {
   state = {
     seedConversationOpen: true,
@@ -166,33 +168,29 @@ class CalloutModal extends Component {
                   />
                 </ThreadHeading>
 
-                <InteractiveThread
-                  messages={seedConvo.messages}
-                  target={context.target}
+                <InteractiveThreadContainer
                   onSubmitMessage={this.createOnSubmitMessage({
                     convoId: context.conversationId || context.conversationId,
                     threadType: privateConvo.type || publicConvo.type,
                   })}
-                  threadContainer={ThreadContainerWithOverleaves}
-                  leftOverleaf={
-                    <SeedConvoOverleaf
-                      {...context.initiator}
-                      movie={{
-                        id: context.movieId,
-                        movieName: 'Movie Name',
-                      }}
-                    />
+                  canRespond={!this.state.privateConversationOpen &&
+                    !this.state.publicConversationOpen
                   }
-                  rightOverleaf={
-                    <SeedConvoOverleaf
-                      {...context.target}
-                      movie={{
-                        id: context.movieId,
-                        movieName: 'Movie Name',
-                      }}
+                >
+                  <SeedConvoContainer
+                    initiator={context.initiator}
+                    target={context.target}
+                    movie={{
+                      id: context.movieId,
+                      movieName: 'Movie Name',
+                    }}
+                  >
+                    <ThreadMessages
+                      messages={seedConvo.messages}
+                      targetUser={context.target}
                     />
-                  }
-                />
+                  </SeedConvoContainer>
+                </InteractiveThreadContainer>
               </SeedConvoPane>
             </ThemeProvider>
 
@@ -206,15 +204,18 @@ class CalloutModal extends Component {
                   >
                     Guests
                   </ThreadHeading>
-                  <InteractiveThread
-                    messages={privateConvo.messages}
-                    includeSenderSummary
-                    target={privateConvo.target}
+                  <InteractiveThreadContainer
                     onSubmitMessage={this.createOnSubmitMessage({
                       convoId: context.conversationId,
                       threadType: privateConvo.type,
                     })}
-                  />
+                    canRespond
+                  >
+                    <ThreadMessages
+                      messages={privateConvo.messages}
+                      includeSenderSummary
+                    />
+                  </InteractiveThreadContainer>
                 </PrivateConvoPane>
               </ThemeProvider>
             }
@@ -228,15 +229,18 @@ class CalloutModal extends Component {
                 >
                   Everyone
                 </ThreadHeading>
-                <InteractiveThread
-                  messages={publicConvo.messages}
-                  includeSenderSummary
-                  target={publicConvo.target}
+                <InteractiveThreadContainer
                   onSubmitMessage={this.createOnSubmitMessage({
                     convoId: context.conversationId,
                     threadType: publicConvo.type,
                   })}
-                />
+                  canRespond
+                >
+                  <ThreadMessages
+                    messages={publicConvo.messages}
+                    includeSenderSummary
+                  />
+                </InteractiveThreadContainer>
               </PublicConvoPane>
             </ThemeProvider>
           </Panes>
