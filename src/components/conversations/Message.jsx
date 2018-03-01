@@ -131,64 +131,60 @@ const Author = styled.div.attrs({
   className: 'message-text-quotation-author',
 })``;
 
-const MessageDrawerHandle = styled.div.attrs({
-  className: 'message-drawerhandle',
-})``;
-
-// TODO: only show message details on click drawerhandle
-const MessageDetails = styled.div.attrs({
-  className: 'message-drawer',
-})`
-    display: none;
-  `;
-
 // right-side-responder: target in a callout, or current user in a group convo.
 const Message = ({
   messageGroup,
   sender,
   isRightSideResponder,
   includeSenderSummary,
+  onClickMessage,
   theme,
-}) => (
-  <ThemeProvider theme={theme}>
-    <MessageContainer
-      isRightSideResponder={isRightSideResponder}
-      includeSenderSummary={includeSenderSummary}
-    >
-      {includeSenderSummary &&
-        <MessageSenderInfo
-          username={sender.username}
-          userId={sender.id}
-          rating={sender.ratingSnapshot.rating}
-          picUrl={sender.profilePicUrl}
-        />
-      }
-      <MessageTextContainer isRightSideResponder={isRightSideResponder}>
-        {messageGroup.map(message => (
-          <SingleSend
-            key={`message-${message.id}`}
-            isRightSideResponder={isRightSideResponder}
-          >
-            {message.responseTo && message.responseTo.text &&
-              <Quotation>
-                {message.responseTo.text}
-                <Author>{message.responseTo.sender.username}</Author>
-              </Quotation>
-            }
-            <MessageText>
-              {message.text}
-            </MessageText>
-          </SingleSend>
-        ))}
-      </MessageTextContainer>
+}) => {
+  function getOnClickMessage(message) {
+    return () => onClickMessage({
+      message,
+      author: sender.username,
+    });
+  }
 
-      <MessageDrawerHandle />
-      <MessageDetails>
-        {isRightSideResponder ? 'me' : sender.username}
-      </MessageDetails>
-    </MessageContainer>
-  </ThemeProvider>
-);
+  return (
+    <ThemeProvider theme={theme}>
+      <MessageContainer
+        isRightSideResponder={isRightSideResponder}
+        includeSenderSummary={includeSenderSummary}
+      >
+        {includeSenderSummary &&
+          <MessageSenderInfo
+            username={sender.username}
+            userId={sender.id}
+            rating={sender.ratingSnapshot.rating}
+            picUrl={sender.profilePicUrl}
+            isRightSideResponder={isRightSideResponder}
+          />
+        }
+        <MessageTextContainer isRightSideResponder={isRightSideResponder}>
+          {messageGroup.map(message => (
+            <SingleSend
+              key={`message-${message.id}`}
+              isRightSideResponder={isRightSideResponder}
+              onClick={getOnClickMessage(message.text)}
+            >
+              {message.responseTo && message.responseTo.text &&
+                <Quotation>
+                  {message.responseTo.text}
+                  <Author>{message.responseTo.sender.username}</Author>
+                </Quotation>
+              }
+              <MessageText>
+                {message.text}
+              </MessageText>
+            </SingleSend>
+          ))}
+        </MessageTextContainer>
+      </MessageContainer>
+    </ThemeProvider>
+  );
+};
 
 Message.propTypes = {
   messageGroup: PropTypes.array.isRequired,
@@ -196,11 +192,13 @@ Message.propTypes = {
   isRightSideResponder: PropTypes.bool,
   includeSenderSummary: PropTypes.bool,
   theme: PropTypes.object,
+  onClickMessage: PropTypes.func,
 };
 
 Message.defaultProps = {
   isRightSideResponder: false,
   includeSenderSummary: false,
+  onClickMessage: null,
   theme: {},
 };
 

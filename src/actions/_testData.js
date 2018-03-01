@@ -3,9 +3,9 @@ const userData = {
 };
 
 export const testUser = {
-  id: '9876543210',
-  username: 'Jessie',
-  ...userData,
+  username: 'jester',
+  id: '99999',
+  profilePicUrl: 'http://www.dogedoor.net/wp-content/uploads/shibe-teeth.jpg',
 };
 
 export const friends = {
@@ -571,9 +571,22 @@ export const parties = {
 export const messagesBetweenOthers = {
   id: '00001',
   type: 'seed',
-  // store by convo sequence number, maybe in case
-  // a message gets deleted ?
-  // TODO: decide on data structure
+  participants: {
+    1234567891: {
+      ...friends['1234567891'],
+      messages: [
+        0,
+        2,
+      ],
+    },
+    1234567890: {
+      ...friends['1234567890'],
+      messages: [
+        1,
+        3,
+      ],
+    },
+  },
   messages: {
     0: {
       messageSequenceNumber: 0,
@@ -645,6 +658,20 @@ export const messagesBetweenOthers = {
 export const messagesBetweenFriends = {
   id: '00002',
   type: 'private',
+  participants: {
+    1234567892: {
+      ...friends['1234567892'],
+      messages: [
+        0,
+      ],
+    },
+    1234567891: {
+      ...friends['1234567891'],
+      messages: [
+        1,
+      ],
+    },
+  },
   messages: {
     0: {
       messageSequenceNumber: 0,
@@ -691,6 +718,7 @@ export const messagesBetweenFriends = {
 export const messagesBetweenAll = {
   id: '00003',
   type: 'public',
+  participants: {},
   messages: {},
 };
 
@@ -699,7 +727,10 @@ export const calloutContext = {
   subType: 'seed',
   contextId: '00001',
   conversationId: '00001',
-  movieId: '00001',
+  movie: {
+    id: '00001',
+    title: 'Whatever: The Movie',
+  },
   initiator: {
     ...friends['1234567891'],
     ratingSnapshot: {

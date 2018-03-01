@@ -114,7 +114,7 @@ export const LIKE_BORDER_HIGHLIGHT = '#b8f5c6';
 export const MESSAGE_THEMES = {
   seed: {
     messagesContainer: {
-      background: '#2e0a0a',
+      background: '#231f0e',
     },
     messagesLeft: {
       background: '#0583e6',

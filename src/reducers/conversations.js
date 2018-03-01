@@ -12,7 +12,7 @@ const initialState = {
     variant: '',
     contextId: '', // id of context thing, e.g., the callout
     conversationId: '',
-    movieId: '',
+    movie: {},
     initiator: {
       userId: '',
       username: '',
@@ -46,11 +46,36 @@ const threadInitialState = {
   messages: {},
 };
 
+const participantInitialState = {};
+
+function participantReducer(state = participantInitialState, action) {
+  switch (action.type) {
+    case UPDATE_CONVERSATION_THREAD:
+      return {
+        ...state,
+        ...action.payload.sender,
+        messages: [
+          ...(state.messages || []),
+          action.payload.message.messageSequenceNumber,
+        ],
+      };
+    default:
+      return state;
+  }
+}
+
 function threadReducer(state = threadInitialState, action) {
   switch (action.type) {
     case UPDATE_CONVERSATION_THREAD:
       return {
         ...state,
+        participants: {
+          ...state.participants,
+          [action.payload.sender.id]: participantReducer(
+            state.participants[action.payload.sender.id],
+            action,
+          ),
+        },
         messages: {
           ...state.messages,
           [action.payload.messageSequenceNumber]: action.payload.message,

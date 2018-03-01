@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import styled, { withTheme, ThemeProvider } from 'styled-components';
 
 import { DARK } from '../../util/themes';
-import { isEmpty } from '../../util/helpers';
 
 import Message from './Message';
 
@@ -30,7 +29,7 @@ const ThreadMessagesWrapper = styled.div.attrs({
 })`
   height: 100%;
   width: 100%;
-  padding: 4% 5% 8%; // TODO: make padding bottom = height of respondbox
+  padding: 4% 4% 8%;
   box-sizing: border-box;
   overflow: scroll;
 `;
@@ -42,7 +41,7 @@ const ThreadMessages = ({
   messages,
   user,
   targetUser,
-  includeSenderSummary,
+  onClickMessage,
   theme,
 }) => {
   // make sure conversation is in order
@@ -58,9 +57,10 @@ const ThreadMessages = ({
             key={`messagegroup-${messageGroup[0].id}`}
             messageGroup={messageGroup}
             sender={messageGroup[0].sender}
-            includeSenderSummary={includeSenderSummary}
+            includeSenderSummary={!targetUser}
+            onClickMessage={onClickMessage}
             isRightSideResponder={
-              isEmpty(targetUser) ?
+              !targetUser ?
               messageGroup[0].sender.id === user.id :
               messageGroup[0].sender.id === targetUser.id
             }
@@ -76,13 +76,13 @@ ThreadMessages.propTypes = {
   messages: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   targetUser: PropTypes.object,
-  includeSenderSummary: PropTypes.bool,
+  onClickMessage: PropTypes.func,
   theme: PropTypes.object,
 };
 
 ThreadMessages.defaultProps = {
-  targetUser: {},
-  includeSenderSummary: false,
+  targetUser: null,
+  onClickMessage: null,
   theme: {},
 };
 

@@ -1,70 +1,129 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { ThemeProvider, withTheme } from 'styled-components';
 
+import { MESSAGE_THEMES } from '../../../../util/themes';
 import SeedParticipantSummary from './SeedParticipantSummary';
+
+const defaultTheme = MESSAGE_THEMES.seed;
+
+const circleDiameter = 36; // px
 
 const SeedConvoThreadHeaderContainer = styled.div.attrs({
   className: 'seedconvothreadheader',
 })`
   display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative; // for positioning @ symbol
 `;
 
 const SeedParticipantSummaryContainer = styled.div`
-  width: 100%;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; // for positioning circle behind @ symbol
+  overflow: hidden; // to clip circle
 `;
 
 const InitiatorSummary = SeedParticipantSummaryContainer.extend.attrs({
-  className: 'calloutmodal-personsummarycontainer',
+  className: 'seedconvothreadheader-personsummarycontainer',
 })`
-  justify-content: flex-end;
+  background-color: ${props => (
+    (props.theme.messagesLeft || defaultTheme.messagesLeft).background
+  )}
 `;
 
 const ResponderSummary = SeedParticipantSummaryContainer.extend.attrs({
-  className: 'calloutmodal-personsummarycontainer',
+  className: 'seedconvothreadheader-personsummarycontainer',
 })`
-  justify-content: flex-start;
+  background-color: ${props => (
+    (props.theme.messagesRight || defaultTheme.messagesRight).background
+  )}
 `;
 
 const VsText = styled.p.attrs({
-  className: 'calloutmodal-conversation-vstext',
+  className: 'seedconvothreadheader-vstext',
 })`
   font-weight: 300;
-  font-size: 12px;
+  font-size: 20px;
   margin: 0 7px;
-  padding-top: 9px;
+  position: absolute;
+  top: 10px;
+  left: 45.5%;
+  z-index: 999;
+`;
+
+const VsBackgroundCircle = styled.div.attrs({
+  className: 'seedconvothreadheader-circle',
+})`
+  height: ${circleDiameter}px;
+  width: ${circleDiameter}px;
+  position: absolute;
+  top: 2px;
+  border-radius: 100%;
+`;
+
+const LeftCircle = VsBackgroundCircle.extend.attrs({
+  className: 'seedconvothreadheader-circle seedconvothreadheader-circle-left',
+})`
+  right: -${circleDiameter / 2}px;
+  background-color: ${props => (
+    (props.theme.messagesRight || defaultTheme.messagesRight).background
+  )}
+`;
+
+const RightCircle = VsBackgroundCircle.extend.attrs({
+  className: 'seedconvothreadheader-circle seedconvothreadheader-circle-right',
+})`
+  left: -${circleDiameter / 2}px;
+  background-color: ${props => (
+    (props.theme.messagesLeft || defaultTheme.messagesLeft).background
+  )}
 `;
 
 const SeedConvoThreadHeader = ({
   initiator,
   target,
   movieId,
+  theme,
 }) => (
-  <SeedConvoThreadHeaderContainer>
-    <InitiatorSummary>
-      <SeedParticipantSummary
-        {...initiator}
-        rating={initiator.ratingSnapshot.rating}
-        movieId={movieId}
-      />
-    </InitiatorSummary>
+  <ThemeProvider theme={theme}>
+    <SeedConvoThreadHeaderContainer>
+      <InitiatorSummary>
+        <SeedParticipantSummary
+          {...initiator}
+          rating={initiator.ratingSnapshot.rating}
+          movieId={movieId}
+        />
+        <LeftCircle />
+      </InitiatorSummary>
 
-    <VsText>@</VsText>
+      <VsText>@</VsText>
 
-    <ResponderSummary>
-      <SeedParticipantSummary
-        {...target}
-        rating={target.ratingSnapshot.rating}
-        movieId={movieId}
-      />
-    </ResponderSummary>
-  </SeedConvoThreadHeaderContainer>
+      <ResponderSummary>
+        <SeedParticipantSummary
+          {...target}
+          rating={target.ratingSnapshot.rating}
+          movieId={movieId}
+        />
+        <RightCircle />
+      </ResponderSummary>
+    </SeedConvoThreadHeaderContainer>
+  </ThemeProvider>
 );
 
 SeedConvoThreadHeader.propTypes = {
   initiator: PropTypes.object.isRequired,
   target: PropTypes.object.isRequired,
   movieId: PropTypes.string.isRequired,
+  theme: PropTypes.object,
 };
 
-export default SeedConvoThreadHeader;
+SeedConvoThreadHeader.defaultProps = {
+  theme: {},
+};
+
+export default withTheme(SeedConvoThreadHeader);

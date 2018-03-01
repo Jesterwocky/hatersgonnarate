@@ -18,7 +18,6 @@ const MessageSenderInfoContainer = styled.div.attrs({
   justify-content: flex-start;
   align-items: center;
   font-weight: 600;
-  margin-top: -${marginBetweenInfoAndBubble}px;
 
   ${(props) => {
     const messagesRight = props.theme.messagesRight || defaultTheme.messagesRight;
@@ -64,8 +63,9 @@ const MessageSenderInfo = ({
   movieId,
   rating,
   picUrl,
+  isRightSideResponder,
 }) => (
-  <MessageSenderInfoContainer>
+  <MessageSenderInfoContainer isRightSideResponder={isRightSideResponder}>
     <PicContainer url={picUrl} />
     <Username>{username}</Username>
     <MovieRatingContainer>
@@ -84,11 +84,13 @@ MessageSenderInfo.propTypes = {
   rating: PropTypes.string.isRequired,
   movieId: PropTypes.string,
   picUrl: PropTypes.string,
+  isRightSideResponder: PropTypes.bool,
 };
 
 MessageSenderInfo.defaultProps = {
   movieId: '',
   picUrl: '',
+  isRightSideResponder: false,
 };
 
 export default withTheme(MessageSenderInfo);

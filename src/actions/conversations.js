@@ -18,16 +18,17 @@ export function getConversationAction(context, conversation) {
 }
 
 const lastSeqNumByThreadType = {
-  'seed': 3,
-  'private': 1,
-  'public': null,
+  seed: 3,
+  private: 1,
+  public: null,
 };
 
 let lastMessageId = 6;
 
 // TODO: fix when actual data is coming through
 function addMessageToConversationAction(conversationId, threadType, messageText) {
-  const messageSequenceNumber = lastSeqNumByThreadType[threadType] += 1;
+  const messageSequenceNumber = lastSeqNumByThreadType[threadType] + 1;
+  lastSeqNumByThreadType[threadType] += 1;
   const id = lastMessageId + 1;
   lastMessageId += 1;
   const time = Date.now();
@@ -38,6 +39,9 @@ function addMessageToConversationAction(conversationId, threadType, messageText)
       conversationId,
       threadType,
       messageSequenceNumber,
+      sender: {
+        ...testUser,
+      },
       message: {
         messageSequenceNumber,
         time,

@@ -17,14 +17,6 @@ const RespondContainer = styled.div.attrs({
   border: none;
 `;
 
-const MessageBoxContainer = styled.div.attrs({
-  className: 'respond-messageboxcontainer',
-})`
-  width: 100%;
-  margin: 0;
-  display: flex;
-`;
-
 const PostMessageButton = Button.extend.attrs({
   className: 'respond-respondbuttoncontainer',
 })`
@@ -41,11 +33,13 @@ const PostMessageButton = Button.extend.attrs({
   border-bottom-right-radius: 4px;
 `;
 
-// TODO: expand textbox on click
-const MessageBox = TextArea.extend.attrs({
-  className: 'respond-box',
+const MessageBoxContainer = styled.div.attrs({
+  className: 'respond-messageboxcontainer',
 })`
-  min-height: auto;
+  width: 100%;
+  margin: 0;
+  display: flex;
+
   height: 100%;
   width: auto;
   text-align: left;
@@ -56,12 +50,47 @@ const MessageBox = TextArea.extend.attrs({
   border: 2px solid red;
   border-right: none;
 
-  margin: 0;
-  padding: 13px 10px 0 20px;
-
   border-radius: 0;
   border-top-left-radius: 20px;
   margin-left: 43px;
+
+  overflow: hidden;
+`;
+
+const QuotationBox = styled.div.attrs({
+  className: 'respond-quotation',
+})`
+  height: auto;
+`;
+
+const QuotationText = styled.div.attrs({
+  className: 'respond-quotation-text',
+})``;
+
+const QuotationAuthor = styled.div.attrs({
+  className: 'respond-quotation-author',
+})``;
+
+// TODO: expand textbox on click
+const MessageBox = TextArea.extend.attrs({
+  className: 'respond-box',
+})`
+  min-height: auto;
+  text-align: left;
+  font-weight: 400;
+  background-color: #f9f9f9;
+  color: #504dad;
+  margin: 0;
+  padding: 13px 10px 0 20px;
+
+  // height: 100%;
+  // width: auto;
+  // border: 2px solid red;
+  // border-right: none;
+
+  // border-radius: 0;
+  // border-top-left-radius: 20px;
+  // margin-left: 43px;
 `;
 
 class RespondBox extends Component {
@@ -86,9 +115,22 @@ class RespondBox extends Component {
 
   render() {
     // TODO: enable submit on hitting return?
+    const { quotation } = this.props;
+
     return (
       <RespondContainer height={this.props.height}>
         <MessageBoxContainer>
+          {quotation &&
+            <QuotationBox>
+              <QuotationText>
+                {quotation.text}
+              </QuotationText>
+              <QuotationAuthor>
+                {quotation.author}
+              </QuotationAuthor>
+            </QuotationBox>
+          }
+
           <MessageBox
             onUpdateText={this.updateMessageText}
             value={this.state.messageText}
@@ -111,11 +153,16 @@ class RespondBox extends Component {
 RespondBox.propTypes = {
   onSubmitMessage: PropTypes.func,
   height: PropTypes.string,
+  quotation: PropTypes.shape({
+    text: PropTypes.string,
+    author: PropTypes.string,
+  }),
 };
 
 RespondBox.defaultProps = {
   onSubmitMessage: null,
   height: '50px',
+  quotation: null,
 };
 
 export default RespondBox;
