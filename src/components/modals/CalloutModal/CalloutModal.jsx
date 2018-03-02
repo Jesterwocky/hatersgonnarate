@@ -202,7 +202,7 @@ class CalloutModal extends Component {
                 <ThreadHeading onClick={this.toggleSeedConvoPane}>
                   <SeedConvoThreadHeader
                     initiator={context.initiator}
-                    target={context.target}
+                    targetUser={context.targetUser}
                     movieId={context.movie.id}
                   />
                 </ThreadHeading>
@@ -230,6 +230,7 @@ class CalloutModal extends Component {
                   <InteractiveThreadContainer
                     messages={privateConvo.messages}
                     onSubmitMessage={this.onSubmitPrivateMessage}
+                    includeSenderSummary
                     canRespond
                   />
 
@@ -246,6 +247,7 @@ class CalloutModal extends Component {
                 <InteractiveThreadContainer
                   messages={publicConvo.messages}
                   onSubmitMessage={this.onSubmitPublicMessage}
+                  includeSenderSummary
                   canRespond
                 />
 

@@ -86,7 +86,7 @@ const RightCircle = VsBackgroundCircle.extend.attrs({
 
 const SeedConvoThreadHeader = ({
   initiator,
-  target,
+  targetUser,
   movieId,
   theme,
 }) => (
@@ -105,8 +105,8 @@ const SeedConvoThreadHeader = ({
 
       <ResponderSummary>
         <SeedParticipantSummary
-          {...target}
-          rating={target.ratingSnapshot.rating}
+          {...targetUser}
+          rating={targetUser.ratingSnapshot.rating}
           movieId={movieId}
         />
         <RightCircle />
@@ -117,7 +117,7 @@ const SeedConvoThreadHeader = ({
 
 SeedConvoThreadHeader.propTypes = {
   initiator: PropTypes.object.isRequired,
-  target: PropTypes.object.isRequired,
+  targetUser: PropTypes.object.isRequired,
   movieId: PropTypes.string.isRequired,
   theme: PropTypes.object,
 };

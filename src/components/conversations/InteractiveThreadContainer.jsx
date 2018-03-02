@@ -120,8 +120,8 @@ class InteractiveThreadContainer extends Component {
 }
 
 InteractiveThreadContainer.propTypes = {
-  messages: PropTypes.node,
-  informationalMessageContainer: PropTypes.node,
+  messages: PropTypes.object,
+  informationalMessageContainer: PropTypes.func,
   onSubmitMessage: PropTypes.func.isRequired,
   canRespond: PropTypes.bool,
   quotation: PropTypes.object,

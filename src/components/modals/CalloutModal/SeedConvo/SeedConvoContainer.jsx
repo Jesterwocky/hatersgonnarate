@@ -6,7 +6,7 @@ import SeedConvoOverleaf from './SeedConvoOverleaf';
 
 const SeedConvoContainer = ({
   initiator,
-  target,
+  targetUser,
   movie,
   children,
 }) => (
@@ -19,7 +19,7 @@ const SeedConvoContainer = ({
     }
     rightOverleaf={
       <SeedConvoOverleaf
-        {...target}
+        {...targetUser}
         movie={movie}
       />
     }
@@ -30,7 +30,7 @@ const SeedConvoContainer = ({
 
 SeedConvoContainer.propTypes = {
   initiator: PropTypes.object.isRequired,
-  target: PropTypes.object.isRequired,
+  targetUser: PropTypes.object.isRequired,
   movie: PropTypes.object.isRequired,
   children: PropTypes.node,
 };

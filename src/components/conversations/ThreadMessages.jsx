@@ -7,20 +7,30 @@ import { DARK } from '../../util/themes';
 
 import Message from './Message';
 
-function groupMessages(messages) {
-  return messages.reduce((groupedMessages, currentMessage) => {
+function getSorted(messages) {
+  return Object.keys(messages)
+    .sort().map(key => messages[key]);
+}
+
+function addMessageToLastGroup(groupedMessages, message) {
+  return groupedMessages
+    .slice(0, groupedMessages.length - 1)
+    .concat([
+      groupedMessages[groupedMessages.length - 1]
+        .concat([message]),
+    ]);
+}
+
+function sortAndGroup(messages) {
+  return getSorted(messages).reduce((groupedMessages, currentMessage) => {
     const lastGroup = groupedMessages[groupedMessages.length - 1] || [];
-    const lastMessageOfLastGroup = lastGroup[lastGroup.length - 1] || {};
+    const lastMessage = lastGroup[lastGroup.length - 1] || {};
+    const sameSender = lastMessage.sender &&
+      lastMessage.sender.id === currentMessage.sender.id;
 
-    if (
-      lastMessageOfLastGroup.sender &&
-      lastMessageOfLastGroup.sender.id === currentMessage.sender.id
-    ) {
-      return groupedMessages.slice(0, groupedMessages.length - 1)
-        .concat([lastGroup.concat([currentMessage])]);
-    }
-
-    return groupedMessages.concat([[currentMessage]]);
+    return sameSender ?
+      addMessageToLastGroup(groupedMessages, currentMessage) :
+      groupedMessages.concat([[currentMessage]]);
   }, []);
 }
 
@@ -36,41 +46,34 @@ const ThreadMessagesWrapper = styled.div.attrs({
 
 // TODO: if message is responding to the message immediately preceding it,
 // don't quote that message in the response even if the data is there
-
 const ThreadMessages = ({
   messages,
   user,
   targetUser,
   onClickMessage,
   theme,
-}) => {
-  // make sure conversation is in order
-  const messageList = Object.keys(messages)
-    .sort().map(key => messages[key]);
+}) => (
+  <ThemeProvider theme={{ ...theme, star: DARK.star }}>
 
-  return (
-    <ThemeProvider theme={{ ...theme, star: DARK.star }}>
+    <ThreadMessagesWrapper>
+      {sortAndGroup(messages).map(messageGroup => (
+        <Message
+          key={`messagegroup-${messageGroup[0].id}`}
+          messageGroup={messageGroup}
+          sender={messageGroup[0].sender}
+          includeSenderSummary={!targetUser}
+          onClickMessage={onClickMessage}
+          isRightSideResponder={
+            !targetUser ?
+            messageGroup[0].sender.id === user.id :
+            messageGroup[0].sender.id === targetUser.id
+          }
+        />
+      ))}
+    </ThreadMessagesWrapper>
 
-      <ThreadMessagesWrapper>
-        {groupMessages(messageList).map(messageGroup => (
-          <Message
-            key={`messagegroup-${messageGroup[0].id}`}
-            messageGroup={messageGroup}
-            sender={messageGroup[0].sender}
-            includeSenderSummary={!targetUser}
-            onClickMessage={onClickMessage}
-            isRightSideResponder={
-              !targetUser ?
-              messageGroup[0].sender.id === user.id :
-              messageGroup[0].sender.id === targetUser.id
-            }
-          />
-        ))}
-      </ThreadMessagesWrapper>
-
-    </ThemeProvider>
-  );
-};
+  </ThemeProvider>
+);
 
 ThreadMessages.propTypes = {
   messages: PropTypes.object.isRequired,

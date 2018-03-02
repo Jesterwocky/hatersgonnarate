@@ -738,7 +738,7 @@ export const calloutContext = {
       snippet: 'I had something to say. So many thinks! What a thing.',
     },
   },
-  target: {
+  targetUser: {
     ...friends['1234567890'],
     ratingSnapshot: {
       rating: '1',
